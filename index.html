@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMANA STORE | أمانة ستور</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090909;color:white;font-family:Arial,sans-serif}
+header{padding:20px;background:#111;border-bottom:1px solid #b99142;display:flex;justify-content:space-between;align-items:center}
+.logo{color:#e4bd67;font-size:21px;font-weight:bold}
+.logo small{display:block;color:white;font-size:14px;margin-top:5px}
+button{border:0;border-radius:9px;padding:12px 18px;background:#c49a43;color:#111;font-weight:bold;cursor:pointer}
+.hero{text-align:center;padding:65px 20px 45px;background:linear-gradient(145deg,#17130b,#080808)}
+.hero h1{font-size:32px;color:#e5bd67}
+.hero p{color:#ccc;line-height:2}
+.container{padding:20px;max-width:900px;margin:auto}
+.title{color:#e5bd67;border-right:4px solid #c49a43;padding-right:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-top:20px}
+.card{background:#151515;border:1px solid #514124;border-radius:13px;padding:22px 12px;text-align:center}
+.icon{font-size:30px;margin-bottom:12px}
+.card h3{font-size:16px}
+.note{color:#aaa;font-size:13px}
+.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:25px}
+.secondary{background:#292929;color:white;border:1px solid #c49a43}
+footer{text-align:center;padding:30px;color:#aaa;border-top:1px solid #333;margin-top:45px}
+.modal{display:none;position:fixed;inset:0;background:#000d;z-index:10;align-items:center;justify-content:center;padding:15px}
+.box{background:#171717;border:1px solid #c49a43;border-radius:15px;padding:22px;width:100%;max-width:380px}
+input{width:100%;padding:13px;margin:9px 0;background:#090909;border:1px solid #555;border-radius:8px;color:white}
+.box button{width:100%;margin-top:10px}
+.close{float:left;background:#333;color:white}
+#message{color:#e5bd67;text-align:center;line-height:1.8}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">AMANA STORE<small>أمانة ستور</small></div>
+ <button onclick="openLogin()">حسابي</button>
+</header>
+
+<section class="hero">
+ <h1>مرحباً بك في أمانة ستور</h1>
+ <p>ثقتك أمانة.. وخدماتك علينا.<br>
+ وجهتك للخدمات الرقمية والشحن والتحويلات الإلكترونية.</p>
+ <div class="actions">
+  <button onclick="openLogin()">تسجيل الدخول</button>
+  <button class="secondary" onclick="openLogin()">إنشاء حساب</button>
+ </div>
+</section>
+
+<main class="container">
+ <h2 class="title">خدمات المتجر</h2>
+ <div class="grid">
+  <div class="card"><div class="icon">💳</div><h3>المحفظة</h3><p class="note">إدارة رصيدك وطلبات الشحن</p></div>
+  <div class="card"><div class="icon">📱</div><h3>رصيد الشبكات</h3><p class="note">زين وسوداني وأريبا</p></div>
+  <div class="card"><div class="icon">🎮</div><h3>شحن الألعاب</h3><p class="note">خدمات الألعاب الرقمية</p></div>
+  <div class="card"><div class="icon">💎</div><h3>الجواهر والعملات</h3><p class="note">خدمات رقمية متنوعة</p></div>
+  <div class="card"><div class="icon">🔄</div><h3>التحويلات</h3><p class="note">خدمات ماي كاشي</p></div>
+  <div class="card"><div class="icon">🪙</div><h3>شراء USDT</h3><p class="note">طلبات العملات الرقمية</p></div>
+  <div class="card"><div class="icon">🎯</div><h3>حسابات الألعاب</h3><p class="note">حسابات للبيع والشراء</p></div>
+  <div class="card"><div class="icon">🛟</div><h3>خدمة العملاء</h3><p class="note">نحن هنا لمساعدتك</p></div>
+ </div>
+ <p id="message"></p>
+</main>
+
+<div class="modal" id="loginModal">
+ <div class="box">
+  <button class="close" onclick="closeLogin()">إغلاق</button>
+  <h2 style="color:#e5bd67">حساب أمانة ستور</h2>
+  <input id="email" type="email" placeholder="البريد الإلكتروني">
+  <input id="password" type="password" placeholder="كلمة المرور">
+  <button onclick="signIn()">تسجيل الدخول</button>
+  <button class="secondary" onclick="signUp()">إنشاء حساب جديد</button>
+  <p id="authMessage"></p>
+ </div>
+</div>
+
+<footer>
+ AMANA STORE | أمانة ستور
+ <p>ثقتك أمانة.. وخدماتك علينا.</p>
+ <small>إدارة المتجر وخدمة العملاء</small>
+</footer>
+
+<script>
+const SUPABASE_URL = "https://zlwagyhhjzrggjlqigpz.supabase.co";
+const SUPABASE_KEY = "sb_publishable_2Yr1cVB2vclDkytSegjDhg_wtwSKvX2";
+
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+function openLogin(){
+ document.getElementById("loginModal").style.display="flex";
+}
+function closeLogin(){
+ document.getElementById("loginModal").style.display="none";
+}
+async function signUp(){
+ const email=document.getElementById("email").value.trim();
+ const password=document.getElementById("password").value;
+ const msg=document.getElementById("authMessage");
+ if(!email||password.length<6){
+  msg.textContent="أدخل البريد وكلمة مرور من 6 أحرف على الأقل";
+  return;
+ }
+ msg.textContent="جارٍ إنشاء الحساب...";
+ const {error}=await db.auth.signUp({email,password});
+ msg.textContent=error?error.message:"تم إرسال طلب إنشاء الحساب. تحقق من بريدك الإلكتروني.";
+}
+async function signIn(){
+ const email=document.getElementById("email").value.trim();
+ const password=document.getElementById("password").value;
+ const msg=document.getElementById("authMessage");
+ msg.textContent="جارٍ تسجيل الدخول...";
+ const {error}=await db.auth.signInWithPassword({email,password});
+ msg.textContent=error?error.message:"تم تسجيل الدخول بنجاح.";
+}
+</script>
+</body>
+  </html>
