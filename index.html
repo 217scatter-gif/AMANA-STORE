@@ -5,19 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#c69b35">
 <title>AMANA STORE | أمانة ستور</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 :root{
-  --gold:#c69b35;
-  --gold2:#f0d58b;
-  --ink:#171717;
-  --muted:#777;
-  --line:#e9e9e9;
-  --bg:#f7f7f7;
-  --white:#fff;
-  --shadow:0 5px 18px #0000000c;
+  --gold:#c69b35;--gold2:#f0d58b;--ink:#171717;
+  --muted:#777;--line:#e9e9e9;--bg:#f7f7f7;
+  --white:#fff;--shadow:0 5px 18px #0000000c;
 }
 *{box-sizing:border-box}
 body{
@@ -184,6 +178,7 @@ textarea.field{min-height:90px;resize:vertical}
   display:inline-block;padding:4px 9px;border-radius:20px;
   background:#e8f6eb;color:#23733a;font-size:11px;margin-top:5px;
 }
+.status-off{background:#fdeaea;color:#a32626}
 @media(min-width:700px){
   .category-grid{grid-template-columns:repeat(3,1fr)}
   .product-grid{grid-template-columns:repeat(4,1fr)}
@@ -202,12 +197,10 @@ button:disabled{opacity:.65;cursor:not-allowed}
     <button class="icon-btn" onclick="openAuth()" aria-label="حسابي">♙</button>
     <button class="icon-btn" onclick="searchProducts()" aria-label="بحث">⌕</button>
   </div>
-
   <div class="brand">
     <div class="brand-mark">أ</div>
     <div>AMANA STORE<small>أمانة ستور</small></div>
   </div>
-
   <button class="icon-btn" onclick="toggleMenu()" aria-label="القائمة">☰</button>
 </header>
 
@@ -299,17 +292,15 @@ button:disabled{opacity:.65;cursor:not-allowed}
   <div class="page-title">لوحة تحكم المدير</div>
 
   <div class="notice">
-    يمكنك من هنا إدارة أقسام المتجر ومنتجاته وإعدادات العرض.
-    التغييرات تحفظ مباشرة في قاعدة البيانات.
+    إدارة الأقسام والمنتجات وإعدادات المتجر. التغييرات تحفظ مباشرة في قاعدة البيانات.
   </div>
 
   <div class="admin-tabs">
-    <button class="secondary" onclick="showAdminTab('categoriesTab',this)">الأقسام</button>
-    <button class="secondary" onclick="showAdminTab('productsTab',this)">المنتجات</button>
-    <button class="secondary" onclick="showAdminTab('settingsTab',this)">إعدادات المتجر</button>
+    <button class="secondary" onclick="showAdminTab('categoriesTab')">الأقسام</button>
+    <button class="secondary" onclick="showAdminTab('productsTab')">المنتجات</button>
+    <button class="secondary" onclick="showAdminTab('settingsTab')">إعدادات المتجر</button>
   </div>
 
-  <!-- إدارة الأقسام -->
   <div id="categoriesTab" class="admin-section active">
     <div class="panel">
       <h3 id="categoryFormTitle">إضافة قسم جديد</h3>
@@ -326,14 +317,11 @@ button:disabled{opacity:.65;cursor:not-allowed}
     </div>
 
     <div class="panel">
-      <h3>الأقسام الموجودة</h3>
-      <div id="adminCategoriesList">
-        <div class="empty">جاري التحميل...</div>
-      </div>
+      <h3>جميع الأقسام</h3>
+      <div id="adminCategoriesList"><div class="empty">جاري التحميل...</div></div>
     </div>
   </div>
 
-  <!-- إدارة المنتجات -->
   <div id="productsTab" class="admin-section">
     <div class="panel">
       <h3 id="productFormTitle">إضافة منتج جديد</h3>
@@ -361,14 +349,11 @@ button:disabled{opacity:.65;cursor:not-allowed}
     </div>
 
     <div class="panel">
-      <h3>المنتجات الموجودة</h3>
-      <div id="adminProductsList">
-        <div class="empty">جاري التحميل...</div>
-      </div>
+      <h3>جميع المنتجات</h3>
+      <div id="adminProductsList"><div class="empty">جاري التحميل...</div></div>
     </div>
   </div>
 
-  <!-- إعدادات المتجر -->
   <div id="settingsTab" class="admin-section">
     <div class="panel">
       <h3>إعدادات المتجر</h3>
@@ -418,32 +403,26 @@ button:disabled{opacity:.65;cursor:not-allowed}
 
 <a id="whatsappFloat" class="whatsapp" href="#" onclick="contactSupport();return false;" aria-label="واتساب">☏</a>
 
-<!-- نافذة تسجيل الدخول -->
 <div id="authModal" class="modal">
   <div class="modal-box">
     <div class="modal-head">
       <h3 id="authTitle">تسجيل الدخول</h3>
       <button class="close" onclick="closeModal('authModal')">×</button>
     </div>
-
     <div id="authForms">
       <input id="authName" class="field" placeholder="الاسم الكامل" style="display:none">
       <input id="authEmail" class="field" type="email" placeholder="البريد الإلكتروني">
       <input id="authPassword" class="field" type="password" placeholder="كلمة المرور">
-
       <button class="primary" id="authSubmit" onclick="submitAuth()">تسجيل الدخول</button>
-
       <p class="muted" style="text-align:center">
         <span id="authSwitchText">ليس لديك حساب؟</span>
         <button class="secondary" id="authSwitch" onclick="switchAuth()">إنشاء حساب جديد</button>
       </p>
     </div>
-
     <div class="notice">استخدم بريداً إلكترونياً صحيحاً وكلمة مرور قوية.</div>
   </div>
 </div>
 
-<!-- تفاصيل المنتج -->
 <div id="productModal" class="modal">
   <div class="modal-box">
     <div class="modal-head">
@@ -454,14 +433,12 @@ button:disabled{opacity:.65;cursor:not-allowed}
   </div>
 </div>
 
-<!-- القائمة -->
 <div id="menuModal" class="modal">
   <div class="modal-box">
     <div class="modal-head">
       <h3>القائمة</h3>
       <button class="close" onclick="closeModal('menuModal')">×</button>
     </div>
-
     <button class="secondary field" onclick="closeModal('menuModal');showPage('home')">الرئيسية</button>
     <button class="secondary field" onclick="closeModal('menuModal');showPage('shop')">المتجر</button>
     <button class="secondary field" onclick="closeModal('menuModal');showPage('wallet')">محفظتي</button>
@@ -480,6 +457,11 @@ const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
 let categories = [];
 let products = [];
+
+// القوائم الكاملة للمدير، وتشمل العناصر المتوقفة
+let allCategories = [];
+let allProducts = [];
+
 let settings = {};
 let currentUser = null;
 let authMode = "login";
@@ -606,7 +588,7 @@ async function submitAuth(){
   }
 }
 
-// فحص صلاحية المدير من قاعدة البيانات
+// التحقق من صلاحية المدير
 async function checkAdmin(){
   isAdmin=false;
 
@@ -617,7 +599,6 @@ async function checkAdmin(){
 
   try{
     const {data,error}=await db.rpc("is_store_admin");
-
     if(error) throw error;
 
     isAdmin=data===true;
@@ -649,7 +630,6 @@ async function openAdmin(){
   }
 
   showPage("admin");
-  loadAdminData();
 }
 
 async function loadUserData(){
@@ -685,24 +665,14 @@ async function loadUserData(){
     const displayName=
       profile?.full_name || user.user_metadata?.full_name || user.email;
 
+    await checkAdmin();
+
     panel.innerHTML=
       '<h3>مرحباً، '+safeText(displayName)+'</h3>'+
       '<p class="muted">البريد: '+safeText(user.email)+'</p>'+
       '<p class="muted">رقم العضوية: '+safeText(profile?.member_id || "سيظهر بعد إنشاء ملفك")+'</p>'+
-      (isAdmin?'<button class="primary" onclick="openAdmin()">دخول لوحة تحكم المدير</button>':'')+
-      '<button class="secondary" style="width:100%;margin-top:10px" onclick="signOut()">تسجيل الخروج</button>';
-
-    await checkAdmin();
-
-    if(isAdmin && !panel.querySelector("#adminAccess")){
-      const btn=document.createElement("button");
-      btn.className="primary";
-      btn.id="adminAccess";
-      btn.style.marginBottom="10px";
-      btn.textContent="دخول لوحة تحكم المدير";
-      btn.onclick=openAdmin;
-      panel.insertBefore(btn,panel.lastElementChild);
-    }
+      (isAdmin?'<button class="primary" style="margin-bottom:10px" onclick="openAdmin()">دخول لوحة تحكم المدير</button>':'')+
+      '<button class="secondary" style="width:100%" onclick="signOut()">تسجيل الخروج</button>';
 
   }catch(error){
     console.error("خطأ تحميل بيانات العميل:",error);
@@ -717,45 +687,42 @@ async function signOut(){
   alert("تم تسجيل الخروج.");
 }
 
-// تحميل بيانات المتجر
+// تحميل بيانات المتجر العامة
 async function loadStore(){
-  const {data:cats,error:catErr}=await db
-    .from("categories")
-    .select("id,name,image_url,is_active")
-    .eq("is_active",true);
+  const [catResult,prodResult,settingsResult]=await Promise.all([
+    db.from("categories")
+      .select("id,name,image_url,is_active")
+      .eq("is_active",true),
 
-  const {data:prods,error:prodErr}=await db
-    .from("products")
-    .select("id,category_id,name,description,image_url,price,is_active")
-    .eq("is_active",true);
+    db.from("products")
+      .select("id,category_id,name,description,image_url,price,is_active")
+      .eq("is_active",true),
 
-  const {data:setts,error:settErr}=await db
-    .from("store_settings")
-    .select("*")
-    .limit(1)
-    .maybeSingle();
+    db.from("store_settings")
+      .select("*")
+      .limit(1)
+      .maybeSingle()
+  ]);
 
-  if(catErr){
-    console.error("خطأ تحميل الأقسام:",catErr);
+  if(catResult.error){
+    console.error("خطأ تحميل الأقسام:",catResult.error);
     categories=[];
-    document.getElementById("homeCategories").innerHTML=
-      '<div class="empty">تعذر تحميل الأقسام. تحقق من صلاحيات القراءة.</div>';
   }else{
-    categories=cats||[];
+    categories=catResult.data||[];
   }
 
-  if(prodErr){
-    console.error("خطأ تحميل المنتجات:",prodErr);
+  if(prodResult.error){
+    console.error("خطأ تحميل المنتجات:",prodResult.error);
     products=[];
-    document.getElementById("featuredProducts").innerHTML=
-      '<div class="empty">تعذر تحميل المنتجات حالياً.</div>';
   }else{
-    products=prods||[];
+    products=prodResult.data||[];
   }
 
-  settings=setts||{};
+  settings=settingsResult.data||{};
 
-  if(settErr) console.warn("إعدادات المتجر:",settErr.message);
+  if(settingsResult.error){
+    console.warn("إعدادات المتجر:",settingsResult.error.message);
+  }
 
   document.title=(settings.store_name||"AMANA STORE")+" | أمانة ستور";
 
@@ -779,6 +746,23 @@ async function loadStore(){
   renderCategories();
   renderProducts();
   renderShop();
+}
+
+// تحميل كل العناصر للمدير، بما فيها المتوقفة
+async function loadAllAdminItems(){
+  const [catResult,prodResult]=await Promise.all([
+    db.from("categories")
+      .select("id,name,image_url,is_active"),
+
+    db.from("products")
+      .select("id,category_id,name,description,image_url,price,is_active")
+  ]);
+
+  if(catResult.error) throw catResult.error;
+  if(prodResult.error) throw prodResult.error;
+
+  allCategories=catResult.data||[];
+  allProducts=prodResult.data||[];
 }
 
 // عرض الأقسام للعملاء
@@ -885,15 +869,11 @@ function contactSupport(message){
   }
 
   const text=encodeURIComponent(message||"السلام عليكم، أحتاج مساعدة من خدمة عملاء أمانة ستور.");
-
   window.open("https://wa.me/"+number+"?text="+text,"_blank");
 }
 
-// ================================
-// وظائف لوحة تحكم المدير
-// ================================
-
-function showAdminTab(tabId,button){
+// لوحة المدير
+function showAdminTab(tabId){
   document.querySelectorAll(".admin-section").forEach(s=>s.classList.remove("active"));
   document.getElementById(tabId).classList.add("active");
 }
@@ -901,55 +881,66 @@ function showAdminTab(tabId,button){
 async function loadAdminData(){
   if(!isAdmin) return;
 
-  await loadStore();
+  try{
+    await loadStore();
+    await loadAllAdminItems();
 
-  renderAdminCategories();
-  renderAdminProducts();
-  fillAdminCategorySelect();
-  fillSettingsForm();
+    renderAdminCategories();
+    renderAdminProducts();
+    fillAdminCategorySelect();
+    fillSettingsForm();
+
+  }catch(error){
+    console.error(error);
+    alert("تعذر تحميل بيانات لوحة الإدارة: "+error.message);
+  }
 }
 
-// تعبئة قائمة الأقسام داخل نموذج المنتج
 function fillAdminCategorySelect(){
   const select=document.getElementById("adminProductCategory");
   const current=select.value;
 
   select.innerHTML='<option value="">اختر القسم</option>'+
-    categories.map(c=>
-      '<option value="'+safeText(c.id)+'">'+safeText(c.name)+'</option>'
+    allCategories.map(c=>
+      '<option value="'+safeText(c.id)+'">'+
+      safeText(c.name)+(c.is_active===false?" (متوقف)":"")+
+      '</option>'
     ).join("");
 
   if(current) select.value=current;
 }
 
-// عرض الأقسام في لوحة الإدارة
+// عرض جميع الأقسام للمدير
 function renderAdminCategories(){
   const target=document.getElementById("adminCategoriesList");
 
-  if(!categories.length){
+  if(!allCategories.length){
     target.innerHTML='<div class="empty">لا توجد أقسام حتى الآن.</div>';
     return;
   }
 
-  target.innerHTML=categories.map(c=>
+  target.innerHTML=allCategories.map(c=>
     '<div class="admin-item">'+
       '<div class="admin-item-row">'+
         '<img src="'+safeText(c.image_url||"https://placehold.co/100x100")+'">'+
         '<div class="admin-item-info">'+
           '<strong>'+safeText(c.name)+'</strong>'+
-          '<span class="status-badge">قسم نشط</span>'+
+          (c.is_active
+            ?'<span class="status-badge">قسم نشط</span>'
+            :'<span class="status-badge status-off">قسم متوقف</span>')+
         '</div>'+
       '</div>'+
       '<div class="admin-actions">'+
         '<button class="secondary small-btn" onclick="editCategory(\''+safeText(c.id)+'\')">تعديل</button>'+
-        '<button class="secondary small-btn" onclick="toggleCategory(\''+safeText(c.id)+'\',false)">إيقاف</button>'+
+        '<button class="secondary small-btn" onclick="toggleCategory(\''+safeText(c.id)+'\','+(c.is_active?'false':'true')+')">'+
+          (c.is_active?'إيقاف':'تفعيل')+
+        '</button>'+
         '<button class="danger small-btn" onclick="deleteCategory(\''+safeText(c.id)+'\')">حذف</button>'+
       '</div>'+
     '</div>'
   ).join("");
 }
 
-// إضافة أو تعديل قسم
 async function saveCategory(){
   if(!isAdmin) return alert("ليس لديك صلاحية.");
 
@@ -972,6 +963,8 @@ async function saveCategory(){
     let result;
 
     if(id){
+      // لا نعيد تفعيل القسم تلقائياً عند تعديله
+      delete payload.is_active;
       result=await db.from("categories").update(payload).eq("id",id);
     }else{
       result=await db.from("categories").insert(payload);
@@ -980,7 +973,6 @@ async function saveCategory(){
     if(result.error) throw result.error;
 
     alert(id?"تم تعديل القسم بنجاح.":"تمت إضافة القسم بنجاح.");
-
     resetCategoryForm();
     await loadAdminData();
 
@@ -990,7 +982,7 @@ async function saveCategory(){
 }
 
 function editCategory(id){
-  const c=categories.find(x=>String(x.id)===String(id));
+  const c=allCategories.find(x=>String(x.id)===String(id));
   if(!c) return;
 
   document.getElementById("editCategoryId").value=c.id;
@@ -1017,7 +1009,9 @@ async function toggleCategory(id,active){
 
     if(error) throw error;
 
+    alert(active?"تم تفعيل القسم.":"تم إيقاف القسم.");
     await loadAdminData();
+
   }catch(error){
     alert("تعذر تغيير حالة القسم: "+error.message);
   }
@@ -1026,11 +1020,10 @@ async function toggleCategory(id,active){
 async function deleteCategory(id){
   if(!isAdmin) return;
 
-  if(!confirm("هل أنت متأكد من حذف هذا القسم؟")) return;
+  if(!confirm("هل أنت متأكد من حذف هذا القسم؟ قد يكون مرتبطاً بمنتجات.")) return;
 
   try{
     const {error}=await db.from("categories").delete().eq("id",id);
-
     if(error) throw error;
 
     alert("تم حذف القسم.");
@@ -1041,17 +1034,17 @@ async function deleteCategory(id){
   }
 }
 
-// عرض المنتجات في لوحة الإدارة
+// عرض جميع المنتجات للمدير
 function renderAdminProducts(){
   const target=document.getElementById("adminProductsList");
 
-  if(!products.length){
+  if(!allProducts.length){
     target.innerHTML='<div class="empty">لا توجد منتجات حتى الآن.</div>';
     return;
   }
 
-  target.innerHTML=products.map(p=>{
-    const category=categories.find(c=>String(c.id)===String(p.category_id));
+  target.innerHTML=allProducts.map(p=>{
+    const category=allCategories.find(c=>String(c.id)===String(p.category_id));
 
     return '<div class="admin-item">'+
       '<div class="admin-item-row">'+
@@ -1059,19 +1052,23 @@ function renderAdminProducts(){
         '<div class="admin-item-info">'+
           '<strong>'+safeText(p.name)+'</strong>'+
           '<div class="price">'+money(p.price)+'</div>'+
-          '<small class="muted">'+safeText(category?.name||"بدون قسم")+'</small>'+
+          '<small class="muted">'+safeText(category?.name||"بدون قسم")+'</small><br>'+
+          (p.is_active
+            ?'<span class="status-badge">منتج نشط</span>'
+            :'<span class="status-badge status-off">منتج متوقف</span>')+
         '</div>'+
       '</div>'+
       '<div class="admin-actions">'+
         '<button class="secondary small-btn" onclick="editProduct(\''+safeText(p.id)+'\')">تعديل</button>'+
-        '<button class="secondary small-btn" onclick="toggleProduct(\''+safeText(p.id)+'\',false)">إيقاف</button>'+
+        '<button class="secondary small-btn" onclick="toggleProduct(\''+safeText(p.id)+'\','+(p.is_active?'false':'true')+')">'+
+          (p.is_active?'إيقاف':'تفعيل')+
+        '</button>'+
         '<button class="danger small-btn" onclick="deleteProduct(\''+safeText(p.id)+'\')">حذف</button>'+
       '</div>'+
     '</div>';
   }).join("");
 }
 
-// إضافة أو تعديل منتج
 async function saveProduct(){
   if(!isAdmin) return alert("ليس لديك صلاحية.");
 
@@ -1110,6 +1107,8 @@ async function saveProduct(){
     let result;
 
     if(id){
+      // لا نعيد تفعيل المنتج تلقائياً عند تعديله
+      delete payload.is_active;
       result=await db.from("products").update(payload).eq("id",id);
     }else{
       result=await db.from("products").insert(payload);
@@ -1118,7 +1117,6 @@ async function saveProduct(){
     if(result.error) throw result.error;
 
     alert(id?"تم تعديل المنتج بنجاح.":"تمت إضافة المنتج بنجاح.");
-
     resetProductForm();
     await loadAdminData();
 
@@ -1128,7 +1126,7 @@ async function saveProduct(){
 }
 
 function editProduct(id){
-  const p=products.find(x=>String(x.id)===String(id));
+  const p=allProducts.find(x=>String(x.id)===String(id));
   if(!p) return;
 
   document.getElementById("editProductId").value=p.id;
@@ -1162,6 +1160,7 @@ async function toggleProduct(id,active){
 
     if(error) throw error;
 
+    alert(active?"تم تفعيل المنتج.":"تم إيقاف المنتج.");
     await loadAdminData();
 
   }catch(error){
@@ -1176,7 +1175,6 @@ async function deleteProduct(id){
 
   try{
     const {error}=await db.from("products").delete().eq("id",id);
-
     if(error) throw error;
 
     alert("تم حذف المنتج.");
@@ -1206,7 +1204,6 @@ async function saveSettings(){
   if(!isAdmin) return alert("ليس لديك صلاحية.");
 
   let paymentAccounts={};
-
   const paymentText=document.getElementById("settingPayments").value.trim();
 
   if(paymentText){
@@ -1279,4 +1276,4 @@ startStore().catch(error=>{
 </script>
 
 </body>
-  </html>
+      </html>
