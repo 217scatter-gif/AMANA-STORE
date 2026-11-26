@@ -19,439 +19,171 @@
   --white:#fff;
   --shadow:0 5px 18px #0000000c;
 }
-
 *{box-sizing:border-box}
-
 body{
-  margin:0;
-  background:var(--bg);
-  color:var(--ink);
-  font-family:Tahoma,Arial,sans-serif;
-  padding-bottom:86px;
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:Tahoma,Arial,sans-serif;padding-bottom:86px;
 }
-
-button,input,select{font:inherit}
+button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-
 .topbar{
-  height:76px;
-  background:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 15px;
-  border-bottom:1px solid var(--line);
-  position:sticky;
-  top:0;
-  z-index:20;
+  height:76px;background:#fff;display:flex;align-items:center;
+  justify-content:space-between;padding:0 15px;
+  border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;
 }
-
 .top-actions{display:flex;gap:9px}
-
 .icon-btn{
-  width:43px;
-  height:43px;
-  border:0;
-  border-radius:13px;
-  background:var(--gold);
-  color:#171717;
-  font-size:21px;
+  width:43px;height:43px;border:0;border-radius:13px;
+  background:var(--gold);color:#171717;font-size:21px;
 }
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-weight:900;
-  font-size:23px;
-  letter-spacing:.2px;
-}
-
+.brand{display:flex;align-items:center;gap:8px;font-weight:900;font-size:23px}
 .brand-mark{
-  width:36px;
-  height:36px;
-  border-radius:11px;
-  background:var(--ink);
-  color:var(--gold2);
-  display:grid;
-  place-items:center;
-  font-size:21px;
-  overflow:hidden;
+  width:36px;height:36px;border-radius:11px;background:var(--ink);
+  color:var(--gold2);display:grid;place-items:center;font-size:21px;overflow:hidden;
 }
-
 .brand small{
-  display:block;
-  font-size:11px;
-  color:#777;
-  font-weight:600;
-  text-align:right;
-  margin-top:2px;
+  display:block;font-size:11px;color:#777;font-weight:600;
+  text-align:right;margin-top:2px;
 }
-
-.page{
-  display:none;
-  max-width:1050px;
-  margin:auto;
-  padding:15px;
-}
-
+.page{display:none;max-width:1050px;margin:auto;padding:15px}
 .page.active{display:block}
-
 .hero{
-  height:190px;
-  border-radius:23px;
+  height:190px;border-radius:23px;
   background:linear-gradient(120deg,#171717,#383027 60%,#b18a35);
-  color:#fff;
-  padding:25px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  overflow:hidden;
-  position:relative;
-  margin:10px 0 28px;
+  color:#fff;padding:25px;display:flex;flex-direction:column;
+  justify-content:center;overflow:hidden;position:relative;margin:10px 0 28px;
 }
-
 .hero:after{
-  content:"✦";
-  position:absolute;
-  left:22px;
-  top:10px;
-  font-size:130px;
-  color:#ffffff12;
+  content:"✦";position:absolute;left:22px;top:10px;
+  font-size:130px;color:#ffffff12;
 }
-
-.hero .eyebrow{
-  color:var(--gold2);
-  font-size:13px;
-  margin-bottom:10px;
-}
-
-.hero h1{
-  font-size:25px;
-  margin:0 0 10px;
-  max-width:75%;
-  line-height:1.5;
-}
-
-.hero p{
-  margin:0;
-  color:#e6e2d8;
-  font-size:14px;
-}
-
+.hero .eyebrow{color:var(--gold2);font-size:13px;margin-bottom:10px}
+.hero h1{font-size:25px;margin:0 0 10px;max-width:75%;line-height:1.5}
+.hero p{margin:0;color:#e6e2d8;font-size:14px}
 .section-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+  display:flex;align-items:center;justify-content:space-between;
   margin:27px 2px 14px;
 }
-
-.section-head h2{
-  font-size:20px;
-  margin:0;
-}
-
+.section-head h2{font-size:20px;margin:0}
 .section-head h2:after{
-  content:"";
-  display:block;
-  width:48px;
-  height:3px;
-  background:var(--gold);
-  margin-top:7px;
-  border-radius:5px;
+  content:"";display:block;width:48px;height:3px;
+  background:var(--gold);margin-top:7px;border-radius:5px;
 }
-
 .text-btn{
-  border:1px solid var(--gold);
-  color:#171717;
-  background:var(--gold);
-  border-radius:30px;
-  padding:9px 15px;
-  font-weight:bold;
+  border:1px solid var(--gold);color:#171717;background:var(--gold);
+  border-radius:30px;padding:9px 15px;font-weight:bold;
 }
-
 .category-grid,.product-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:13px;
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;
 }
-
 .category-card,.product-card{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:17px;
-  overflow:hidden;
-  box-shadow:var(--shadow);
-  text-align:right;
+  background:#fff;border:1px solid var(--line);border-radius:17px;
+  overflow:hidden;box-shadow:var(--shadow);text-align:right;
 }
-
 .category-card{
-  padding:15px;
-  min-height:110px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  width:100%;
-  color:var(--ink);
+  padding:15px;min-height:110px;display:flex;align-items:center;
+  gap:12px;width:100%;color:var(--ink);
 }
-
 .category-icon{
-  width:52px;
-  height:52px;
-  border-radius:15px;
-  background:#fff7e4;
-  display:grid;
-  place-items:center;
-  font-size:25px;
-  flex-shrink:0;
-  overflow:hidden;
+  width:52px;height:52px;border-radius:15px;background:#fff7e4;
+  display:grid;place-items:center;font-size:25px;flex-shrink:0;overflow:hidden;
 }
-
-.category-card strong{
-  display:block;
-  font-size:15px;
-}
-
-.category-card small{
-  display:block;
-  color:var(--muted);
-  margin-top:7px;
-  font-size:12px;
-}
-
+.category-card strong{display:block;font-size:15px}
+.category-card small{display:block;color:var(--muted);margin-top:7px;font-size:12px}
 .product-card{cursor:pointer}
-
 .product-card img{
-  width:100%;
-  height:178px;
-  object-fit:cover;
-  display:block;
-  background:#eee;
+  width:100%;height:178px;object-fit:cover;display:block;background:#eee;
 }
-
 .product-info{padding:12px}
-
-.product-info strong{
-  display:block;
-  font-size:14px;
-  line-height:1.5;
-  min-height:40px;
-}
-
-.price{
-  color:#98701d;
-  font-weight:bold;
-  margin-top:8px;
-  font-size:14px;
-}
-
+.product-info strong{display:block;font-size:14px;line-height:1.5;min-height:40px}
+.price{color:#98701d;font-weight:bold;margin-top:8px;font-size:14px}
 .empty{
-  background:#fff;
-  border:1px dashed #d8c18b;
-  border-radius:15px;
-  padding:25px;
-  text-align:center;
-  color:#777;
-  grid-column:1/-1;
-  line-height:1.8;
+  background:#fff;border:1px dashed #d8c18b;border-radius:15px;
+  padding:25px;text-align:center;color:#777;grid-column:1/-1;line-height:1.8;
 }
-
 .page-title{
-  background:#191919;
-  color:#fff;
-  padding:24px;
-  border-radius:18px;
-  text-align:center;
-  font-size:22px;
-  font-weight:bold;
-  margin:8px 0 18px;
+  background:#191919;color:#fff;padding:24px;border-radius:18px;
+  text-align:center;font-size:22px;font-weight:bold;margin:8px 0 18px;
 }
-
 .panel{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:17px;
-  padding:18px;
-  margin:14px 0;
-  box-shadow:var(--shadow);
+  background:#fff;border:1px solid var(--line);border-radius:17px;
+  padding:18px;margin:14px 0;box-shadow:var(--shadow);
 }
-
 .panel h3{margin:0 0 14px}
-
 .field{
-  width:100%;
-  padding:13px;
-  border:1px solid #ddd;
-  border-radius:12px;
-  margin:7px 0 12px;
-  background:#fff;
-  outline:none;
+  width:100%;padding:13px;border:1px solid #ddd;border-radius:12px;
+  margin:7px 0 12px;background:#fff;outline:none;
 }
-
 .field:focus{border-color:var(--gold)}
-
-.primary{
-  border:1px solid var(--gold);
-  background:var(--gold);
-  color:#171717;
-  border-radius:12px;
-  padding:13px 18px;
-  font-weight:bold;
-  width:100%;
+textarea.field{min-height:90px;resize:vertical}
+.primary,.secondary{
+  border:1px solid var(--gold);background:var(--gold);color:#171717;
+  border-radius:12px;padding:13px 18px;font-weight:bold;
 }
-
-.primary span{color:#171717}
-
-.secondary{
-  border:1px solid var(--gold);
-  background:var(--gold);
-  color:#171717;
-  border-radius:12px;
-  padding:11px 15px;
-  font-weight:bold;
+.primary{width:100%}
+.secondary{padding:11px 15px}
+.danger{
+  border:1px solid #c62828;background:#c62828;color:#fff;
+  border-radius:10px;padding:10px 13px;font-weight:bold;
 }
-
-.muted{
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.8;
-}
-
-.balance{
-  font-size:30px;
-  color:#98701d;
-  font-weight:bold;
-}
-
+.small-btn{padding:8px 12px;font-size:12px}
+.muted{color:var(--muted);font-size:13px;line-height:1.8}
+.balance{font-size:30px;color:#98701d;font-weight:bold}
 .bottom-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  height:72px;
-  background:#fff;
-  border-top:1px solid #ddd;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  z-index:30;
-  padding-bottom:env(safe-area-inset-bottom);
+  position:fixed;bottom:0;left:0;right:0;height:72px;background:#fff;
+  border-top:1px solid #ddd;display:flex;justify-content:space-around;
+  align-items:center;z-index:30;padding-bottom:env(safe-area-inset-bottom);
 }
-
 .nav-item{
-  border:0;
-  background:none;
-  color:#777;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:4px;
-  font-size:11px;
-  min-width:58px;
+  border:0;background:none;color:#777;display:flex;flex-direction:column;
+  align-items:center;gap:4px;font-size:11px;min-width:58px;
 }
-
-.nav-item b{
-  font-size:22px;
-  font-weight:normal;
-}
-
-.nav-item.active{
-  color:#a77b20;
-  font-weight:bold;
-}
-
+.nav-item b{font-size:22px;font-weight:normal}
+.nav-item.active{color:#a77b20;font-weight:bold}
 .whatsapp{
-  position:fixed;
-  bottom:88px;
-  left:17px;
-  width:55px;
-  height:55px;
-  border-radius:50%;
-  background:#20c86b;
-  color:white;
-  text-decoration:none;
-  display:grid;
-  place-items:center;
-  font-size:27px;
-  box-shadow:0 5px 15px #0002;
-  z-index:25;
+  position:fixed;bottom:88px;left:17px;width:55px;height:55px;
+  border-radius:50%;background:#20c86b;color:white;text-decoration:none;
+  display:grid;place-items:center;font-size:27px;box-shadow:0 5px 15px #0002;z-index:25;
 }
-
 .modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:#0008;
-  z-index:50;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
+  display:none;position:fixed;inset:0;background:#0008;z-index:50;
+  align-items:center;justify-content:center;padding:18px;
 }
-
 .modal.show{display:flex}
-
 .modal-box{
-  background:#fff;
-  border-radius:18px;
-  padding:20px;
-  width:100%;
-  max-width:440px;
-  max-height:85vh;
-  overflow:auto;
+  background:#fff;border-radius:18px;padding:20px;width:100%;
+  max-width:480px;max-height:88vh;overflow:auto;
 }
-
-.modal-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:12px;
-}
-
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
 .close{
-  border:1px solid var(--gold);
-  background:var(--gold);
-  color:#171717;
-  border-radius:10px;
-  width:35px;
-  height:35px;
-  font-size:20px;
+  border:1px solid var(--gold);background:var(--gold);color:#171717;
+  border-radius:10px;width:35px;height:35px;font-size:20px;
 }
-
 .notice{
-  padding:12px;
-  background:#fff8e8;
-  border:1px solid #f0dfb5;
-  color:#77591c;
-  border-radius:12px;
-  font-size:13px;
-  line-height:1.7;
-  margin:12px 0;
+  padding:12px;background:#fff8e8;border:1px solid #f0dfb5;
+  color:#77591c;border-radius:12px;font-size:13px;line-height:1.7;margin:12px 0;
 }
-
-.footer{
-  text-align:center;
-  color:#888;
-  font-size:12px;
-  padding:30px 10px;
+.footer{text-align:center;color:#888;font-size:12px;padding:30px 10px}
+.admin-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
+.admin-tabs button{flex:1;min-width:100px}
+.admin-item{
+  border:1px solid #eee;border-radius:13px;padding:12px;
+  margin:10px 0;background:#fff;
 }
-
-/* توحيد لون الأزرار */
-button.primary,
-button.secondary,
-button.text-btn,
-button.icon-btn,
-button.close,
-.menu-button{
-  background:var(--gold);
-  color:#171717;
-  border-color:var(--gold);
+.admin-item-row{display:flex;align-items:center;gap:12px}
+.admin-item img{
+  width:65px;height:65px;object-fit:cover;border-radius:10px;background:#eee;
 }
-
-button:disabled{
-  opacity:.65;
-  cursor:not-allowed;
+.admin-item-info{flex:1;min-width:0}
+.admin-item-info strong{display:block;line-height:1.6}
+.admin-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.admin-actions button{flex:1}
+.admin-section{display:none}
+.admin-section.active{display:block}
+.status-badge{
+  display:inline-block;padding:4px 9px;border-radius:20px;
+  background:#e8f6eb;color:#23733a;font-size:11px;margin-top:5px;
 }
-
 @media(min-width:700px){
   .category-grid{grid-template-columns:repeat(3,1fr)}
   .product-grid{grid-template-columns:repeat(4,1fr)}
@@ -459,6 +191,7 @@ button:disabled{
   .hero{height:240px}
   .hero h1{font-size:32px}
 }
+button:disabled{opacity:.65;cursor:not-allowed}
 </style>
 </head>
 
@@ -481,7 +214,6 @@ button:disabled{
 <main>
 
 <section id="home" class="page active">
-
   <div class="hero">
     <div class="eyebrow">AMANA STORE · أمانة ستور</div>
     <h1>ثقتك أمانة.. وخدماتك علينا.</h1>
@@ -492,7 +224,6 @@ button:disabled{
     <h2>تسوق حسب القسم</h2>
     <button class="text-btn" onclick="showPage('shop')">عرض الكل ‹</button>
   </div>
-
   <div id="homeCategories" class="category-grid">
     <div class="empty">جاري تحميل الأقسام...</div>
   </div>
@@ -501,7 +232,6 @@ button:disabled{
     <h2>الأكثر طلباً</h2>
     <button class="text-btn" onclick="showPage('shop')">عرض الكل ‹</button>
   </div>
-
   <div id="featuredProducts" class="product-grid">
     <div class="empty">جاري تحميل المنتجات...</div>
   </div>
@@ -513,19 +243,13 @@ button:disabled{
 
 <section id="shop" class="page">
   <div class="page-title">المتجر</div>
-
   <div class="panel">
-    <input id="shopSearch" class="field"
-      placeholder="ابحث عن منتج..."
-      oninput="renderShop()">
-
+    <input id="shopSearch" class="field" placeholder="ابحث عن منتج..." oninput="renderShop()">
     <select id="categoryFilter" class="field" onchange="renderShop()">
       <option value="">كل الأقسام</option>
     </select>
-
     <div class="muted" id="productCount"></div>
   </div>
-
   <div id="shopProducts" class="product-grid">
     <div class="empty">جاري تحميل المنتجات...</div>
   </div>
@@ -533,123 +257,193 @@ button:disabled{
 
 <section id="wallet" class="page">
   <div class="page-title">محفظتي</div>
-
   <div class="panel">
     <div class="muted">رصيد المحفظة الحالي</div>
     <div class="balance" id="walletBalance">— SDG</div>
     <div class="muted">يظهر رصيدك بعد تسجيل الدخول.</div>
   </div>
-
   <div class="panel">
     <h3>شحن المحفظة</h3>
     <p class="muted">
       لطلب إضافة رصيد، تواصل مع خدمة العملاء وأرسل إيصال التحويل.
       تتم مراجعة الطلب يدوياً قبل إضافة الرصيد.
     </p>
-    <button class="primary" onclick="contactSupport()">
-      التواصل لشحن المحفظة <span>←</span>
-    </button>
+    <button class="primary" onclick="contactSupport()">التواصل لشحن المحفظة ←</button>
   </div>
-
-  <div class="notice">
-    لا تحول أي مبلغ إلا بعد التأكد من بيانات الدفع المعروضة من إدارة المتجر.
-  </div>
+  <div class="notice">لا تحول أي مبلغ إلا بعد التأكد من بيانات الدفع المعروضة من إدارة المتجر.</div>
 </section>
 
 <section id="orders" class="page">
   <div class="page-title">طلباتي</div>
   <div class="panel">
-    <p class="muted" id="ordersMessage">
-      سجل الدخول لمتابعة طلباتك.
-    </p>
+    <p class="muted" id="ordersMessage">سجل الدخول لمتابعة طلباتك.</p>
   </div>
 </section>
 
 <section id="account" class="page">
   <div class="page-title">حسابي</div>
-
   <div class="panel" id="accountPanel">
     <h3>أهلاً بك في أمانة ستور</h3>
-    <p class="muted">
-      سجل الدخول أو أنشئ حساباً لمتابعة محفظتك وطلباتك.
-    </p>
-    <button class="primary" onclick="openAuth()">
-      تسجيل الدخول / حساب جديد
-    </button>
+    <p class="muted">سجل الدخول أو أنشئ حساباً لمتابعة محفظتك وطلباتك.</p>
+    <button class="primary" onclick="openAuth()">تسجيل الدخول / حساب جديد</button>
   </div>
-
   <div class="panel">
     <h3>الدعم الفني</h3>
     <p class="muted">نحن هنا لمساعدتك في الطلبات والخدمات.</p>
-    <button class="secondary" onclick="contactSupport()">
-      تواصل مع خدمة العملاء
-    </button>
+    <button class="secondary" onclick="contactSupport()">تواصل مع خدمة العملاء</button>
+  </div>
+</section>
+
+<!-- لوحة تحكم المدير -->
+<section id="admin" class="page">
+  <div class="page-title">لوحة تحكم المدير</div>
+
+  <div class="notice">
+    يمكنك من هنا إدارة أقسام المتجر ومنتجاته وإعدادات العرض.
+    التغييرات تحفظ مباشرة في قاعدة البيانات.
+  </div>
+
+  <div class="admin-tabs">
+    <button class="secondary" onclick="showAdminTab('categoriesTab',this)">الأقسام</button>
+    <button class="secondary" onclick="showAdminTab('productsTab',this)">المنتجات</button>
+    <button class="secondary" onclick="showAdminTab('settingsTab',this)">إعدادات المتجر</button>
+  </div>
+
+  <!-- إدارة الأقسام -->
+  <div id="categoriesTab" class="admin-section active">
+    <div class="panel">
+      <h3 id="categoryFormTitle">إضافة قسم جديد</h3>
+      <input type="hidden" id="editCategoryId">
+
+      <label class="muted">اسم القسم</label>
+      <input id="adminCategoryName" class="field" placeholder="مثال: شحن الألعاب">
+
+      <label class="muted">رابط صورة القسم</label>
+      <input id="adminCategoryImage" class="field" placeholder="https://example.com/image.jpg">
+
+      <button class="primary" onclick="saveCategory()">حفظ القسم</button>
+      <button class="secondary" style="width:100%;margin-top:8px" onclick="resetCategoryForm()">إلغاء التعديل</button>
+    </div>
+
+    <div class="panel">
+      <h3>الأقسام الموجودة</h3>
+      <div id="adminCategoriesList">
+        <div class="empty">جاري التحميل...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- إدارة المنتجات -->
+  <div id="productsTab" class="admin-section">
+    <div class="panel">
+      <h3 id="productFormTitle">إضافة منتج جديد</h3>
+      <input type="hidden" id="editProductId">
+
+      <label class="muted">اسم المنتج</label>
+      <input id="adminProductName" class="field" placeholder="اسم المنتج">
+
+      <label class="muted">القسم</label>
+      <select id="adminProductCategory" class="field">
+        <option value="">اختر القسم</option>
+      </select>
+
+      <label class="muted">السعر بالجنيه السوداني</label>
+      <input id="adminProductPrice" class="field" type="number" min="0" placeholder="مثال: 50000">
+
+      <label class="muted">رابط صورة المنتج</label>
+      <input id="adminProductImage" class="field" placeholder="https://example.com/image.jpg">
+
+      <label class="muted">وصف المنتج</label>
+      <textarea id="adminProductDescription" class="field" placeholder="تفاصيل المنتج..."></textarea>
+
+      <button class="primary" onclick="saveProduct()">حفظ المنتج</button>
+      <button class="secondary" style="width:100%;margin-top:8px" onclick="resetProductForm()">إلغاء التعديل</button>
+    </div>
+
+    <div class="panel">
+      <h3>المنتجات الموجودة</h3>
+      <div id="adminProductsList">
+        <div class="empty">جاري التحميل...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- إعدادات المتجر -->
+  <div id="settingsTab" class="admin-section">
+    <div class="panel">
+      <h3>إعدادات المتجر</h3>
+
+      <label class="muted">الاسم الإنجليزي</label>
+      <input id="settingStoreName" class="field" placeholder="AMANA STORE">
+
+      <label class="muted">الاسم العربي</label>
+      <input id="settingArabicName" class="field" placeholder="أمانة ستور">
+
+      <label class="muted">الشعار / العبارة التعريفية</label>
+      <input id="settingSlogan" class="field" placeholder="ثقتك أمانة.. وخدماتك علينا.">
+
+      <label class="muted">رابط شعار المتجر</label>
+      <input id="settingLogo" class="field" placeholder="رابط صورة الشعار">
+
+      <label class="muted">رقم واتساب المتجر مع مفتاح الدولة</label>
+      <input id="settingWhatsapp" class="field" placeholder="249xxxxxxxxx">
+
+      <label class="muted">رقم الهاتف</label>
+      <input id="settingPhone" class="field" placeholder="رقم الهاتف">
+
+      <label class="muted">رسالة الترحيب</label>
+      <textarea id="settingWelcome" class="field" placeholder="رسالة الترحيب بالعملاء"></textarea>
+
+      <label class="muted">بيانات حسابات الدفع (JSON)</label>
+      <textarea id="settingPayments" class="field" placeholder='{"maycash":"بيانات الحساب"}'></textarea>
+
+      <button class="primary" onclick="saveSettings()">حفظ إعدادات المتجر</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <button class="danger" style="width:100%" onclick="showPage('home')">الخروج من لوحة التحكم</button>
   </div>
 </section>
 
 </main>
 
 <nav class="bottom-nav">
-  <button class="nav-item active" data-page="home" onclick="showPage('home')">
-    <b>⌂</b>الرئيسية
-  </button>
-
-  <button class="nav-item" data-page="shop" onclick="showPage('shop')">
-    <b>▦</b>المتجر
-  </button>
-
-  <button class="nav-item" data-page="wallet" onclick="showPage('wallet')">
-    <b>▣</b>محفظتي
-  </button>
-
-  <button class="nav-item" data-page="orders" onclick="showPage('orders')">
-    <b>▤</b>طلباتي
-  </button>
-
-  <button class="nav-item" data-page="account" onclick="showPage('account')">
-    <b>♙</b>حسابي
-  </button>
+  <button class="nav-item active" data-page="home" onclick="showPage('home')"><b>⌂</b>الرئيسية</button>
+  <button class="nav-item" data-page="shop" onclick="showPage('shop')"><b>▦</b>المتجر</button>
+  <button class="nav-item" data-page="wallet" onclick="showPage('wallet')"><b>▣</b>محفظتي</button>
+  <button class="nav-item" data-page="orders" onclick="showPage('orders')"><b>▤</b>طلباتي</button>
+  <button class="nav-item" data-page="account" onclick="showPage('account')"><b>♙</b>حسابي</button>
 </nav>
 
-<a id="whatsappFloat" class="whatsapp" href="#"
-  onclick="contactSupport();return false;" aria-label="واتساب">☏</a>
+<a id="whatsappFloat" class="whatsapp" href="#" onclick="contactSupport();return false;" aria-label="واتساب">☏</a>
 
+<!-- نافذة تسجيل الدخول -->
 <div id="authModal" class="modal">
   <div class="modal-box">
-
     <div class="modal-head">
       <h3 id="authTitle">تسجيل الدخول</h3>
       <button class="close" onclick="closeModal('authModal')">×</button>
     </div>
 
     <div id="authForms">
-      <input id="authName" class="field"
-        placeholder="الاسم الكامل" style="display:none">
+      <input id="authName" class="field" placeholder="الاسم الكامل" style="display:none">
+      <input id="authEmail" class="field" type="email" placeholder="البريد الإلكتروني">
+      <input id="authPassword" class="field" type="password" placeholder="كلمة المرور">
 
-      <input id="authEmail" class="field"
-        type="email" placeholder="البريد الإلكتروني">
-
-      <input id="authPassword" class="field"
-        type="password" placeholder="كلمة المرور">
-
-      <button class="primary" id="authSubmit" onclick="submitAuth()">
-        تسجيل الدخول
-      </button>
+      <button class="primary" id="authSubmit" onclick="submitAuth()">تسجيل الدخول</button>
 
       <p class="muted" style="text-align:center">
         <span id="authSwitchText">ليس لديك حساب؟</span>
-        <button class="secondary" id="authSwitch" onclick="switchAuth()">
-          إنشاء حساب جديد
-        </button>
+        <button class="secondary" id="authSwitch" onclick="switchAuth()">إنشاء حساب جديد</button>
       </p>
     </div>
 
-    <div class="notice">
-      استخدم بريداً إلكترونياً صحيحاً وكلمة مرور قوية.
-    </div>
+    <div class="notice">استخدم بريداً إلكترونياً صحيحاً وكلمة مرور قوية.</div>
   </div>
 </div>
 
+<!-- تفاصيل المنتج -->
 <div id="productModal" class="modal">
   <div class="modal-box">
     <div class="modal-head">
@@ -660,6 +454,7 @@ button:disabled{
   </div>
 </div>
 
+<!-- القائمة -->
 <div id="menuModal" class="modal">
   <div class="modal-box">
     <div class="modal-head">
@@ -672,6 +467,7 @@ button:disabled{
     <button class="secondary field" onclick="closeModal('menuModal');showPage('wallet')">محفظتي</button>
     <button class="secondary field" onclick="closeModal('menuModal');showPage('orders')">طلباتي</button>
     <button class="secondary field" onclick="closeModal('menuModal');showPage('account')">حسابي</button>
+    <button id="menuAdminButton" class="primary field" style="display:none" onclick="closeModal('menuModal');openAdmin()">لوحة تحكم المدير</button>
   </div>
 </div>
 
@@ -680,48 +476,49 @@ button:disabled{
 const SUPABASE_URL = "https://zlwagyhhjzrggjlqigpz.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_2Yr1cVB2vclDkytSegjDhg_wtwSKvX2";
 
-const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
 let categories = [];
 let products = [];
 let settings = {};
 let currentUser = null;
 let authMode = "login";
+let isAdmin = false;
 
-document.getElementById("year").textContent =
-  new Date().getFullYear();
+document.getElementById("year").textContent = new Date().getFullYear();
 
 function money(value){
-  const n = Number(value || 0);
-  return n.toLocaleString("en-US") + " SDG";
+  return Number(value || 0).toLocaleString("en-US") + " SDG";
 }
 
 function safeText(value){
-  return String(value ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
+  return String(value ?? "").replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
   }[c]));
 }
 
 function showPage(id){
-  document.querySelectorAll(".page").forEach(p =>
+  if(id==="admin" && !isAdmin){
+    alert("هذه الصفحة مخصصة لإدارة المتجر فقط.");
+    return;
+  }
+
+  document.querySelectorAll(".page").forEach(p=>
     p.classList.toggle("active",p.id===id)
   );
 
-  document.querySelectorAll(".nav-item").forEach(b =>
+  document.querySelectorAll(".nav-item").forEach(b=>
     b.classList.toggle("active",b.dataset.page===id)
   );
 
   window.scrollTo({top:0,behavior:"smooth"});
 
-  if(id==="wallet" || id==="account"){
+  if(id==="wallet" || id==="account" || id==="orders"){
     loadUserData();
+  }
+
+  if(id==="admin"){
+    loadAdminData();
   }
 }
 
@@ -738,29 +535,28 @@ function toggleMenu(){
 }
 
 function switchAuth(){
-  authMode = authMode==="login" ? "signup" : "login";
+  authMode=authMode==="login"?"signup":"login";
 
-  document.getElementById("authTitle").textContent =
-    authMode==="login" ? "تسجيل الدخول" : "إنشاء حساب جديد";
+  document.getElementById("authTitle").textContent=
+    authMode==="login"?"تسجيل الدخول":"إنشاء حساب جديد";
 
-  document.getElementById("authSubmit").textContent =
-    authMode==="login" ? "تسجيل الدخول" : "إنشاء الحساب";
+  document.getElementById("authSubmit").textContent=
+    authMode==="login"?"تسجيل الدخول":"إنشاء الحساب";
 
-  document.getElementById("authName").style.display =
-    authMode==="signup" ? "block" : "none";
+  document.getElementById("authName").style.display=
+    authMode==="signup"?"block":"none";
 
-  document.getElementById("authSwitchText").textContent =
-    authMode==="login" ? "ليس لديك حساب؟" : "لديك حساب بالفعل؟";
+  document.getElementById("authSwitchText").textContent=
+    authMode==="login"?"ليس لديك حساب؟":"لديك حساب بالفعل؟";
 
-  document.getElementById("authSwitch").textContent =
-    authMode==="login" ? "إنشاء حساب جديد" : "تسجيل الدخول";
+  document.getElementById("authSwitch").textContent=
+    authMode==="login"?"إنشاء حساب جديد":"تسجيل الدخول";
 }
 
-// تسجيل الدخول وإنشاء الحساب
 async function submitAuth(){
-  const email = document.getElementById("authEmail").value.trim();
-  const password = document.getElementById("authPassword").value;
-  const name = document.getElementById("authName").value.trim();
+  const email=document.getElementById("authEmail").value.trim();
+  const password=document.getElementById("authPassword").value;
+  const name=document.getElementById("authName").value.trim();
 
   if(!email || !password){
     alert("أدخل البريد الإلكتروني وكلمة المرور.");
@@ -772,123 +568,168 @@ async function submitAuth(){
     return;
   }
 
-  const btn = document.getElementById("authSubmit");
-  btn.disabled = true;
-  btn.textContent = "يرجى الانتظار...";
+  const btn=document.getElementById("authSubmit");
+  btn.disabled=true;
+  btn.textContent="يرجى الانتظار...";
 
-  let result;
+  try{
+    let result;
 
-  if(authMode==="signup"){
-    result = await db.auth.signUp({
-      email,
-      password,
-      options:{
-        data:{full_name:name}
-      }
-    });
-  }else{
-    result = await db.auth.signInWithPassword({
-      email,
-      password
-    });
+    if(authMode==="signup"){
+      result=await db.auth.signUp({
+        email,password,options:{data:{full_name:name}}
+      });
+    }else{
+      result=await db.auth.signInWithPassword({email,password});
+    }
+
+    if(result.error) throw result.error;
+
+    if(authMode==="signup" && !result.data.session){
+      alert("تم إنشاء الحساب. راجع بريدك الإلكتروني لتأكيد الحساب، ثم سجل الدخول.");
+      switchAuth();
+      return;
+    }
+
+    currentUser=result.data.user || null;
+    closeModal("authModal");
+    await loadUserData();
+    await checkAdmin();
+
+    alert("تم تسجيل الدخول بنجاح.");
+
+  }catch(error){
+    alert("تعذر إكمال العملية: "+error.message);
+  }finally{
+    btn.disabled=false;
+    btn.textContent=authMode==="login"?"تسجيل الدخول":"إنشاء الحساب";
   }
-
-  btn.disabled = false;
-  btn.textContent =
-    authMode==="login" ? "تسجيل الدخول" : "إنشاء الحساب";
-
-  if(result.error){
-    alert("تعذر إكمال العملية: " + result.error.message);
-    return;
-  }
-
-  if(authMode==="signup" && !result.data.session){
-    alert("تم إنشاء الحساب. راجع بريدك الإلكتروني لتأكيد الحساب، ثم سجل الدخول.");
-    switchAuth();
-    return;
-  }
-
-  currentUser = result.data.user || null;
-
-  closeModal("authModal");
-  await loadUserData();
-
-  alert("تم تسجيل الدخول بنجاح.");
 }
 
-// بيانات حساب العميل
-async function loadUserData(){
-  const {data:{user}} = await db.auth.getUser();
-  currentUser = user;
+// فحص صلاحية المدير من قاعدة البيانات
+async function checkAdmin(){
+  isAdmin=false;
 
-  const panel = document.getElementById("accountPanel");
+  const adminButton=document.getElementById("menuAdminButton");
+  if(adminButton) adminButton.style.display="none";
 
-  if(!user){
-    document.getElementById("walletBalance").textContent = "— SDG";
-    document.getElementById("ordersMessage").textContent =
-      "سجل الدخول لمتابعة طلباتك.";
+  if(!currentUser) return false;
 
-    panel.innerHTML =
-      '<h3>أهلاً بك في أمانة ستور</h3>'+
-      '<p class="muted">سجل الدخول أو أنشئ حساباً لمتابعة محفظتك وطلباتك.</p>'+
-      '<button class="primary" onclick="openAuth()">تسجيل الدخول / حساب جديد</button>';
+  try{
+    const {data,error}=await db.rpc("is_store_admin");
 
+    if(error) throw error;
+
+    isAdmin=data===true;
+
+    if(adminButton){
+      adminButton.style.display=isAdmin?"block":"none";
+    }
+
+  }catch(error){
+    console.warn("تعذر التحقق من صلاحية المدير:",error.message);
+    isAdmin=false;
+  }
+
+  return isAdmin;
+}
+
+async function openAdmin(){
+  if(!currentUser){
+    alert("سجل الدخول أولاً.");
+    openAuth();
     return;
   }
 
-  const [{data:profile},{data:wallet}] = await Promise.all([
-    db.from("profiles")
-      .select("*")
-      .eq("id",user.id)
-      .maybeSingle(),
+  const allowed=await checkAdmin();
 
-    db.from("wallets")
-      .select("*")
-      .eq("user_id",user.id)
-      .maybeSingle()
-  ]);
+  if(!allowed){
+    alert("ليس لديك صلاحية دخول لوحة الإدارة.");
+    return;
+  }
 
-  document.getElementById("walletBalance").textContent =
-    money(wallet?.balance);
+  showPage("admin");
+  loadAdminData();
+}
 
-  document.getElementById("ordersMessage").textContent =
-    "تم تسجيل الدخول. ستظهر تفاصيل الطلبات بعد تفعيل سجل الطلبات في قاعدة البيانات.";
+async function loadUserData(){
+  try{
+    const {data:{user}}=await db.auth.getUser();
+    currentUser=user;
 
-  const displayName =
-    profile?.full_name ||
-    user.user_metadata?.full_name ||
-    user.email;
+    const panel=document.getElementById("accountPanel");
 
-  panel.innerHTML =
-    '<h3>مرحباً، '+safeText(displayName)+'</h3>'+
-    '<p class="muted">البريد: '+safeText(user.email)+'</p>'+
-    '<p class="muted">رقم العضوية: '+safeText(profile?.member_id || "سيظهر بعد إنشاء ملفك")+'</p>'+
-    '<button class="secondary" onclick="signOut()">تسجيل الخروج</button>';
+    if(!user){
+      document.getElementById("walletBalance").textContent="— SDG";
+      document.getElementById("ordersMessage").textContent="سجل الدخول لمتابعة طلباتك.";
+
+      panel.innerHTML=
+        '<h3>أهلاً بك في أمانة ستور</h3>'+
+        '<p class="muted">سجل الدخول أو أنشئ حساباً لمتابعة محفظتك وطلباتك.</p>'+
+        '<button class="primary" onclick="openAuth()">تسجيل الدخول / حساب جديد</button>';
+
+      await checkAdmin();
+      return;
+    }
+
+    const [{data:profile},{data:wallet}]=await Promise.all([
+      db.from("profiles").select("*").eq("id",user.id).maybeSingle(),
+      db.from("wallets").select("*").eq("user_id",user.id).maybeSingle()
+    ]);
+
+    document.getElementById("walletBalance").textContent=money(wallet?.balance);
+
+    document.getElementById("ordersMessage").textContent=
+      "تم تسجيل الدخول. ستظهر تفاصيل الطلبات بعد تفعيل سجل الطلبات.";
+
+    const displayName=
+      profile?.full_name || user.user_metadata?.full_name || user.email;
+
+    panel.innerHTML=
+      '<h3>مرحباً، '+safeText(displayName)+'</h3>'+
+      '<p class="muted">البريد: '+safeText(user.email)+'</p>'+
+      '<p class="muted">رقم العضوية: '+safeText(profile?.member_id || "سيظهر بعد إنشاء ملفك")+'</p>'+
+      (isAdmin?'<button class="primary" onclick="openAdmin()">دخول لوحة تحكم المدير</button>':'')+
+      '<button class="secondary" style="width:100%;margin-top:10px" onclick="signOut()">تسجيل الخروج</button>';
+
+    await checkAdmin();
+
+    if(isAdmin && !panel.querySelector("#adminAccess")){
+      const btn=document.createElement("button");
+      btn.className="primary";
+      btn.id="adminAccess";
+      btn.style.marginBottom="10px";
+      btn.textContent="دخول لوحة تحكم المدير";
+      btn.onclick=openAdmin;
+      panel.insertBefore(btn,panel.lastElementChild);
+    }
+
+  }catch(error){
+    console.error("خطأ تحميل بيانات العميل:",error);
+  }
 }
 
 async function signOut(){
   await db.auth.signOut();
-  currentUser = null;
+  currentUser=null;
+  isAdmin=false;
   await loadUserData();
   alert("تم تسجيل الخروج.");
 }
 
 // تحميل بيانات المتجر
 async function loadStore(){
-
-  // الأعمدة الموجودة فعلياً في جدول categories
-  const {data:cats,error:catErr} = await db
+  const {data:cats,error:catErr}=await db
     .from("categories")
     .select("id,name,image_url,is_active")
     .eq("is_active",true);
 
-  // الأعمدة الموجودة فعلياً في جدول products
-  const {data:prods,error:prodErr} = await db
+  const {data:prods,error:prodErr}=await db
     .from("products")
     .select("id,category_id,name,description,image_url,price,is_active")
     .eq("is_active",true);
 
-  const {data:setts,error:settErr} = await db
+  const {data:setts,error:settErr}=await db
     .from("store_settings")
     .select("*")
     .limit(1)
@@ -896,48 +737,43 @@ async function loadStore(){
 
   if(catErr){
     console.error("خطأ تحميل الأقسام:",catErr);
-    categories = [];
-
-    document.getElementById("homeCategories").innerHTML =
-      '<div class="empty">تعذر تحميل الأقسام. تحقق من صلاحيات قراءة جدول الأقسام في قاعدة البيانات.</div>';
+    categories=[];
+    document.getElementById("homeCategories").innerHTML=
+      '<div class="empty">تعذر تحميل الأقسام. تحقق من صلاحيات القراءة.</div>';
   }else{
-    categories = cats || [];
+    categories=cats||[];
   }
 
   if(prodErr){
     console.error("خطأ تحميل المنتجات:",prodErr);
-    products = [];
-
-    document.getElementById("featuredProducts").innerHTML =
+    products=[];
+    document.getElementById("featuredProducts").innerHTML=
       '<div class="empty">تعذر تحميل المنتجات حالياً.</div>';
   }else{
-    products = prods || [];
+    products=prods||[];
   }
 
-  settings = setts || {};
+  settings=setts||{};
 
-  if(settErr){
-    console.warn("تعذر تحميل إعدادات المتجر:",settErr.message);
-  }
+  if(settErr) console.warn("إعدادات المتجر:",settErr.message);
 
-  document.title =
-    (settings.store_name || "AMANA STORE") + " | أمانة ستور";
+  document.title=(settings.store_name||"AMANA STORE")+" | أمانة ستور";
 
-  const brandName = settings.store_name || "AMANA STORE";
-
-  document.querySelector(".brand").innerHTML =
+  document.querySelector(".brand").innerHTML=
     '<div class="brand-mark">أ</div>'+
-    '<div>'+safeText(brandName)+
-    '<small>'+safeText(settings.arabic_name || "أمانة ستور")+'</small></div>';
+    '<div>'+safeText(settings.store_name||"AMANA STORE")+
+    '<small>'+safeText(settings.arabic_name||"أمانة ستور")+'</small></div>';
 
-  const slogan =
-    settings.slogan || "ثقتك أمانة.. وخدماتك علينا.";
-
-  document.querySelector(".hero h1").textContent = slogan;
+  document.querySelector(".hero h1").textContent=
+    settings.slogan||"ثقتك أمانة.. وخدماتك علينا.";
 
   if(settings.logo_url){
-    document.querySelector(".brand-mark").innerHTML =
+    document.querySelector(".brand-mark").innerHTML=
       '<img src="'+safeText(settings.logo_url)+'" style="width:100%;height:100%;object-fit:contain;border-radius:10px">';
+  }
+
+  if(settings.welcome_message){
+    document.querySelector(".hero p").textContent=settings.welcome_message;
   }
 
   renderCategories();
@@ -945,129 +781,87 @@ async function loadStore(){
   renderShop();
 }
 
-// عرض الأقسام
+// عرض الأقسام للعملاء
 function renderCategories(){
-  const target = document.getElementById("homeCategories");
+  const target=document.getElementById("homeCategories");
 
   if(!categories.length){
-    target.innerHTML =
-      '<div class="empty">لا توجد أقسام نشطة مضافة حالياً.</div>';
+    target.innerHTML='<div class="empty">لا توجد أقسام نشطة مضافة حالياً.</div>';
   }else{
-    target.innerHTML = categories.map(c =>
-      '<button class="category-card" onclick="filterCategory(\''+
-      safeText(c.id)+'\')">'+
-
+    target.innerHTML=categories.map(c=>
+      '<button class="category-card" onclick="filterCategory(\''+safeText(c.id)+'\')">'+
         '<div class="category-icon">'+
           (c.image_url
-            ? '<img src="'+safeText(c.image_url)+'" style="width:100%;height:100%;object-fit:cover;border-radius:15px">'
-            : "✦")+
+            ?'<img src="'+safeText(c.image_url)+'" style="width:100%;height:100%;object-fit:cover;border-radius:15px">'
+            :"✦")+
         '</div>'+
-
-        '<div>'+
-          '<strong>'+safeText(c.name)+'</strong>'+
-          '<small>تصفح الخدمات والمنتجات</small>'+
-        '</div>'+
-
+        '<div><strong>'+safeText(c.name)+'</strong>'+
+        '<small>تصفح الخدمات والمنتجات</small></div>'+
       '</button>'
     ).join("");
   }
 
-  document.getElementById("categoryFilter").innerHTML =
+  document.getElementById("categoryFilter").innerHTML=
     '<option value="">كل الأقسام</option>'+
-    categories.map(c =>
-      '<option value="'+safeText(c.id)+'">'+
-      safeText(c.name)+'</option>'
+    categories.map(c=>
+      '<option value="'+safeText(c.id)+'">'+safeText(c.name)+'</option>'
     ).join("");
 }
 
-// بطاقة المنتج
 function productCard(p){
-  return '<article class="product-card" onclick="openProduct(\''+
-    safeText(p.id)+'\')">'+
-
-    '<img src="'+safeText(
-      p.image_url ||
-      "https://placehold.co/600x500/f3f0e8/8b6b2b?text=AMANA+STORE"
-    )+'" alt="'+safeText(p.name)+'" loading="lazy">'+
-
+  return '<article class="product-card" onclick="openProduct(\''+safeText(p.id)+'\')">'+
+    '<img src="'+safeText(p.image_url||"https://placehold.co/600x500/f3f0e8/8b6b2b?text=AMANA+STORE")+'" alt="'+safeText(p.name)+'" loading="lazy">'+
     '<div class="product-info">'+
       '<strong>'+safeText(p.name)+'</strong>'+
       '<div class="price">'+money(p.price)+'</div>'+
     '</div>'+
-
   '</article>';
 }
 
-// المنتجات الأكثر طلباً
 function renderProducts(){
-  const target = document.getElementById("featuredProducts");
-
-  target.innerHTML = products.length
-    ? products.slice(0,4).map(productCard).join("")
-    : '<div class="empty">لا توجد منتجات مضافة حالياً.</div>';
+  const target=document.getElementById("featuredProducts");
+  target.innerHTML=products.length
+    ?products.slice(0,4).map(productCard).join("")
+    :'<div class="empty">لا توجد منتجات مضافة حالياً.</div>';
 }
 
-// عرض منتجات المتجر
 function renderShop(){
-  const query = (
-    document.getElementById("shopSearch")?.value || ""
-  ).trim().toLowerCase();
+  const query=(document.getElementById("shopSearch")?.value||"").trim().toLowerCase();
+  const cat=document.getElementById("categoryFilter")?.value||"";
 
-  const cat =
-    document.getElementById("categoryFilter")?.value || "";
-
-  const list = products.filter(p =>
-    (!cat || String(p.category_id) === String(cat)) &&
-    (
-      !query ||
-      String(p.name || "").toLowerCase().includes(query) ||
-      String(p.description || "").toLowerCase().includes(query)
-    )
+  const list=products.filter(p=>
+    (!cat || String(p.category_id)===String(cat)) &&
+    (!query ||
+      String(p.name||"").toLowerCase().includes(query) ||
+      String(p.description||"").toLowerCase().includes(query))
   );
 
-  document.getElementById("productCount").textContent =
-    "عرض " + list.length + " منتج";
+  document.getElementById("productCount").textContent="عرض "+list.length+" منتج";
 
-  document.getElementById("shopProducts").innerHTML =
-    list.length
-      ? list.map(productCard).join("")
-      : '<div class="empty">لا توجد منتجات مطابقة حالياً.</div>';
+  document.getElementById("shopProducts").innerHTML=
+    list.length?list.map(productCard).join("")
+    :'<div class="empty">لا توجد منتجات مطابقة حالياً.</div>';
 }
 
-// فتح قسم محدد
 function filterCategory(id){
   showPage("shop");
-  document.getElementById("categoryFilter").value = id;
+  document.getElementById("categoryFilter").value=id;
   renderShop();
 }
 
-// تفاصيل المنتج
 function openProduct(id){
-  const p = products.find(x => String(x.id) === String(id));
+  const p=products.find(x=>String(x.id)===String(id));
   if(!p) return;
 
-  document.getElementById("productModalTitle").textContent = p.name;
+  document.getElementById("productModalTitle").textContent=p.name;
 
-  document.getElementById("productModalBody").innerHTML =
-    '<img src="'+safeText(
-      p.image_url || "https://placehold.co/600x500"
-    )+'" style="width:100%;max-height:230px;object-fit:cover;border-radius:13px">'+
-
+  document.getElementById("productModalBody").innerHTML=
+    '<img src="'+safeText(p.image_url||"https://placehold.co/600x500")+'" style="width:100%;max-height:230px;object-fit:cover;border-radius:13px">'+
     '<h3>'+safeText(p.name)+'</h3>'+
-
     '<div class="price">'+money(p.price)+'</div>'+
-
-    '<p class="muted">'+safeText(p.description || "")+'</p>'+
-
-    '<div class="notice">'+
-      'لتأكيد توفر المنتج وإتمام الطلب، تواصل مع خدمة العملاء. '+
-      'لا يتم خصم أي مبلغ من محفظتك عبر هذه الصفحة حالياً.'+
-    '</div>'+
-
-    '<button class="primary" onclick="contactSupportFor(\''+
-      safeText(p.name)+'\')">'+
-      'اطلب عبر خدمة العملاء <span>←</span>'+
-    '</button>';
+    '<p class="muted">'+safeText(p.description||"")+'</p>'+
+    '<div class="notice">لتأكيد توفر المنتج وإتمام الطلب، تواصل مع خدمة العملاء. لا يتم خصم أي مبلغ من محفظتك عبر هذه الصفحة حالياً.</div>'+
+    '<button class="primary" onclick="contactSupportFor(\''+safeText(p.name)+'\')">اطلب عبر خدمة العملاء ←</button>';
 
   document.getElementById("productModal").classList.add("show");
 }
@@ -1079,41 +873,410 @@ function searchProducts(){
 
 function contactSupportFor(name){
   closeModal("productModal");
-  contactSupport("أرغب في الاستفسار عن: " + name);
+  contactSupport("أرغب في الاستفسار عن: "+name);
 }
 
-// التواصل مع واتساب المتجر
 function contactSupport(message){
-  const number =
-    String(settings.whatsapp_number || "").replace(/\D/g,"");
+  const number=String(settings.whatsapp_number||"").replace(/\D/g,"");
 
   if(!number){
-    alert("رقم واتساب المتجر لم تتم إضافته بعد. يمكن لإدارة المتجر إضافته في إعدادات قاعدة البيانات.");
+    alert("رقم واتساب المتجر لم تتم إضافته بعد من إعدادات لوحة الإدارة.");
     return;
   }
 
-  const text = encodeURIComponent(
-    message ||
-    "السلام عليكم، أحتاج مساعدة من خدمة عملاء أمانة ستور."
-  );
+  const text=encodeURIComponent(message||"السلام عليكم، أحتاج مساعدة من خدمة عملاء أمانة ستور.");
 
-  window.open(
-    "https://wa.me/"+number+"?text="+text,
-    "_blank"
-  );
+  window.open("https://wa.me/"+number+"?text="+text,"_blank");
 }
 
+// ================================
+// وظائف لوحة تحكم المدير
+// ================================
+
+function showAdminTab(tabId,button){
+  document.querySelectorAll(".admin-section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(tabId).classList.add("active");
+}
+
+async function loadAdminData(){
+  if(!isAdmin) return;
+
+  await loadStore();
+
+  renderAdminCategories();
+  renderAdminProducts();
+  fillAdminCategorySelect();
+  fillSettingsForm();
+}
+
+// تعبئة قائمة الأقسام داخل نموذج المنتج
+function fillAdminCategorySelect(){
+  const select=document.getElementById("adminProductCategory");
+  const current=select.value;
+
+  select.innerHTML='<option value="">اختر القسم</option>'+
+    categories.map(c=>
+      '<option value="'+safeText(c.id)+'">'+safeText(c.name)+'</option>'
+    ).join("");
+
+  if(current) select.value=current;
+}
+
+// عرض الأقسام في لوحة الإدارة
+function renderAdminCategories(){
+  const target=document.getElementById("adminCategoriesList");
+
+  if(!categories.length){
+    target.innerHTML='<div class="empty">لا توجد أقسام حتى الآن.</div>';
+    return;
+  }
+
+  target.innerHTML=categories.map(c=>
+    '<div class="admin-item">'+
+      '<div class="admin-item-row">'+
+        '<img src="'+safeText(c.image_url||"https://placehold.co/100x100")+'">'+
+        '<div class="admin-item-info">'+
+          '<strong>'+safeText(c.name)+'</strong>'+
+          '<span class="status-badge">قسم نشط</span>'+
+        '</div>'+
+      '</div>'+
+      '<div class="admin-actions">'+
+        '<button class="secondary small-btn" onclick="editCategory(\''+safeText(c.id)+'\')">تعديل</button>'+
+        '<button class="secondary small-btn" onclick="toggleCategory(\''+safeText(c.id)+'\',false)">إيقاف</button>'+
+        '<button class="danger small-btn" onclick="deleteCategory(\''+safeText(c.id)+'\')">حذف</button>'+
+      '</div>'+
+    '</div>'
+  ).join("");
+}
+
+// إضافة أو تعديل قسم
+async function saveCategory(){
+  if(!isAdmin) return alert("ليس لديك صلاحية.");
+
+  const id=document.getElementById("editCategoryId").value;
+  const name=document.getElementById("adminCategoryName").value.trim();
+  const image=document.getElementById("adminCategoryImage").value.trim();
+
+  if(!name){
+    alert("اكتب اسم القسم.");
+    return;
+  }
+
+  const payload={
+    name,
+    image_url:image||null,
+    is_active:true
+  };
+
+  try{
+    let result;
+
+    if(id){
+      result=await db.from("categories").update(payload).eq("id",id);
+    }else{
+      result=await db.from("categories").insert(payload);
+    }
+
+    if(result.error) throw result.error;
+
+    alert(id?"تم تعديل القسم بنجاح.":"تمت إضافة القسم بنجاح.");
+
+    resetCategoryForm();
+    await loadAdminData();
+
+  }catch(error){
+    alert("تعذر حفظ القسم: "+error.message);
+  }
+}
+
+function editCategory(id){
+  const c=categories.find(x=>String(x.id)===String(id));
+  if(!c) return;
+
+  document.getElementById("editCategoryId").value=c.id;
+  document.getElementById("adminCategoryName").value=c.name||"";
+  document.getElementById("adminCategoryImage").value=c.image_url||"";
+  document.getElementById("categoryFormTitle").textContent="تعديل القسم";
+  document.getElementById("categoriesTab").scrollIntoView({behavior:"smooth"});
+}
+
+function resetCategoryForm(){
+  document.getElementById("editCategoryId").value="";
+  document.getElementById("adminCategoryName").value="";
+  document.getElementById("adminCategoryImage").value="";
+  document.getElementById("categoryFormTitle").textContent="إضافة قسم جديد";
+}
+
+async function toggleCategory(id,active){
+  if(!isAdmin) return;
+
+  try{
+    const {error}=await db.from("categories")
+      .update({is_active:active})
+      .eq("id",id);
+
+    if(error) throw error;
+
+    await loadAdminData();
+  }catch(error){
+    alert("تعذر تغيير حالة القسم: "+error.message);
+  }
+}
+
+async function deleteCategory(id){
+  if(!isAdmin) return;
+
+  if(!confirm("هل أنت متأكد من حذف هذا القسم؟")) return;
+
+  try{
+    const {error}=await db.from("categories").delete().eq("id",id);
+
+    if(error) throw error;
+
+    alert("تم حذف القسم.");
+    await loadAdminData();
+
+  }catch(error){
+    alert("تعذر حذف القسم. قد يكون مرتبطاً بمنتجات. يمكنك إيقافه بدلاً من حذفه.\n"+error.message);
+  }
+}
+
+// عرض المنتجات في لوحة الإدارة
+function renderAdminProducts(){
+  const target=document.getElementById("adminProductsList");
+
+  if(!products.length){
+    target.innerHTML='<div class="empty">لا توجد منتجات حتى الآن.</div>';
+    return;
+  }
+
+  target.innerHTML=products.map(p=>{
+    const category=categories.find(c=>String(c.id)===String(p.category_id));
+
+    return '<div class="admin-item">'+
+      '<div class="admin-item-row">'+
+        '<img src="'+safeText(p.image_url||"https://placehold.co/100x100")+'">'+
+        '<div class="admin-item-info">'+
+          '<strong>'+safeText(p.name)+'</strong>'+
+          '<div class="price">'+money(p.price)+'</div>'+
+          '<small class="muted">'+safeText(category?.name||"بدون قسم")+'</small>'+
+        '</div>'+
+      '</div>'+
+      '<div class="admin-actions">'+
+        '<button class="secondary small-btn" onclick="editProduct(\''+safeText(p.id)+'\')">تعديل</button>'+
+        '<button class="secondary small-btn" onclick="toggleProduct(\''+safeText(p.id)+'\',false)">إيقاف</button>'+
+        '<button class="danger small-btn" onclick="deleteProduct(\''+safeText(p.id)+'\')">حذف</button>'+
+      '</div>'+
+    '</div>';
+  }).join("");
+}
+
+// إضافة أو تعديل منتج
+async function saveProduct(){
+  if(!isAdmin) return alert("ليس لديك صلاحية.");
+
+  const id=document.getElementById("editProductId").value;
+  const name=document.getElementById("adminProductName").value.trim();
+  const category=document.getElementById("adminProductCategory").value;
+  const price=Number(document.getElementById("adminProductPrice").value);
+  const image=document.getElementById("adminProductImage").value.trim();
+  const description=document.getElementById("adminProductDescription").value.trim();
+
+  if(!name){
+    alert("اكتب اسم المنتج.");
+    return;
+  }
+
+  if(!category){
+    alert("اختر القسم.");
+    return;
+  }
+
+  if(!Number.isFinite(price)||price<0){
+    alert("أدخل سعراً صحيحاً.");
+    return;
+  }
+
+  const payload={
+    name,
+    category_id:category,
+    price,
+    image_url:image||null,
+    description,
+    is_active:true
+  };
+
+  try{
+    let result;
+
+    if(id){
+      result=await db.from("products").update(payload).eq("id",id);
+    }else{
+      result=await db.from("products").insert(payload);
+    }
+
+    if(result.error) throw result.error;
+
+    alert(id?"تم تعديل المنتج بنجاح.":"تمت إضافة المنتج بنجاح.");
+
+    resetProductForm();
+    await loadAdminData();
+
+  }catch(error){
+    alert("تعذر حفظ المنتج: "+error.message);
+  }
+}
+
+function editProduct(id){
+  const p=products.find(x=>String(x.id)===String(id));
+  if(!p) return;
+
+  document.getElementById("editProductId").value=p.id;
+  document.getElementById("adminProductName").value=p.name||"";
+  document.getElementById("adminProductCategory").value=p.category_id||"";
+  document.getElementById("adminProductPrice").value=p.price||0;
+  document.getElementById("adminProductImage").value=p.image_url||"";
+  document.getElementById("adminProductDescription").value=p.description||"";
+  document.getElementById("productFormTitle").textContent="تعديل المنتج";
+
+  document.getElementById("productsTab").scrollIntoView({behavior:"smooth"});
+}
+
+function resetProductForm(){
+  document.getElementById("editProductId").value="";
+  document.getElementById("adminProductName").value="";
+  document.getElementById("adminProductCategory").value="";
+  document.getElementById("adminProductPrice").value="";
+  document.getElementById("adminProductImage").value="";
+  document.getElementById("adminProductDescription").value="";
+  document.getElementById("productFormTitle").textContent="إضافة منتج جديد";
+}
+
+async function toggleProduct(id,active){
+  if(!isAdmin) return;
+
+  try{
+    const {error}=await db.from("products")
+      .update({is_active:active})
+      .eq("id",id);
+
+    if(error) throw error;
+
+    await loadAdminData();
+
+  }catch(error){
+    alert("تعذر تغيير حالة المنتج: "+error.message);
+  }
+}
+
+async function deleteProduct(id){
+  if(!isAdmin) return;
+
+  if(!confirm("هل تريد حذف هذا المنتج نهائياً؟")) return;
+
+  try{
+    const {error}=await db.from("products").delete().eq("id",id);
+
+    if(error) throw error;
+
+    alert("تم حذف المنتج.");
+    await loadAdminData();
+
+  }catch(error){
+    alert("تعذر حذف المنتج: "+error.message);
+  }
+}
+
+// إعدادات المتجر
+function fillSettingsForm(){
+  document.getElementById("settingStoreName").value=settings.store_name||"AMANA STORE";
+  document.getElementById("settingArabicName").value=settings.arabic_name||"أمانة ستور";
+  document.getElementById("settingSlogan").value=settings.slogan||"ثقتك أمانة.. وخدماتك علينا.";
+  document.getElementById("settingLogo").value=settings.logo_url||"";
+  document.getElementById("settingWhatsapp").value=settings.whatsapp_number||"";
+  document.getElementById("settingPhone").value=settings.phone_number||"";
+  document.getElementById("settingWelcome").value=settings.welcome_message||"";
+
+  const payments=settings.payment_accounts||{};
+  document.getElementById("settingPayments").value=
+    typeof payments==="string"?payments:JSON.stringify(payments,null,2);
+}
+
+async function saveSettings(){
+  if(!isAdmin) return alert("ليس لديك صلاحية.");
+
+  let paymentAccounts={};
+
+  const paymentText=document.getElementById("settingPayments").value.trim();
+
+  if(paymentText){
+    try{
+      paymentAccounts=JSON.parse(paymentText);
+    }catch(error){
+      alert("بيانات حسابات الدفع يجب أن تكون بصيغة JSON صحيحة.");
+      return;
+    }
+  }
+
+  const payload={
+    store_name:document.getElementById("settingStoreName").value.trim(),
+    arabic_name:document.getElementById("settingArabicName").value.trim(),
+    slogan:document.getElementById("settingSlogan").value.trim(),
+    logo_url:document.getElementById("settingLogo").value.trim(),
+    whatsapp_number:document.getElementById("settingWhatsapp").value.trim(),
+    phone_number:document.getElementById("settingPhone").value.trim(),
+    welcome_message:document.getElementById("settingWelcome").value.trim(),
+    payment_accounts:paymentAccounts,
+    updated_at:new Date().toISOString()
+  };
+
+  try{
+    let result;
+
+    if(settings.id){
+      result=await db.from("store_settings")
+        .update(payload)
+        .eq("id",settings.id);
+    }else{
+      result=await db.from("store_settings").insert(payload);
+    }
+
+    if(result.error) throw result.error;
+
+    alert("تم حفظ إعدادات المتجر.");
+    await loadStore();
+    fillSettingsForm();
+
+  }catch(error){
+    alert("تعذر حفظ الإعدادات: "+error.message);
+  }
+}
+
+// مراقبة جلسة المستخدم
 db.auth.onAuthStateChange((_event,session)=>{
-  currentUser = session?.user || null;
+  currentUser=session?.user||null;
+
+  setTimeout(async()=>{
+    await checkAdmin();
+    await loadUserData();
+  },0);
 });
 
-// بدء تحميل الموقع
-loadStore()
-  .then(loadUserData)
-  .catch(err=>{
-    console.error("خطأ في تشغيل المتجر:",err);
-  });
+// تشغيل الموقع
+async function startStore(){
+  await loadStore();
 
+  const {data:{user}}=await db.auth.getUser();
+  currentUser=user;
+
+  await checkAdmin();
+  await loadUserData();
+}
+
+startStore().catch(error=>{
+  console.error("خطأ في تشغيل المتجر:",error);
+});
 </script>
+
 </body>
-    </html>
+  </html>
