@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#c69b35">
 <title>AMANA STORE | أمانة ستور</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 :root{--gold:#c69b35;--gold2:#f0d58b;--ink:#171717;--muted:#777;--line:#e9e9e9;--bg:#f7f7f7;--white:#fff;--shadow:0 5px 18px #0000000c}
 *{box-sizing:border-box}
@@ -91,11 +92,12 @@ textarea.field{min-height:90px;resize:vertical}
 .banner-dot{width:9px;height:9px;border:0;border-radius:20px;background:#ffffff99;padding:0}
 .banner-dot.active{width:24px;background:var(--gold2)}
 .banner-empty{height:100%;display:flex;align-items:center;justify-content:center;color:#f0d58b;font-weight:bold;font-size:16px}
+button:disabled{opacity:.65;cursor:not-allowed}
 @media(min-width:700px){.category-grid{grid-template-columns:repeat(3,1fr)}.product-grid{grid-template-columns:repeat(4,1fr)}.product-card img{height:190px}.hero{height:240px}.hero h1{font-size:32px}.banner-slider{height:280px}}
 @media(max-width:420px){.banner-slider{height:155px}}
-button:disabled{opacity:.65;cursor:not-allowed}
 </style>
 </head>
+
 <body>
 
 <header class="topbar">
@@ -111,17 +113,22 @@ button:disabled{opacity:.65;cursor:not-allowed}
 </header>
 
 <main>
+
 <section id="home" class="page active">
 <div id="bannerSlider" class="banner-slider"><div class="banner-empty">أمانة ستور — ثقتك أمانة</div></div>
+
 <div class="hero">
 <div class="eyebrow">AMANA STORE · أمانة ستور</div>
 <h1>ثقتك أمانة.. وخدماتك علينا.</h1>
 <p>خدمات رقمية، شحن، تحويلات وحسابات — بسهولة وأمان.</p>
 </div>
+
 <div class="section-head"><h2>تسوق حسب القسم</h2><button class="text-btn" onclick="showPage('shop')">عرض الكل ‹</button></div>
 <div id="homeCategories" class="category-grid"><div class="empty">جاري تحميل الأقسام...</div></div>
+
 <div class="section-head"><h2>الأكثر طلباً</h2><button class="text-btn" onclick="showPage('shop')">عرض الكل ‹</button></div>
 <div id="featuredProducts" class="product-grid"><div class="empty">جاري تحميل المنتجات...</div></div>
+
 <div class="footer">© <span id="year"></span> AMANA STORE — جميع الحقوق محفوظة</div>
 </section>
 
@@ -137,8 +144,16 @@ button:disabled{opacity:.65;cursor:not-allowed}
 
 <section id="wallet" class="page">
 <div class="page-title">محفظتي</div>
-<div class="panel"><div class="muted">رصيد المحفظة الحالي</div><div class="balance" id="walletBalance">— SDG</div><div class="muted">يظهر رصيدك بعد تسجيل الدخول.</div></div>
-<div class="panel"><h3>شحن المحفظة</h3><p class="muted">لطلب إضافة رصيد، تواصل مع خدمة العملاء وأرسل إيصال التحويل. تتم مراجعة الطلب يدوياً.</p><button class="primary" onclick="contactSupport()">التواصل لشحن المحفظة ←</button></div>
+<div class="panel">
+<div class="muted">رصيد المحفظة الحالي</div>
+<div class="balance" id="walletBalance">— SDG</div>
+<div class="muted">يظهر رصيدك بعد تسجيل الدخول.</div>
+</div>
+<div class="panel">
+<h3>شحن المحفظة</h3>
+<p class="muted">لطلب إضافة رصيد، تواصل مع خدمة العملاء وأرسل إيصال التحويل. تتم مراجعة الطلب يدوياً.</p>
+<button class="primary" onclick="contactSupport()">التواصل لشحن المحفظة ←</button>
+</div>
 <div class="notice">لا تحول أي مبلغ إلا بعد التأكد من بيانات الدفع المعروضة من إدارة المتجر.</div>
 </section>
 
@@ -149,12 +164,22 @@ button:disabled{opacity:.65;cursor:not-allowed}
 
 <section id="account" class="page">
 <div class="page-title">حسابي</div>
-<div class="panel" id="accountPanel"><h3>أهلاً بك في أمانة ستور</h3><p class="muted">سجل الدخول أو أنشئ حساباً لمتابعة محفظتك وطلباتك.</p><button class="primary" onclick="openAuth()">تسجيل الدخول / حساب جديد</button></div>
-<div class="panel"><h3>الدعم الفني</h3><p class="muted">نحن هنا لمساعدتك في الطلبات والخدمات.</p><button class="secondary" onclick="contactSupport()">تواصل مع خدمة العملاء</button></div>
-  </section>
-  <section id="admin" class="page">
+<div class="panel" id="accountPanel">
+<h3>أهلاً بك في أمانة ستور</h3>
+<p class="muted">سجل الدخول أو أنشئ حساباً لمتابعة محفظتك وطلباتك.</p>
+<button class="primary" onclick="openAuth()">تسجيل الدخول / حساب جديد</button>
+</div>
+<div class="panel">
+<h3>الدعم الفني</h3>
+<p class="muted">نحن هنا لمساعدتك في الطلبات والخدمات.</p>
+<button class="secondary" onclick="contactSupport()">تواصل مع خدمة العملاء</button>
+</div>
+</section>
+
+<section id="admin" class="page">
 <div class="page-title">لوحة تحكم المدير</div>
 <div class="notice">إدارة الأقسام والمنتجات والبنرات وإعدادات المتجر. يمكنك تفعيل العناصر المتوقفة وإعادة عرضها.</div>
+
 <div class="admin-tabs">
 <button class="secondary" onclick="showAdminTab('categoriesTab')">الأقسام</button>
 <button class="secondary" onclick="showAdminTab('productsTab')">المنتجات</button>
@@ -227,19 +252,29 @@ button:disabled{opacity:.65;cursor:not-allowed}
 <div id="settingsTab" class="admin-section">
 <div class="panel">
 <h3>إعدادات المتجر</h3>
-<label class="muted">الاسم الإنجليزي</label><input id="settingStoreName" class="field" placeholder="AMANA STORE">
-<label class="muted">الاسم العربي</label><input id="settingArabicName" class="field" placeholder="أمانة ستور">
-<label class="muted">الشعار</label><input id="settingSlogan" class="field" placeholder="ثقتك أمانة.. وخدماتك علينا.">
-<label class="muted">شعار المتجر من الهاتف</label><input id="settingLogoFile" class="field" type="file" accept="image/*" onchange="previewImage(this,'logoImagePreview')">
+<label class="muted">الاسم الإنجليزي</label>
+<input id="settingStoreName" class="field" placeholder="AMANA STORE">
+<label class="muted">الاسم العربي</label>
+<input id="settingArabicName" class="field" placeholder="أمانة ستور">
+<label class="muted">الشعار</label>
+<input id="settingSlogan" class="field" placeholder="ثقتك أمانة.. وخدماتك علينا.">
+<label class="muted">شعار المتجر من الهاتف</label>
+<input id="settingLogoFile" class="field" type="file" accept="image/*" onchange="previewImage(this,'logoImagePreview')">
 <img id="logoImagePreview" class="image-preview">
-<label class="muted">رابط الشعار</label><input id="settingLogo" class="field" placeholder="رابط الشعار">
-<label class="muted">رقم واتساب مع مفتاح الدولة</label><input id="settingWhatsapp" class="field" placeholder="249xxxxxxxxx">
-<label class="muted">رقم الهاتف</label><input id="settingPhone" class="field" placeholder="رقم الهاتف">
-<label class="muted">رسالة الترحيب</label><textarea id="settingWelcome" class="field"></textarea>
-<label class="muted">بيانات حسابات الدفع (JSON)</label><textarea id="settingPayments" class="field" placeholder='{"maycash":"بيانات الحساب"}'></textarea>
+<label class="muted">رابط الشعار</label>
+<input id="settingLogo" class="field" placeholder="رابط الشعار">
+<label class="muted">رقم واتساب مع مفتاح الدولة</label>
+<input id="settingWhatsapp" class="field" placeholder="249xxxxxxxxx">
+<label class="muted">رقم الهاتف</label>
+<input id="settingPhone" class="field" placeholder="رقم الهاتف">
+<label class="muted">رسالة الترحيب</label>
+<textarea id="settingWelcome" class="field"></textarea>
+<label class="muted">بيانات حسابات الدفع (JSON)</label>
+<textarea id="settingPayments" class="field" placeholder='{"maycash":"بيانات الحساب"}'></textarea>
 <button class="primary" onclick="saveSettings()">حفظ إعدادات المتجر</button>
 </div>
 </div>
+
 <div class="panel"><button class="danger" style="width:100%" onclick="exitAdmin()">الخروج من لوحة التحكم</button></div>
 </section>
 </main>
@@ -286,610 +321,1481 @@ button:disabled{opacity:.65;cursor:not-allowed}
 </div>
 
 <script>
-/* إعدادات Supabase الأصلية */
+"use strict";
+
+/* =========================
+   إعدادات الاتصال
+========================= */
+
 const SUPABASE_URL="https://zlwagyhhjzrggjlqigpz.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_2Yr1cVB2vclDkytSegjDhg_wtwSKvX2";
 const IMAGE_BUCKET="store-images";
 
-/* الإصلاح الأساسي: حفظ الجلسة بصورة صريحة */
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{
- auth:{
-  persistSession:true,
-  autoRefreshToken:true,
-  detectSessionInUrl:true,
-  storage:window.localStorage,
-  storageKey:"amana-store-auth-v1",
-  flowType:"pkce"
- }
-});
+if(!window.supabase){
+ alert("تعذر تحميل مكتبة Supabase. تحقق من اتصال الإنترنت.");
+ throw new Error("Supabase library not loaded");
+}
 
-let categories=[],products=[],adminCategories=[],adminProducts=[];
-let banners=[],settings={},adminBanners=[];
-let currentUser=null,isAdmin=false,authMode="login";
-let authSyncToken=0,bannerTimer=null,currentBannerIndex=0;
+const db=window.supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_ANON_KEY,
+ {
+  auth:{
+   persistSession:true,
+   autoRefreshToken:true,
+   detectSessionInUrl:true,
+   storage:window.localStorage,
+   storageKey:"amana-store-auth-v1",
+   flowType:"pkce"
+  }
+ }
+);
+
+/* =========================
+   المتغيرات العامة
+========================= */
+
+let categories=[];
+let products=[];
+let adminCategories=[];
+let adminProducts=[];
+let banners=[];
+let adminBanners=[];
+let settings={};
+
+let currentUser=null;
+let isAdmin=false;
+let authMode="login";
+
+let authSyncToken=0;
+let userDataToken=0;
+let bannerTimer=null;
+let currentBannerIndex=0;
 let sessionReady=false;
-let lastKnownUserId=null;
+let authInitialized=false;
+
+/* =========================
+   أدوات عامة
+========================= */
 
 document.getElementById("year").textContent=new Date().getFullYear();
 
-function money(v){return Number(v||0).toLocaleString("en-US")+" SDG";}
-function safeText(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-function closeModal(id){document.getElementById(id).classList.remove("show");}
-function toggleMenu(){document.getElementById("menuModal").classList.add("show");}
-function menuGo(id){closeModal("menuModal");showPage(id);}
-
-/* لا يتم فحص الجلسة من جديد عند التنقل بين الصفحات */
-function showPage(id){
- if(id==="admin"&&!isAdmin){alert("هذه الصفحة مخصصة للمدير.");return;}
- document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));
- document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
- window.scrollTo({top:0,behavior:"smooth"});
- if(id==="account"||id==="wallet"||id==="orders")loadUserData(false);
+function money(value){
+ return Number(value||0).toLocaleString("en-US")+" SDG";
 }
-function exitAdmin(){showPage("home");}
+
+function safeText(value){
+ return String(value??"").replace(/[&<>"']/g,function(char){
+  return {
+   "&":"&amp;",
+   "<":"&lt;",
+   ">":"&gt;",
+   '"':"&quot;",
+   "'":"&#39;"
+  }[char];
+ });
+}
+
+function closeModal(id){
+ const element=document.getElementById(id);
+ if(element)element.classList.remove("show");
+}
+
+function toggleMenu(){
+ document.getElementById("menuModal").classList.add("show");
+}
+
+function menuGo(id){
+ closeModal("menuModal");
+ showPage(id);
+}
+
+function showPage(id){
+ if(id==="admin"&&!isAdmin){
+  alert("هذه الصفحة مخصصة للمدير.");
+  return;
+ }
+
+ document.querySelectorAll(".page").forEach(function(page){
+  page.classList.toggle("active",page.id===id);
+ });
+
+ document.querySelectorAll(".nav-item").forEach(function(button){
+  button.classList.toggle("active",button.dataset.page===id);
+ });
+
+ window.scrollTo({top:0,behavior:"smooth"});
+
+ if(["account","wallet","orders"].includes(id)){
+  loadUserData(false);
+ }
+}
+
+function exitAdmin(){
+ showPage("home");
+}
 
 function previewImage(input,previewId){
- const preview=document.getElementById(previewId),file=input.files?.[0];
- if(!file){preview.style.display="none";return;}
- if(!file.type.startsWith("image/")){alert("الملف ليس صورة.");input.value="";return;}
- if(file.size>5*1024*1024){alert("حجم الصورة يجب ألا يتجاوز 5 ميجابايت.");input.value="";return;}
+ const preview=document.getElementById(previewId);
+ const file=input.files&&input.files[0];
+
+ if(!file){
+  preview.style.display="none";
+  return;
+ }
+
+ if(!file.type.startsWith("image/")){
+  alert("الملف المحدد ليس صورة.");
+  input.value="";
+  return;
+ }
+
+ if(file.size>5*1024*1024){
+  alert("حجم الصورة يجب ألا يتجاوز 5 ميجابايت.");
+  input.value="";
+  return;
+ }
+
  const reader=new FileReader();
- reader.onload=()=>{preview.src=reader.result;preview.style.display="block";};
+
+ reader.onload=function(){
+  preview.src=reader.result;
+  preview.style.display="block";
+ };
+
  reader.readAsDataURL(file);
 }
+
 async function uploadStoreImage(inputId,oldUrl="",folder="store"){
- const file=document.getElementById(inputId)?.files?.[0];
+ const input=document.getElementById(inputId);
+ const file=input?.files?.[0];
+
  if(!file)return oldUrl||null;
- if(!file.type.startsWith("image/"))throw new Error("الملف المحدد ليس صورة.");
- if(file.size>5*1024*1024)throw new Error("حجم الصورة أكبر من 5 ميجابايت.");
+
+ if(!file.type.startsWith("image/")){
+  throw new Error("الملف المحدد ليس صورة.");
+ }
+
+ if(file.size>5*1024*1024){
+  throw new Error("حجم الصورة أكبر من 5 ميجابايت.");
+ }
+
  const ext=(file.name.split(".").pop()||"jpg").toLowerCase();
  const path=folder+"/"+Date.now()+"-"+Math.random().toString(36).slice(2)+"."+ext;
- const {data,error}=await db.storage.from(IMAGE_BUCKET).upload(path,file,{cacheControl:"3600",upsert:false,contentType:file.type});
+
+ const {data,error}=await db.storage
+  .from(IMAGE_BUCKET)
+  .upload(path,file,{
+   cacheControl:"3600",
+   upsert:false,
+   contentType:file.type
+  });
+
  if(error)throw error;
+
  return db.storage.from(IMAGE_BUCKET).getPublicUrl(data.path).data.publicUrl;
 }
-  /* تسجيل الدخول */
+
+/* =========================
+   تسجيل الدخول والحساب
+========================= */
+
 function openAuth(){
- if(currentUser){showPage("account");return;}
+ if(currentUser){
+  showPage("account");
+  return;
+ }
+
  document.getElementById("authModal").classList.add("show");
 }
+
 function switchAuth(){
  authMode=authMode==="login"?"signup":"login";
- document.getElementById("authTitle").textContent=authMode==="login"?"تسجيل الدخول":"إنشاء حساب جديد";
- document.getElementById("authSubmit").textContent=authMode==="login"?"تسجيل الدخول":"إنشاء الحساب";
- document.getElementById("authName").style.display=authMode==="signup"?"block":"none";
- document.getElementById("authSwitchText").textContent=authMode==="login"?"ليس لديك حساب؟":"لديك حساب بالفعل؟";
- document.getElementById("authSwitch").textContent=authMode==="login"?"إنشاء حساب جديد":"تسجيل الدخول";
+
+ document.getElementById("authTitle").textContent=
+  authMode==="login"?"تسجيل الدخول":"إنشاء حساب جديد";
+
+ document.getElementById("authSubmit").textContent=
+  authMode==="login"?"تسجيل الدخول":"إنشاء الحساب";
+
+ document.getElementById("authName").style.display=
+  authMode==="signup"?"block":"none";
+
+ document.getElementById("authSwitchText").textContent=
+  authMode==="login"?"ليس لديك حساب؟":"لديك حساب بالفعل؟";
+
+ document.getElementById("authSwitch").textContent=
+  authMode==="login"?"إنشاء حساب جديد":"تسجيل الدخول";
 }
+
 async function submitAuth(){
  const email=document.getElementById("authEmail").value.trim();
  const password=document.getElementById("authPassword").value;
  const name=document.getElementById("authName").value.trim();
- if(!email||!password)return alert("أدخل البريد وكلمة المرور.");
- if(authMode==="signup"&&!name)return alert("أدخل اسمك الكامل.");
- const btn=document.getElementById("authSubmit");
- btn.disabled=true;btn.textContent="يرجى الانتظار...";
+
+ if(!email||!password){
+  alert("أدخل البريد الإلكتروني وكلمة المرور.");
+  return;
+ }
+
+ if(password.length<6){
+  alert("كلمة المرور يجب ألا تقل عن 6 أحرف.");
+  return;
+ }
+
+ if(authMode==="signup"&&!name){
+  alert("أدخل اسمك الكامل.");
+  return;
+ }
+
+ const button=document.getElementById("authSubmit");
+
+ button.disabled=true;
+ button.textContent="يرجى الانتظار...";
+
  try{
-  let result=authMode==="signup"
-   ?await db.auth.signUp({email,password,options:{data:{full_name:name}}})
-   :await db.auth.signInWithPassword({email,password});
-  if(result.error)throw result.error;
-  if(authMode==="signup"&&!result.data.session){
-   alert("تم إنشاء الحساب. راجع بريدك الإلكتروني للتأكيد.");
-   switchAuth();return;
+  let result;
+
+  if(authMode==="signup"){
+   result=await db.auth.signUp({
+    email:email,
+    password:password,
+    options:{
+     data:{full_name:name}
+    }
+   });
+  }else{
+   result=await db.auth.signInWithPassword({
+    email:email,
+    password:password
+   });
   }
-  if(result.data.session)await syncSession(result.data.session,true);
-  closeModal("authModal");
-  showPage("account");
-  alert("تم تسجيل الدخول بنجاح.");
- }catch(e){alert("تعذر إكمال العملية: "+e.message);}
- finally{btn.disabled=false;btn.textContent=authMode==="login"?"تسجيل الدخول":"إنشاء الحساب";}
+
+  if(result.error)throw result.error;
+
+  if(authMode==="signup"&&!result.data.session){
+   alert("تم إنشاء الحساب. راجع بريدك الإلكتروني لتأكيد الحساب.");
+   switchAuth();
+   return;
+  }
+
+  if(result.data.session){
+   await syncSession(result.data.session,true);
+   closeModal("authModal");
+   showPage("account");
+   alert("تم تسجيل الدخول بنجاح.");
+  }
+
+ }catch(error){
+  console.error("Auth error:",error);
+  alert("تعذر إكمال العملية: "+(error.message||"خطأ غير معروف"));
+ }finally{
+  button.disabled=false;
+  button.textContent=authMode==="login"?"تسجيل الدخول":"إنشاء الحساب";
+ }
 }
 
 /*
-  لا نستخدم getSession داخل onAuthStateChange.
-  نحدّث حالة المستخدم فقط عند وصول جلسة فعلية أو حدث خروج صريح.
+  هذه الدالة هي المسؤولة عن تحديث حالة المستخدم.
+  لا يتم استدعاء getSession من داخل onAuthStateChange.
 */
+
 async function syncSession(session,force=false){
  const token=++authSyncToken;
- if(!session?.user){
+
+ if(!session||!session.user){
   if(force){
-   currentUser=null;lastKnownUserId=null;isAdmin=false;
+   currentUser=null;
+   isAdmin=false;
    updateAdminButtons();
    await loadUserData(false);
   }
   return;
  }
+
  const user=session.user;
- const changed=lastKnownUserId!==user.id;
+
  currentUser=user;
- lastKnownUserId=user.id;
- if(changed)isAdmin=false;
+ isAdmin=false;
+
+ updateAdminButtons();
 
  try{
   const {data,error}=await db.rpc("is_store_admin");
+
   if(token!==authSyncToken)return;
-  if(!error)isAdmin=data===true;
-  else console.warn("فشل التحقق من صلاحية المدير:",error.message);
- }catch(e){console.warn(e);}
+
+  if(error){
+   console.warn("تعذر التحقق من صلاحية المدير:",error.message);
+   isAdmin=false;
+  }else{
+   isAdmin=data===true;
+  }
+
+ }catch(error){
+  console.warn("Admin check error:",error);
+  isAdmin=false;
+ }
 
  if(token!==authSyncToken)return;
+
  updateAdminButtons();
  await loadUserData(false);
 }
 
-function updateAdminButtons(){
- const menuButton=document.getElementById("menuAdminButton");
- if(menuButton)menuButton.style.display=isAdmin?"block":"none";
- const account=document.getElementById("accountPanel");
- if(account&&currentUser){
-  const button=account.querySelector(".admin-entry");
-  if(isAdmin&&!button){
-   const b=document.createElement("button");
-   b.className="primary admin-entry";
-   b.style.marginTop="10px";
-   b.textContent="دخول لوحة المدير";
-   b.onclick=openAdmin;
-   account.insertBefore(b,account.querySelector("button[onclick='signOut()']"));
-  }
-  if(!isAdmin&&button)button.remove();
- }
-}
+/* استعادة الجلسة عند فتح الموقع */
 
 async function refreshSession(){
  try{
   const {data,error}=await db.auth.getSession();
+
   if(error)throw error;
-  if(data.session)await syncSession(data.session,true);
-  else{
-   /* لا نمسح حالة المستخدم إلا بعد التأكد من عدم وجود جلسة */
-   const {data:again,error:secondError}=await db.auth.getSession();
-   if(!secondError&&again.session)await syncSession(again.session,true);
-   else if(!lastKnownUserId){
-    currentUser=null;isAdmin=false;updateAdminButtons();
-    await loadUserData(false);
-   }
+
+  if(data.session){
+   await syncSession(data.session,true);
+  }else{
+   currentUser=null;
+   isAdmin=false;
+   updateAdminButtons();
+   await loadUserData(false);
   }
+
   sessionReady=true;
- }catch(e){
-  console.error("Session restore error:",e);
+
+ }catch(error){
+  console.error("Session restore error:",error);
  }
 }
 
-db.auth.onAuthStateChange((event,session)=>{
- if(event==="SIGNED_OUT"){
-  authSyncToken++;
-  currentUser=null;lastKnownUserId=null;isAdmin=false;
-  updateAdminButtons();
-  setTimeout(()=>loadUserData(false),0);
-  return;
- }
- if(session?.user){
-  setTimeout(()=>syncSession(session),0);
- }
+/*
+  استقبال تغييرات الجلسة:
+  INITIAL_SESSION عند فتح الموقع.
+  SIGNED_IN عند تسجيل الدخول.
+  TOKEN_REFRESHED عند تجديد الجلسة.
+  SIGNED_OUT عند تسجيل الخروج.
+*/
+
+db.auth.onAuthStateChange(function(event,session){
+
+ setTimeout(async function(){
+
+  if(event==="SIGNED_OUT"){
+   authSyncToken++;
+   userDataToken++;
+
+   currentUser=null;
+   isAdmin=false;
+
+   updateAdminButtons();
+   await loadUserData(false);
+
+   return;
+  }
+
+  if(session&&session.user){
+   await syncSession(session,false);
+   return;
+  }
+
+  if(event==="INITIAL_SESSION"){
+   currentUser=null;
+   isAdmin=false;
+   updateAdminButtons();
+   await loadUserData(false);
+  }
+
+ },0);
+
 });
 
-/* تسجيل الخروج الحقيقي فقط من زر الحساب */
+/* تسجيل الخروج */
+
 async function signOut(){
  if(!confirm("هل تريد تسجيل الخروج؟"))return;
- const {error}=await db.auth.signOut();
- if(error)return alert("تعذر تسجيل الخروج: "+error.message);
- authSyncToken++;
- currentUser=null;lastKnownUserId=null;isAdmin=false;
- updateAdminButtons();
- await loadUserData(false);
- showPage("home");
- alert("تم تسجيل الخروج.");
+
+ try{
+  const {error}=await db.auth.signOut();
+
+  if(error)throw error;
+
+  authSyncToken++;
+  userDataToken++;
+
+  currentUser=null;
+  isAdmin=false;
+
+  updateAdminButtons();
+  await loadUserData(false);
+
+  showPage("home");
+  alert("تم تسجيل الخروج.");
+
+ }catch(error){
+  alert("تعذر تسجيل الخروج: "+error.message);
+ }
 }
 
-/* تحميل بيانات الحساب دون إعادة ضبط currentUser */
+/* =========================
+   تحديث واجهة الحساب
+========================= */
+
+function updateAdminButtons(){
+ const menuButton=document.getElementById("menuAdminButton");
+
+ if(menuButton){
+  menuButton.style.display=isAdmin?"block":"none";
+ }
+
+ const panel=document.getElementById("accountPanel");
+
+ if(!panel)return;
+
+ if(!currentUser){
+  panel.innerHTML=`
+   <h3>أهلاً بك في أمانة ستور</h3>
+   <p class="muted">سجل الدخول أو أنشئ حساباً لمتابعة محفظتك وطلباتك.</p>
+   <button class="primary" onclick="openAuth()">تسجيل الدخول / حساب جديد</button>
+  `;
+ }
+}
+
 async function loadUserData(refresh=false){
+ const token=++userDataToken;
+
  try{
   if(refresh){
    const {data,error}=await db.auth.getSession();
+
    if(error)throw error;
+
    if(data.session?.user){
     currentUser=data.session.user;
-    lastKnownUserId=currentUser.id;
    }
-   /* لا نضع currentUser=null هنا عند قراءة جلسة فارغة */
   }
 
   const panel=document.getElementById("accountPanel");
+
   if(!currentUser){
    document.getElementById("walletBalance").textContent="— SDG";
    document.getElementById("ordersMessage").textContent="سجل الدخول لمتابعة طلباتك.";
-   panel.innerHTML='<h3>أهلاً بك في أمانة ستور</h3><p class="muted">سجل الدخول أو أنشئ حساباً.</p><button class="primary" onclick="openAuth()">تسجيل الدخول / حساب جديد</button>';
+
+   if(panel){
+    panel.innerHTML=`
+     <h3>أهلاً بك في أمانة ستور</h3>
+     <p class="muted">سجل الدخول أو أنشئ حساباً لمتابعة محفظتك وطلباتك.</p>
+     <button class="primary" onclick="openAuth()">تسجيل الدخول / حساب جديد</button>
+    `;
+   }
+
    return;
   }
 
   const userId=currentUser.id;
   const userEmail=currentUser.email||"";
-  const [{data:profile,error:profileError},{data:wallet,error:walletError}]=await Promise.all([
+
+  const results=await Promise.all([
    db.from("profiles").select("*").eq("id",userId).maybeSingle(),
    db.from("wallets").select("*").eq("user_id",userId).maybeSingle()
   ]);
+
+  if(token!==userDataToken)return;
   if(!currentUser||currentUser.id!==userId)return;
-  if(profileError)console.warn(profileError.message);
-  if(walletError)console.warn(walletError.message);
 
-  document.getElementById("walletBalance").textContent=money(wallet?.balance);
-  document.getElementById("ordersMessage").textContent="تم تسجيل الدخول. ستظهر تفاصيل الطلبات بعد تفعيل سجل الطلبات.";
-  const name=profile?.full_name||currentUser.user_metadata?.full_name||userEmail;
-  panel.innerHTML=`
-   <h3>مرحباً، ${safeText(name)}</h3>
-   <p class="muted">البريد: ${safeText(userEmail)}</p>
-   <p class="muted">رقم العضوية: ${safeText(profile?.member_id||"")}</p>
-   ${isAdmin?'<button class="primary admin-entry" onclick="openAdmin()">دخول لوحة المدير</button>':""}
-   <button class="secondary" style="width:100%;margin-top:10px" onclick="signOut()">تسجيل الخروج</button>`;
- }catch(e){console.error("loadUserData:",e);}
+  const profileResult=results[0];
+  const walletResult=results[1];
+
+  if(profileResult.error)console.warn("Profile:",profileResult.error.message);
+  if(walletResult.error)console.warn("Wallet:",walletResult.error.message);
+
+  const profile=profileResult.data;
+  const wallet=walletResult.data;
+
+  document.getElementById("walletBalance").textContent=
+   money(wallet?.balance);
+
+  document.getElementById("ordersMessage").textContent=
+   "تم تسجيل الدخول. ستظهر تفاصيل الطلبات بعد تفعيل سجل الطلبات.";
+
+  const name=
+   profile?.full_name||
+   currentUser.user_metadata?.full_name||
+   userEmail;
+
+  if(panel){
+   panel.innerHTML=`
+    <h3>مرحباً، ${safeText(name)}</h3>
+    <p class="muted">البريد: ${safeText(userEmail)}</p>
+    <p class="muted">رقم العضوية: ${safeText(profile?.member_id||"")}</p>
+    ${isAdmin?'<button class="primary admin-entry" onclick="openAdmin()">دخول لوحة المدير</button>':""}
+    <button class="secondary" style="width:100%;margin-top:10px" onclick="signOut()">تسجيل الخروج</button>
+   `;
+  }
+
+ }catch(error){
+  console.error("loadUserData:",error);
+ }
 }
 
-/* بيانات المتجر العامة */
+/* =========================
+   تحميل بيانات المتجر
+========================= */
+
 async function loadStore(){
- const [c,p,s]=await Promise.all([
-  db.from("categories").select("id,name,image_url,is_active").eq("is_active",true),
-  db.from("products").select("id,category_id,name,description,image_url,price,is_active").eq("is_active",true),
-  db.from("store_settings").select("*").limit(1).maybeSingle()
- ]);
- if(c.error)console.error(c.error);
- if(p.error)console.error(p.error);
- if(s.error)console.warn(s.error);
- categories=c.data||[];
- products=p.data||[];
- settings=s.data||{};
+ try{
+  const results=await Promise.all([
+   db.from("categories").select("id,name,image_url,is_active").eq("is_active",true),
+   db.from("products").select("id,category_id,name,description,image_url,price,is_active").eq("is_active",true),
+   db.from("store_settings").select("*").limit(1).maybeSingle()
+  ]);
 
- document.title=(settings.store_name||"AMANA STORE")+" | أمانة ستور";
- document.querySelector(".brand").innerHTML='<div class="brand-mark">أ</div><div>'+safeText(settings.store_name||"AMANA STORE")+'<small>'+safeText(settings.arabic_name||"أمانة ستور")+'</small></div>';
- document.querySelector(".hero h1").textContent=settings.slogan||"ثقتك أمانة.. وخدماتك علينا.";
- document.querySelector(".hero p").textContent=settings.welcome_message||"خدمات رقمية، شحن، تحويلات وحسابات — بسهولة وأمان.";
- if(settings.logo_url)document.querySelector(".brand-mark").innerHTML='<img src="'+safeText(settings.logo_url)+'" style="width:100%;height:100%;object-fit:contain">';
- renderCategories();renderProducts();renderShop();
- await loadBanners(false);
+  const c=results[0];
+  const p=results[1];
+  const s=results[2];
+
+  if(c.error)console.error("Categories:",c.error);
+  if(p.error)console.error("Products:",p.error);
+  if(s.error)console.warn("Settings:",s.error);
+
+  categories=c.data||[];
+  products=p.data||[];
+  settings=s.data||{};
+
+  document.title=(settings.store_name||"AMANA STORE")+" | أمانة ستور";
+
+  document.querySelector(".brand").innerHTML=`
+   <div class="brand-mark">أ</div>
+   <div>${safeText(settings.store_name||"AMANA STORE")}
+    <small>${safeText(settings.arabic_name||"أمانة ستور")}</small>
+   </div>
+  `;
+
+  document.querySelector(".hero h1").textContent=
+   settings.slogan||"ثقتك أمانة.. وخدماتك علينا.";
+
+  document.querySelector(".hero p").textContent=
+   settings.welcome_message||"خدمات رقمية، شحن، تحويلات وحسابات — بسهولة وأمان.";
+
+  if(settings.logo_url){
+   document.querySelector(".brand-mark").innerHTML=
+    `<img src="${safeText(settings.logo_url)}" style="width:100%;height:100%;object-fit:contain">`;
+  }
+
+  renderCategories();
+  renderProducts();
+  renderShop();
+
+  await loadBanners(false);
+
+ }catch(error){
+  console.error("Load store error:",error);
+ }
 }
 
-/* البنرات */
+/* =========================
+   البنرات
+========================= */
+
 async function loadBanners(adminMode=false){
- let query=db.from("banners").select("id,title,image_url,target_url,is_active,sort_order,created_at").order("sort_order",{ascending:true}).order("created_at",{ascending:true});
- if(!adminMode)query=query.eq("is_active",true);
+ let query=db.from("banners")
+  .select("id,title,image_url,target_url,is_active,sort_order,created_at")
+  .order("sort_order",{ascending:true})
+  .order("created_at",{ascending:true});
+
+ if(!adminMode){
+  query=query.eq("is_active",true);
+ }
+
  const {data,error}=await query;
+
  if(error){
-  console.error(error);
-  if(adminMode)document.getElementById("adminBannersList").innerHTML='<div class="empty">تعذر تحميل البنرات: '+safeText(error.message)+'</div>';
+  console.error("Banners:",error);
+
+  if(adminMode){
+   document.getElementById("adminBannersList").innerHTML=
+    '<div class="empty">تعذر تحميل البنرات: '+safeText(error.message)+'</div>';
+  }
+
   return;
  }
- if(adminMode){adminBanners=data||[];renderAdminBanners();}
- else{banners=data||[];renderBanners();}
+
+ if(adminMode){
+  adminBanners=data||[];
+  renderAdminBanners();
+ }else{
+  banners=data||[];
+  renderBanners();
+ }
 }
+
 function renderBanners(){
  const target=document.getElementById("bannerSlider");
- clearInterval(bannerTimer);bannerTimer=null;
- const active=banners.filter(b=>b.is_active&&b.image_url).sort((a,b)=>(Number(a.sort_order)||0)-(Number(b.sort_order)||0));
- if(!active.length){target.innerHTML='<div class="banner-empty">أمانة ستور — ثقتك أمانة</div>';return;}
+
+ clearInterval(bannerTimer);
+ bannerTimer=null;
+
+ const active=banners
+  .filter(b=>b.is_active&&b.image_url)
+  .sort((a,b)=>(Number(a.sort_order)||0)-(Number(b.sort_order)||0));
+
+ if(!active.length){
+  target.innerHTML='<div class="banner-empty">أمانة ستور — ثقتك أمانة</div>';
+  return;
+ }
+
  if(currentBannerIndex>=active.length)currentBannerIndex=0;
- target.innerHTML=active.map((b,i)=>`
-  <div class="banner-slide ${i===currentBannerIndex?"active":""}" data-target="${safeText(b.target_url||"")}" onclick="openBannerTarget(this.dataset.target)">
-   <img src="${safeText(b.image_url)}" alt="${safeText(b.title||"أمانة ستور")}">
-   ${b.title?'<div class="banner-overlay">'+safeText(b.title)+'</div>':""}
-  </div>`).join("")+(active.length>1?`
+
+ target.innerHTML=active.map(function(b,i){
+  return `
+   <div class="banner-slide ${i===currentBannerIndex?"active":""}"
+    data-target="${safeText(b.target_url||"")}"
+    onclick="openBannerTarget(this.dataset.target)">
+    <img src="${safeText(b.image_url)}" alt="${safeText(b.title||"أمانة ستور")}">
+    ${b.title?'<div class="banner-overlay">'+safeText(b.title)+'</div>':""}
+   </div>
+  `;
+ }).join("")+(active.length>1?`
   <button class="banner-arrow banner-prev" onclick="event.stopPropagation();changeBanner(-1)">›</button>
   <button class="banner-arrow banner-next" onclick="event.stopPropagation();changeBanner(1)">‹</button>
-  <div class="banner-dots">${active.map((b,i)=>`<button class="banner-dot ${i===currentBannerIndex?"active":""}" onclick="event.stopPropagation();goBanner(${i})"></button>`).join("")}</div>`:"");
- if(active.length>1)bannerTimer=setInterval(()=>changeBanner(1),5000);
+  <div class="banner-dots">
+   ${active.map((b,i)=>`
+    <button class="banner-dot ${i===currentBannerIndex?"active":""}"
+     onclick="event.stopPropagation();goBanner(${i})"></button>
+   `).join("")}
+  </div>
+ `:"");
+
+ if(active.length>1){
+  bannerTimer=setInterval(function(){
+   changeBanner(1);
+  },5000);
+ }
 }
-function changeBanner(dir){
+
+function changeBanner(direction){
  const slides=[...document.querySelectorAll(".banner-slide")];
+
  if(slides.length<2)return;
- currentBannerIndex=(currentBannerIndex+dir+slides.length)%slides.length;
- slides.forEach((s,i)=>s.classList.toggle("active",i===currentBannerIndex));
- document.querySelectorAll(".banner-dot").forEach((d,i)=>d.classList.toggle("active",i===currentBannerIndex));
+
+ currentBannerIndex=
+  (currentBannerIndex+direction+slides.length)%slides.length;
+
+ slides.forEach((slide,index)=>{
+  slide.classList.toggle("active",index===currentBannerIndex);
+ });
+
+ document.querySelectorAll(".banner-dot").forEach((dot,index)=>{
+  dot.classList.toggle("active",index===currentBannerIndex);
+ });
 }
-function goBanner(i){
- currentBannerIndex=i;
- document.querySelectorAll(".banner-slide").forEach((s,n)=>s.classList.toggle("active",n===i));
- document.querySelectorAll(".banner-dot").forEach((d,n)=>d.classList.toggle("active",n===i));
+
+function goBanner(index){
+ currentBannerIndex=index;
+
+ document.querySelectorAll(".banner-slide").forEach((slide,i)=>{
+  slide.classList.toggle("active",i===index);
+ });
+
+ document.querySelectorAll(".banner-dot").forEach((dot,i)=>{
+  dot.classList.toggle("active",i===index);
+ });
 }
+
 function openBannerTarget(target){
  if(!target)return;
- if(["home","shop","wallet","orders","account"].includes(target)){showPage(target);return;}
+
+ if(["home","shop","wallet","orders","account"].includes(target)){
+  showPage(target);
+  return;
+ }
+
  if(target.startsWith("#")){
   const page=target.slice(1);
-  if(["home","shop","wallet","orders","account"].includes(page)){showPage(page);return;}
+
+  if(["home","shop","wallet","orders","account"].includes(page)){
+   showPage(page);
+   return;
+  }
  }
- if(/^https?:\/\//i.test(target)){window.open(target,"_blank","noopener");return;}
+
+ if(/^https?:\/\//i.test(target)){
+  window.open(target,"_blank","noopener");
+  return;
+ }
+
  alert("رابط البنر غير صحيح.");
 }
 
-/* المنتجات والأقسام */
+/* =========================
+   الأقسام والمنتجات
+========================= */
+
 function renderCategories(){
  const target=document.getElementById("homeCategories");
- target.innerHTML=categories.length?categories.map(c=>`
-  <button class="category-card" onclick="filterCategory('${safeText(c.id)}')">
-   <div class="category-icon">${c.image_url?'<img src="'+safeText(c.image_url)+'" style="width:100%;height:100%;object-fit:cover">':"✦"}</div>
-   <div><strong>${safeText(c.name)}</strong><small>تصفح الخدمات والمنتجات</small></div>
-  </button>`).join(""):'<div class="empty">لا توجد أقسام نشطة حالياً.</div>';
- document.getElementById("categoryFilter").innerHTML='<option value="">كل الأقسام</option>'+categories.map(c=>`<option value="${safeText(c.id)}">${safeText(c.name)}</option>`).join("");
-}
-function productCard(p){
- return `<article class="product-card" onclick="openProduct('${safeText(p.id)}')"><img src="${safeText(p.image_url||"https://placehold.co/600x500/f3f0e8/8b6b2b?text=AMANA+STORE")}" alt="${safeText(p.name)}" loading="lazy"><div class="product-info"><strong>${safeText(p.name)}</strong><div class="price">${money(p.price)}</div></div></article>`;
-}
-function renderProducts(){
- document.getElementById("featuredProducts").innerHTML=products.length?products.slice(0,4).map(productCard).join(""):'<div class="empty">لا توجد منتجات مضافة حالياً.</div>';
-}
-function renderShop(){
- const q=(document.getElementById("shopSearch")?.value||"").trim().toLowerCase();
- const cat=document.getElementById("categoryFilter")?.value||"";
- const list=products.filter(p=>(!cat||String(p.category_id)===String(cat))&&(!q||String(p.name).toLowerCase().includes(q)||String(p.description||"").toLowerCase().includes(q)));
- document.getElementById("productCount").textContent="عرض "+list.length+" منتج";
- document.getElementById("shopProducts").innerHTML=list.length?list.map(productCard).join(""):'<div class="empty">لا توجد منتجات مطابقة حالياً.</div>';
-}
-function filterCategory(id){showPage("shop");document.getElementById("categoryFilter").value=id;renderShop();}
-function searchProducts(){showPage("shop");document.getElementById("shopSearch").focus();}
-function openProduct(id){
- const p=products.find(x=>String(x.id)===String(id));
- if(!p)return;
- document.getElementById("productModalTitle").textContent=p.name;
- document.getElementById("productModalBody").innerHTML=`
-  <img src="${safeText(p.image_url||"https://placehold.co/600x500")}" style="width:100%;max-height:230px;object-fit:cover;border-radius:13px">
-  <h3>${safeText(p.name)}</h3><div class="price">${money(p.price)}</div>
-  <p class="muted">${safeText(p.description||"")}</p>
-  <div class="notice">لتأكيد توفر المنتج وإتمام الطلب، تواصل مع خدمة العملاء.</div>
-  <button class="primary" onclick="contactSupportFor('${safeText(p.name)}')">اطلب عبر خدمة العملاء ←</button>`;
- document.getElementById("productModal").classList.add("show");
-}
-function contactSupportFor(name){closeModal("productModal");contactSupport("أرغب في الاستفسار عن: "+name);}
-function contactSupport(message){
- const number=String(settings.whatsapp_number||"").replace(/\D/g,"");
- if(!number){alert("رقم واتساب المتجر غير مضاف في الإعدادات.");return;}
- window.open("https://wa.me/"+number+"?text="+encodeURIComponent(message||"السلام عليكم، أحتاج مساعدة من خدمة عملاء أمانة ستور."),"_blank");
+
+ target.innerHTML=categories.length
+  ?categories.map(c=>`
+   <button class="category-card" onclick="filterCategory('${safeText(c.id)}')">
+    <div class="category-icon">
+     ${c.image_url
+      ?'<img src="'+safeText(c.image_url)+'" style="width:100%;height:100%;object-fit:cover">'
+      :"✦"}
+    </div>
+    <div>
+     <strong>${safeText(c.name)}</strong>
+     <small>تصفح الخدمات والمنتجات</small>
+    </div>
+   </button>
+  `).join("")
+  :'<div class="empty">لا توجد أقسام نشطة حالياً.</div>';
+
+ document.getElementById("categoryFilter").innerHTML=
+  '<option value="">كل الأقسام</option>'+
+  categories.map(c=>`
+   <option value="${safeText(c.id)}">${safeText(c.name)}</option>
+  `).join("");
 }
 
-/* لوحة الإدارة */
+function productCard(product){
+ return `
+  <article class="product-card" onclick="openProduct('${safeText(product.id)}')">
+   <img src="${safeText(product.image_url||"https://placehold.co/600x500/f3f0e8/8b6b2b?text=AMANA+STORE")}"
+    alt="${safeText(product.name)}" loading="lazy">
+   <div class="product-info">
+    <strong>${safeText(product.name)}</strong>
+    <div class="price">${money(product.price)}</div>
+   </div>
+  </article>
+ `;
+}
+
+function renderProducts(){
+ document.getElementById("featuredProducts").innerHTML=
+  products.length
+   ?products.slice(0,4).map(productCard).join("")
+   :'<div class="empty">لا توجد منتجات مضافة حالياً.</div>';
+}
+
+function renderShop(){
+ const q=(document.getElementById("shopSearch")?.value||"").trim().toLowerCase();
+ const category=document.getElementById("categoryFilter")?.value||"";
+
+ const list=products.filter(function(product){
+  const matchesCategory=!category||
+   String(product.category_id)===String(category);
+
+  const matchesSearch=!q||
+   String(product.name).toLowerCase().includes(q)||
+   String(product.description||"").toLowerCase().includes(q);
+
+  return matchesCategory&&matchesSearch;
+ });
+
+ document.getElementById("productCount").textContent=
+  "عرض "+list.length+" منتج";
+
+ document.getElementById("shopProducts").innerHTML=
+  list.length
+   ?list.map(productCard).join("")
+   :'<div class="empty">لا توجد منتجات مطابقة حالياً.</div>';
+}
+
+function filterCategory(id){
+ showPage("shop");
+ document.getElementById("categoryFilter").value=id;
+ renderShop();
+}
+
+function searchProducts(){
+ showPage("shop");
+ document.getElementById("shopSearch").focus();
+}
+
+function openProduct(id){
+ const product=products.find(p=>String(p.id)===String(id));
+
+ if(!product)return;
+
+ document.getElementById("productModalTitle").textContent=product.name;
+
+ document.getElementById("productModalBody").innerHTML=`
+  <img src="${safeText(product.image_url||"https://placehold.co/600x500")}"
+   style="width:100%;max-height:230px;object-fit:cover;border-radius:13px">
+  <h3>${safeText(product.name)}</h3>
+  <div class="price">${money(product.price)}</div>
+  <p class="muted">${safeText(product.description||"")}</p>
+  <div class="notice">لتأكيد توفر المنتج وإتمام الطلب، تواصل مع خدمة العملاء.</div>
+  <button class="primary" onclick="contactSupportFor('${safeText(product.name)}')">
+   اطلب عبر خدمة العملاء ←
+  </button>
+ `;
+
+ document.getElementById("productModal").classList.add("show");
+}
+
+function contactSupportFor(name){
+ closeModal("productModal");
+ contactSupport("أرغب في الاستفسار عن: "+name);
+}
+
+function contactSupport(message){
+ const number=String(settings.whatsapp_number||"").replace(/\D/g,"");
+
+ if(!number){
+  alert("رقم واتساب المتجر غير مضاف في الإعدادات.");
+  return;
+ }
+
+ const text=message||
+  "السلام عليكم، أحتاج مساعدة من خدمة عملاء أمانة ستور.";
+
+ window.open(
+  "https://wa.me/"+number+"?text="+encodeURIComponent(text),
+  "_blank"
+ );
+}
+
+/* =========================
+   لوحة المدير
+========================= */
+
 async function openAdmin(){
- const {data,error}=await db.auth.getSession();
- if(error||!data.session?.user){alert("سجل الدخول أولاً.");openAuth();return;}
- await syncSession(data.session,true);
- if(!isAdmin){alert("حسابك لا يملك صلاحية المدير.");return;}
- showPage("admin");
- await loadAdminData();
+ try{
+  const {data,error}=await db.auth.getSession();
+
+  if(error)throw error;
+
+  if(!data.session?.user){
+   alert("سجل الدخول أولاً.");
+   openAuth();
+   return;
+  }
+
+  await syncSession(data.session,true);
+
+  if(!isAdmin){
+   alert("حسابك لا يملك صلاحية المدير. تأكد من إعداد دالة is_store_admin في Supabase.");
+   return;
+  }
+
+  showPage("admin");
+  await loadAdminData();
+
+ }catch(error){
+  alert("تعذر فتح لوحة المدير: "+error.message);
+ }
 }
+
 function showAdminTab(id){
- document.querySelectorAll(".admin-section").forEach(s=>s.classList.remove("active"));
+ document.querySelectorAll(".admin-section").forEach(section=>{
+  section.classList.remove("active");
+ });
+
  document.getElementById(id).classList.add("active");
- if(id==="bannersTab")loadBanners(true);
+
+ if(id==="bannersTab"){
+  loadBanners(true);
+ }
 }
+
 async function loadAdminData(){
  if(!isAdmin)return;
- const [c,p]=await Promise.all([
-  db.from("categories").select("*").order("name"),
-  db.from("products").select("*").order("name")
- ]);
- if(c.error)return alert("خطأ تحميل الأقسام: "+c.error.message);
- if(p.error)return alert("خطأ تحميل المنتجات: "+p.error.message);
- adminCategories=c.data||[];
- adminProducts=p.data||[];
- await loadStore();
- await loadBanners(true);
- renderAdminCategories();
- renderAdminProducts();
- fillAdminCategorySelect();
- fillSettingsForm();
+
+ try{
+  const results=await Promise.all([
+   db.from("categories").select("*").order("name"),
+   db.from("products").select("*").order("name")
+  ]);
+
+  if(results[0].error){
+   alert("خطأ تحميل الأقسام: "+results[0].error.message);
+   return;
+  }
+
+  if(results[1].error){
+   alert("خطأ تحميل المنتجات: "+results[1].error.message);
+   return;
+  }
+
+  adminCategories=results[0].data||[];
+  adminProducts=results[1].data||[];
+
+  await loadStore();
+  await loadBanners(true);
+
+  renderAdminCategories();
+  renderAdminProducts();
+  fillAdminCategorySelect();
+  fillSettingsForm();
+
+ }catch(error){
+  console.error("Admin loading error:",error);
+  alert("حدث خطأ أثناء تحميل لوحة المدير.");
+ }
 }
+
 function fillAdminCategorySelect(selected=""){
  const select=document.getElementById("adminProductCategory");
- select.innerHTML='<option value="">اختر القسم</option>'+adminCategories.map(c=>`<option value="${safeText(c.id)}">${safeText(c.name)}${c.is_active?"":" (متوقف)"}</option>`).join("");
+
+ select.innerHTML=
+  '<option value="">اختر القسم</option>'+
+  adminCategories.map(c=>`
+   <option value="${safeText(c.id)}">
+    ${safeText(c.name)}${c.is_active?"":" (متوقف)"}
+   </option>
+  `).join("");
+
  if(selected)select.value=selected;
 }
+
+/* عرض الأقسام في لوحة المدير */
+
 function renderAdminCategories(){
  const target=document.getElementById("adminCategoriesList");
- if(!adminCategories.length){target.innerHTML='<div class="empty">لا توجد أقسام حتى الآن.</div>';return;}
+
+ if(!adminCategories.length){
+  target.innerHTML='<div class="empty">لا توجد أقسام حتى الآن.</div>';
+  return;
+ }
+
  target.innerHTML=adminCategories.map(c=>`
- <div class="admin-item"><div class="admin-item-row">
- <img src="${safeText(c.image_url||"https://placehold.co/100x100")}">
- <div class="admin-item-info"><strong>${safeText(c.name)}</strong><span class="status-badge ${c.is_active?"":"status-off"}">${c.is_active?"نشط":"متوقف"}</span></div></div>
- <div class="admin-actions">
- <button class="secondary small-btn" onclick="editCategory('${safeText(c.id)}')">تعديل</button>
- <button class="secondary small-btn" onclick="toggleCategory('${safeText(c.id)}',${!c.is_active})">${c.is_active?"إيقاف":"تفعيل"}</button>
- <button class="danger small-btn" onclick="deleteCategory('${safeText(c.id)}')">حذف</button>
- </div></div>`).join("");
+  <div class="admin-item">
+   <div class="admin-item-row">
+    <img src="${safeText(c.image_url||"https://placehold.co/100x100")}">
+    <div class="admin-item-info">
+     <strong>${safeText(c.name)}</strong>
+     <span class="status-badge ${c.is_active?"":"status-off"}">
+      ${c.is_active?"نشط":"متوقف"}
+     </span>
+    </div>
+   </div>
+
+   <div class="admin-actions">
+    <button class="secondary small-btn" onclick="editCategory('${safeText(c.id)}')">تعديل</button>
+    <button class="secondary small-btn" onclick="toggleCategory('${safeText(c.id)}',${!c.is_active})">${c.is_active?"إيقاف":"تفعيل"}</button>
+    <button class="danger small-btn" onclick="deleteCategory('${safeText(c.id)}')">حذف</button>
+   </div>
+  </div>
+ `).join("");
 }
+
+/* عرض المنتجات في لوحة المدير */
+
 function renderAdminProducts(){
  const target=document.getElementById("adminProductsList");
- if(!adminProducts.length){target.innerHTML='<div class="empty">لا توجد منتجات حتى الآن.</div>';return;}
+
+ if(!adminProducts.length){
+  target.innerHTML='<div class="empty">لا توجد منتجات حتى الآن.</div>';
+  return;
+ }
+
  target.innerHTML=adminProducts.map(p=>{
-  const c=adminCategories.find(x=>String(x.id)===String(p.category_id));
-  return `<div class="admin-item"><div class="admin-item-row">
-   <img src="${safeText(p.image_url||"https://placehold.co/100x100")}">
-   <div class="admin-item-info"><strong>${safeText(p.name)}</strong><div class="price">${money(p.price)}</div><small class="muted">${safeText(c?.name||"بدون قسم")}</small><br><span class="status-badge ${p.is_active?"":"status-off"}">${p.is_active?"نشط":"متوقف"}</span></div>
-   </div><div class="admin-actions">
-   <button class="secondary small-btn" onclick="editProduct('${safeText(p.id)}')">تعديل</button>
-   <button class="secondary small-btn" onclick="toggleProduct('${safeText(p.id)}',${!p.is_active})">${p.is_active?"إيقاف":"تفعيل"}</button>
-   <button class="danger small-btn" onclick="deleteProduct('${safeText(p.id)}')">حذف</button>
-   </div></div>`;
+  const category=adminCategories.find(c=>
+   String(c.id)===String(p.category_id)
+  );
+
+  return `
+   <div class="admin-item">
+    <div class="admin-item-row">
+     <img src="${safeText(p.image_url||"https://placehold.co/100x100")}">
+     <div class="admin-item-info">
+      <strong>${safeText(p.name)}</strong>
+      <div class="price">${money(p.price)}</div>
+      <small class="muted">${safeText(category?.name||"بدون قسم")}</small><br>
+      <span class="status-badge ${p.is_active?"":"status-off"}">
+       ${p.is_active?"نشط":"متوقف"}
+      </span>
+     </div>
+    </div>
+
+    <div class="admin-actions">
+     <button class="secondary small-btn" onclick="editProduct('${safeText(p.id)}')">تعديل</button>
+     <button class="secondary small-btn" onclick="toggleProduct('${safeText(p.id)}',${!p.is_active})">${p.is_active?"إيقاف":"تفعيل"}</button>
+     <button class="danger small-btn" onclick="deleteProduct('${safeText(p.id)}')">حذف</button>
+    </div>
+   </div>
+  `;
  }).join("");
-  }
-  /* إدارة الأقسام */
+}
+
+/* =========================
+   إدارة الأقسام
+========================= */
+
 async function saveCategory(){
  if(!isAdmin)return;
+
  const id=document.getElementById("editCategoryId").value;
  const name=document.getElementById("adminCategoryName").value.trim();
- if(!name)return alert("اكتب اسم القسم.");
+
+ if(!name){
+  alert("اكتب اسم القسم.");
+  return;
+ }
+
  const old=adminCategories.find(c=>String(c.id)===String(id));
- const btn=document.querySelector("#categoriesTab .primary");
- btn.disabled=true;
+ const button=document.querySelector("#categoriesTab .primary");
+
+ button.disabled=true;
+
  try{
-  const image=await uploadStoreImage("adminCategoryImageFile",document.getElementById("adminCategoryImage").value.trim(),"categories");
-  const payload={name,image_url:image,is_active:id?(old?.is_active??true):true};
-  const result=id?await db.from("categories").update(payload).eq("id",id):await db.from("categories").insert(payload);
+  const image=await uploadStoreImage(
+   "adminCategoryImageFile",
+   document.getElementById("adminCategoryImage").value.trim(),
+   "categories"
+  );
+
+  const payload={
+   name:name,
+   image_url:image,
+   is_active:id?(old?.is_active??true):true
+  };
+
+  const result=id
+   ?await db.from("categories").update(payload).eq("id",id)
+   :await db.from("categories").insert(payload);
+
   if(result.error)throw result.error;
-  alert("تم حفظ القسم.");resetCategoryForm();await loadAdminData();
- }catch(e){alert("تعذر حفظ القسم: "+e.message);}
- finally{btn.disabled=false;}
+
+  alert("تم حفظ القسم.");
+  resetCategoryForm();
+  await loadAdminData();
+
+ }catch(error){
+  alert("تعذر حفظ القسم: "+error.message);
+ }finally{
+  button.disabled=false;
+ }
 }
+
 function editCategory(id){
- const c=adminCategories.find(x=>String(x.id)===String(id));if(!c)return;
- document.getElementById("editCategoryId").value=c.id;
- document.getElementById("adminCategoryName").value=c.name||"";
- document.getElementById("adminCategoryImage").value=c.image_url||"";
+ const category=adminCategories.find(c=>String(c.id)===String(id));
+
+ if(!category)return;
+
+ document.getElementById("editCategoryId").value=category.id;
+ document.getElementById("adminCategoryName").value=category.name||"";
+ document.getElementById("adminCategoryImage").value=category.image_url||"";
  document.getElementById("adminCategoryImageFile").value="";
+
  const preview=document.getElementById("categoryImagePreview");
- if(c.image_url){preview.src=c.image_url;preview.style.display="block";}else preview.style.display="none";
+
+ if(category.image_url){
+  preview.src=category.image_url;
+  preview.style.display="block";
+ }else{
+  preview.style.display="none";
+ }
+
  document.getElementById("categoryFormTitle").textContent="تعديل القسم";
  showAdminTab("categoriesTab");
 }
+
 function resetCategoryForm(){
- ["editCategoryId","adminCategoryName","adminCategoryImage","adminCategoryImageFile"].forEach(id=>document.getElementById(id).value="");
+ [
+  "editCategoryId",
+  "adminCategoryName",
+  "adminCategoryImage",
+  "adminCategoryImageFile"
+ ].forEach(id=>{
+  document.getElementById(id).value="";
+ });
+
  document.getElementById("categoryImagePreview").style.display="none";
  document.getElementById("categoryFormTitle").textContent="إضافة قسم جديد";
 }
+
 async function toggleCategory(id,active){
  if(!isAdmin)return;
- const {error}=await db.from("categories").update({is_active:active}).eq("id",id);
- if(error)return alert(error.message);await loadAdminData();
-}
-async function deleteCategory(id){
- if(!isAdmin||!confirm("هل تريد حذف القسم؟"))return;
- const {error}=await db.from("categories").delete().eq("id",id);
- if(error)return alert("تعذر حذف القسم. قد يكون مرتبطاً بمنتجات: "+error.message);
+
+ const {error}=await db.from("categories")
+  .update({is_active:active})
+  .eq("id",id);
+
+ if(error){
+  alert(error.message);
+  return;
+ }
+
  await loadAdminData();
 }
 
-/* إدارة المنتجات */
+async function deleteCategory(id){
+ if(!isAdmin||!confirm("هل تريد حذف القسم؟"))return;
+
+ const {error}=await db.from("categories")
+  .delete()
+  .eq("id",id);
+
+ if(error){
+  alert("تعذر حذف القسم. قد يكون مرتبطاً بمنتجات: "+error.message);
+  return;
+ }
+
+ await loadAdminData();
+}
+
+/* =========================
+   إدارة المنتجات
+========================= */
+
 async function saveProduct(){
  if(!isAdmin)return;
+
  const id=document.getElementById("editProductId").value;
  const name=document.getElementById("adminProductName").value.trim();
  const category=document.getElementById("adminProductCategory").value;
  const price=Number(document.getElementById("adminProductPrice").value);
  const description=document.getElementById("adminProductDescription").value.trim();
- if(!name||!category||!Number.isFinite(price)||price<0)return alert("أكمل بيانات المنتج بصورة صحيحة.");
+
+ if(!name||!category||!Number.isFinite(price)||price<0){
+  alert("أكمل بيانات المنتج بصورة صحيحة.");
+  return;
+ }
+
  const old=adminProducts.find(p=>String(p.id)===String(id));
- const btn=document.querySelector("#productsTab .primary");btn.disabled=true;
+ const button=document.querySelector("#productsTab .primary");
+
+ button.disabled=true;
+
  try{
-  const image=await uploadStoreImage("adminProductImageFile",document.getElementById("adminProductImage").value.trim(),"products");
-  const payload={name,category_id:category,price,description,image_url:image,is_active:id?(old?.is_active??true):true};
-  const result=id?await db.from("products").update(payload).eq("id",id):await db.from("products").insert(payload);
+  const image=await uploadStoreImage(
+   "adminProductImageFile",
+   document.getElementById("adminProductImage").value.trim(),
+   "products"
+  );
+
+  const payload={
+   name:name,
+   category_id:category,
+   price:price,
+   description:description,
+   image_url:image,
+   is_active:id?(old?.is_active??true):true
+  };
+
+  const result=id
+   ?await db.from("products").update(payload).eq("id",id)
+   :await db.from("products").insert(payload);
+
   if(result.error)throw result.error;
-  alert("تم حفظ المنتج.");resetProductForm();await loadAdminData();
- }catch(e){alert("تعذر حفظ المنتج: "+e.message);}
- finally{btn.disabled=false;}
+
+  alert("تم حفظ المنتج.");
+  resetProductForm();
+  await loadAdminData();
+
+ }catch(error){
+  alert("تعذر حفظ المنتج: "+error.message);
+ }finally{
+  button.disabled=false;
+ }
 }
+
 function editProduct(id){
- const p=adminProducts.find(x=>String(x.id)===String(id));if(!p)return;
- document.getElementById("editProductId").value=p.id;
- document.getElementById("adminProductName").value=p.name||"";
- fillAdminCategorySelect(p.category_id);
- document.getElementById("adminProductPrice").value=p.price||0;
- document.getElementById("adminProductImage").value=p.image_url||"";
+ const product=adminProducts.find(p=>String(p.id)===String(id));
+
+ if(!product)return;
+
+ document.getElementById("editProductId").value=product.id;
+ document.getElementById("adminProductName").value=product.name||"";
+
+ fillAdminCategorySelect(product.category_id);
+
+ document.getElementById("adminProductPrice").value=product.price||0;
+ document.getElementById("adminProductImage").value=product.image_url||"";
  document.getElementById("adminProductImageFile").value="";
- document.getElementById("adminProductDescription").value=p.description||"";
+ document.getElementById("adminProductDescription").value=product.description||"";
+
  const preview=document.getElementById("productImagePreview");
- if(p.image_url){preview.src=p.image_url;preview.style.display="block";}else preview.style.display="none";
+
+ if(product.image_url){
+  preview.src=product.image_url;
+  preview.style.display="block";
+ }else{
+  preview.style.display="none";
+ }
+
  document.getElementById("productFormTitle").textContent="تعديل المنتج";
  showAdminTab("productsTab");
 }
+
 function resetProductForm(){
- ["editProductId","adminProductName","adminProductPrice","adminProductImage","adminProductImageFile","adminProductDescription"].forEach(id=>document.getElementById(id).value="");
+ [
+  "editProductId",
+  "adminProductName",
+  "adminProductPrice",
+  "adminProductImage",
+  "adminProductImageFile",
+  "adminProductDescription"
+ ].forEach(id=>{
+  document.getElementById(id).value="";
+ });
+
  document.getElementById("productImagePreview").style.display="none";
  document.getElementById("productFormTitle").textContent="إضافة منتج جديد";
+
  fillAdminCategorySelect();
 }
+
 async function toggleProduct(id,active){
  if(!isAdmin)return;
- const {error}=await db.from("products").update({is_active:active}).eq("id",id);
- if(error)return alert(error.message);await loadAdminData();
-}
-async function deleteProduct(id){
- if(!isAdmin||!confirm("هل تريد حذف المنتج نهائياً؟"))return;
- const {error}=await db.from("products").delete().eq("id",id);
- if(error)return alert(error.message);await loadAdminData();
+
+ const {error}=await db.from("products")
+  .update({is_active:active})
+  .eq("id",id);
+
+ if(error){
+  alert(error.message);
+  return;
+ }
+
+ await loadAdminData();
 }
 
-/* البنرات */
+async function deleteProduct(id){
+ if(!isAdmin||!confirm("هل تريد حذف المنتج نهائياً؟"))return;
+
+ const {error}=await db.from("products")
+  .delete()
+  .eq("id",id);
+
+ if(error){
+  alert(error.message);
+  return;
+ }
+
+ await loadAdminData();
+}
+
+/* =========================
+   إدارة البنرات
+========================= */
+
 async function saveBanner(){
  if(!isAdmin)return;
+
  const id=document.getElementById("editBannerId").value;
  const title=document.getElementById("adminBannerTitle").value.trim();
  const target=document.getElementById("adminBannerTarget").value.trim();
  const order=Number(document.getElementById("adminBannerOrder").value||1);
  const active=document.getElementById("adminBannerActive").checked;
  const oldImage=document.getElementById("adminBannerImage").value.trim();
- if(!oldImage&&!document.getElementById("adminBannerImageFile").files.length)return alert("اختر صورة للبنر.");
- if(!Number.isFinite(order)||order<1)return alert("ترتيب البنر غير صحيح.");
- if(target&&!/^https?:\/\//i.test(target)&&!["home","shop","wallet","orders","account","#home","#shop","#wallet","#orders","#account"].includes(target))return alert("رابط البنر غير صحيح.");
- if(!id&&adminBanners.length>=4)return alert("الحد الأقصى 4 بنرات.");
- const btn=document.getElementById("saveBannerButton");btn.disabled=true;
+
+ const file=document.getElementById("adminBannerImageFile").files.length;
+
+ if(!oldImage&&!file){
+  alert("اختر صورة للبنر.");
+  return;
+ }
+
+ if(!Number.isFinite(order)||order<1){
+  alert("ترتيب البنر غير صحيح.");
+  return;
+ }
+
+ const allowedTargets=[
+  "home","shop","wallet","orders","account",
+  "#home","#shop","#wallet","#orders","#account"
+ ];
+
+ if(target&&!/^https?:\/\//i.test(target)&&!allowedTargets.includes(target)){
+  alert("رابط البنر غير صحيح.");
+  return;
+ }
+
+ if(!id&&adminBanners.length>=4){
+  alert("الحد الأقصى 4 بنرات.");
+  return;
+ }
+
+ const button=document.getElementById("saveBannerButton");
+ button.disabled=true;
+
  try{
-  const image=await uploadStoreImage("adminBannerImageFile",oldImage,"banners");
-  const payload={title:title||null,image_url:image,target_url:target||null,sort_order:order,is_active:active};
-  const result=id?await db.from("banners").update(payload).eq("id",id):await db.from("banners").insert(payload);
+  const image=await uploadStoreImage(
+   "adminBannerImageFile",
+   oldImage,
+   "banners"
+  );
+
+  const payload={
+   title:title||null,
+   image_url:image,
+   target_url:target||null,
+   sort_order:order,
+   is_active:active
+  };
+
+  const result=id
+   ?await db.from("banners").update(payload).eq("id",id)
+   :await db.from("banners").insert(payload);
+
   if(result.error)throw result.error;
-  alert("تم حفظ البنر.");resetBannerForm();await loadBanners(true);await loadBanners(false);
- }catch(e){alert("تعذر حفظ البنر: "+e.message);}
- finally{btn.disabled=false;btn.textContent="حفظ البنر";}
+
+  alert("تم حفظ البنر.");
+
+  resetBannerForm();
+
+  await loadBanners(true);
+  await loadBanners(false);
+
+ }catch(error){
+  alert("تعذر حفظ البنر: "+error.message);
+ }finally{
+  button.disabled=false;
+  button.textContent="حفظ البنر";
+ }
 }
+
 function renderAdminBanners(){
- const target=document.getElementById("adminBannersList");if(!target)return;
- if(!adminBanners.length){target.innerHTML='<div class="empty">لا توجد بنرات. يمكنك إضافة 4 بنرات.</div>';return;}
- const sorted=[...adminBanners].sort((a,b)=>(Number(a.sort_order)||0)-(Number(b.sort_order)||0));
+ const target=document.getElementById("adminBannersList");
+
+ if(!target)return;
+
+ if(!adminBanners.length){
+  target.innerHTML='<div class="empty">لا توجد بنرات. يمكنك إضافة 4 بنرات.</div>';
+  return;
+ }
+
+ const sorted=[...adminBanners].sort((a,b)=>
+  (Number(a.sort_order)||0)-(Number(b.sort_order)||0)
+ );
+
  target.innerHTML=sorted.map((b,i)=>`
- <div class="admin-item"><div class="admin-item-row">
- <img src="${safeText(b.image_url||"https://placehold.co/120x80")}">
- <div class="admin-item-info"><strong>${safeText(b.title||"بنر إعلاني")}</strong><small class="muted">الترتيب: ${Number(b.sort_order)||i+1}</small><br><span class="status-badge ${b.is_active?"":"status-off"}">${b.is_active?"ظاهر في الموقع":"متوقف"}</span></div>
- </div><div class="admin-actions">
- <button class="secondary small-btn" onclick="editBanner('${safeText(b.id)}')">تعديل</button>
- <button class="secondary small-btn" onclick="moveBanner('${safeText(b.id)}',-1)">↑ تقديم</button>
- <button class="secondary small-btn" onclick="moveBanner('${safeText(b.id)}',1)">↓ تأخير</button>
- <button class="secondary small-btn" onclick="toggleBanner('${safeText(b.id)}',${!b.is_active})">${b.is_active?"إيقاف":"تفعيل"}</button>
- <button class="danger small-btn" onclick="deleteBanner('${safeText(b.id)}')">حذف</button>
- </div></div>`).join("");
+  <div class="admin-item">
+   <div class="admin-item-row">
+    <img src="${safeText(b.image_url||"https://placehold.co/120x80")}">
+    <div class="admin-item-info">
+     <strong>${safeText(b.title||"بنر إعلاني")}</strong>
+     <small class="muted">الترتيب: ${Number(b.sort_order)||i+1}</small><br>
+     <span class="status-badge ${b.is_active?"":"status-off"}">
+      ${b.is_active?"ظاهر في الموقع":"متوقف"}
+     </span>
+    </div>
+   </div>
+
+   <div class="admin-actions">
+    <button class="secondary small-btn" onclick="editBanner('${safeText(b.id)}')">تعديل</button>
+    <button class="secondary small-btn" onclick="moveBanner('${safeText(b.id)}',-1)">↑ تقديم</button>
+    <button class="secondary small-btn" onclick="moveBanner('${safeText(b.id)}',1)">↓ تأخير</button>
+    <button class="secondary small-btn" onclick="toggleBanner('${safeText(b.id)}',${!b.is_active})">${b.is_active?"إيقاف":"تفعيل"}</button>
+    <button class="danger small-btn" onclick="deleteBanner('${safeText(b.id)}')">حذف</button>
+   </div>
+  </div>
+ `).join("");
 }
+
 function editBanner(id){
- const b=adminBanners.find(x=>String(x.id)===String(id));if(!b)return;
- document.getElementById("editBannerId").value=b.id;
- document.getElementById("adminBannerTitle").value=b.title||"";
- document.getElementById("adminBannerImage").value=b.image_url||"";
- document.getElementById("adminBannerTarget").value=b.target_url||"";
- document.getElementById("adminBannerOrder").value=b.sort_order||1;
- document.getElementById("adminBannerActive").checked=!!b.is_active;
+ const banner=adminBanners.find(b=>String(b.id)===String(id));
+
+ if(!banner)return;
+
+ document.getElementById("editBannerId").value=banner.id;
+ document.getElementById("adminBannerTitle").value=banner.title||"";
+ document.getElementById("adminBannerImage").value=banner.image_url||"";
+ document.getElementById("adminBannerTarget").value=banner.target_url||"";
+ document.getElementById("adminBannerOrder").value=banner.sort_order||1;
+ document.getElementById("adminBannerActive").checked=!!banner.is_active;
  document.getElementById("adminBannerImageFile").value="";
+
  const preview=document.getElementById("bannerImagePreview");
- preview.src=b.image_url||"";preview.style.display=b.image_url?"block":"none";
+
+ preview.src=banner.image_url||"";
+ preview.style.display=banner.image_url?"block":"none";
+
  document.getElementById("bannerFormTitle").textContent="تعديل البنر";
+
  showAdminTab("bannersTab");
 }
+
 function resetBannerForm(){
- ["editBannerId","adminBannerTitle","adminBannerImage","adminBannerTarget","adminBannerImageFile"].forEach(id=>document.getElementById(id).value="");
+ [
+  "editBannerId",
+  "adminBannerTitle",
+  "adminBannerImage",
+  "adminBannerTarget",
+  "adminBannerImageFile"
+ ].forEach(id=>{
+  document.getElementById(id).value="";
+ });
+
  document.getElementById("adminBannerOrder").value=1;
  document.getElementById("adminBannerActive").checked=true;
  document.getElementById("bannerImagePreview").style.display="none";
  document.getElementById("bannerFormTitle").textContent="إضافة بنر إعلاني";
 }
+
 async function toggleBanner(id,active){
  if(!isAdmin)return;
- const {error}=await db.from("banners").update({is_active:active}).eq("id",id);
- if(error)return alert(error.message);
- await loadBanners(true);await loadBanners(false);
-}
-async function deleteBanner(id){
- if(!isAdmin||!confirm("هل تريد حذف البنر؟"))return;
- const {error}=await db.from("banners").delete().eq("id",id);
- if(error)return alert(error.message);
- await loadBanners(true);await loadBanners(false);
-}
-async function moveBanner(id,direction){
- const sorted=[...adminBanners].sort((a,b)=>(Number(a.sort_order)||0)-(Number(b.sort_order)||0));
- const index=sorted.findIndex(b=>String(b.id)===String(id));
- const other=sorted[index+direction];if(!other)return;
- const current=sorted[index];
- const first=await db.from("banners").update({sort_order:Number(other.sort_order)||index+1}).eq("id",current.id);
- if(first.error)return alert(first.error.message);
- const second=await db.from("banners").update({sort_order:Number(current.sort_order)||index+1}).eq("id",other.id);
- if(second.error)return alert(second.error.message);
- await loadBanners(true);await loadBanners(false);
+
+ const {error}=await db.from("banners")
+  .update({is_active:active})
+  .eq("id",id);
+
+ if(error){
+  alert(error.message);
+  return;
+ }
+
+ await loadBanners(true);
+ await loadBanners(false);
 }
 
-/* إعدادات المتجر */
+async function deleteBanner(id){
+ if(!isAdmin||!confirm("هل تريد حذف البنر؟"))return;
+
+ const {error}=await db.from("banners")
+  .delete()
+  .eq("id",id);
+
+ if(error){
+  alert(error.message);
+  return;
+ }
+
+ await loadBanners(true);
+ await loadBanners(false);
+}
+
+async function moveBanner(id,direction){
+ if(!isAdmin)return;
+
+ const sorted=[...adminBanners].sort((a,b)=>
+  (Number(a.sort_order)||0)-(Number(b.sort_order)||0)
+ );
+
+ const index=sorted.findIndex(b=>String(b.id)===String(id));
+ const other=sorted[index+direction];
+
+ if(!other)return;
+
+ const current=sorted[index];
+
+ const first=await db.from("banners")
+  .update({sort_order:Number(other.sort_order)||index+1})
+  .eq("id",current.id);
+
+ if(first.error){
+  alert(first.error.message);
+  return;
+ }
+
+ const second=await db.from("banners")
+  .update({sort_order:Number(current.sort_order)||index+1})
+  .eq("id",other.id);
+
+ if(second.error){
+  alert(second.error.message);
+  return;
+ }
+
+ await loadBanners(true);
+ await loadBanners(false);
+}
+
+/* =========================
+   إعدادات المتجر
+========================= */
+
 function fillSettingsForm(){
  document.getElementById("settingStoreName").value=settings.store_name||"AMANA STORE";
  document.getElementById("settingArabicName").value=settings.arabic_name||"أمانة ستور";
@@ -898,20 +1804,45 @@ function fillSettingsForm(){
  document.getElementById("settingWhatsapp").value=settings.whatsapp_number||"";
  document.getElementById("settingPhone").value=settings.phone_number||"";
  document.getElementById("settingWelcome").value=settings.welcome_message||"";
- document.getElementById("settingPayments").value=typeof settings.payment_accounts==="string"?settings.payment_accounts:JSON.stringify(settings.payment_accounts||{},null,2);
+
+ document.getElementById("settingPayments").value=
+  typeof settings.payment_accounts==="string"
+   ?settings.payment_accounts
+   :JSON.stringify(settings.payment_accounts||{},null,2);
+
+ const preview=document.getElementById("logoImagePreview");
+
  if(settings.logo_url){
-  const img=document.getElementById("logoImagePreview");
-  img.src=settings.logo_url;img.style.display="block";
+  preview.src=settings.logo_url;
+  preview.style.display="block";
+ }else{
+  preview.style.display="none";
  }
 }
+
 async function saveSettings(){
  if(!isAdmin)return;
- const btn=document.querySelector("#settingsTab .primary");btn.disabled=true;
+
+ const button=document.querySelector("#settingsTab .primary");
+ button.disabled=true;
+
  try{
   let payments={};
-  try{payments=JSON.parse(document.getElementById("settingPayments").value||"{}");}
-  catch(e){throw new Error("بيانات الدفع يجب أن تكون بصيغة JSON صحيحة.");}
-  const logo=await uploadStoreImage("settingLogoFile",document.getElementById("settingLogo").value.trim(),"logos");
+
+  try{
+   payments=JSON.parse(
+    document.getElementById("settingPayments").value||"{}"
+   );
+  }catch(error){
+   throw new Error("بيانات الدفع يجب أن تكون بصيغة JSON صحيحة.");
+  }
+
+  const logo=await uploadStoreImage(
+   "settingLogoFile",
+   document.getElementById("settingLogo").value.trim(),
+   "logos"
+  );
+
   const payload={
    store_name:document.getElementById("settingStoreName").value.trim(),
    arabic_name:document.getElementById("settingArabicName").value.trim(),
@@ -923,20 +1854,56 @@ async function saveSettings(){
    payment_accounts:payments,
    updated_at:new Date().toISOString()
   };
-  let result=settings.id?await db.from("store_settings").update(payload).eq("id",settings.id):await db.from("store_settings").insert(payload);
+
+  const result=settings.id
+   ?await db.from("store_settings").update(payload).eq("id",settings.id)
+   :await db.from("store_settings").insert(payload);
+
   if(result.error)throw result.error;
+
   alert("تم حفظ إعدادات المتجر.");
-  await loadStore();await loadAdminData();
- }catch(e){alert("تعذر حفظ الإعدادات: "+e.message);}
- finally{btn.disabled=false;}
+
+  await loadStore();
+
+  const {data,error}=await db.from("store_settings")
+   .select("*")
+   .limit(1)
+   .maybeSingle();
+
+  if(!error){
+   settings=data||{};
+   fillSettingsForm();
+  }
+
+ }catch(error){
+  alert("تعذر حفظ الإعدادات: "+error.message);
+ }finally{
+  button.disabled=false;
+ }
 }
 
-/* بدء التشغيل: نستعيد الجلسة أولاً ثم نحمّل المتجر */
+/* =========================
+   تشغيل الموقع
+========================= */
+
 async function startStore(){
- await refreshSession();
- await loadStore();
- if(currentUser)await loadUserData(false);
+ try{
+  await refreshSession();
+  await loadStore();
+
+  if(currentUser){
+   await loadUserData(false);
+  }
+
+  sessionReady=true;
+
+ }catch(error){
+  console.error("Store startup error:",error);
+ }
 }
+
 startStore();
-</script>  </body>
-</html>
+
+</script>
+</body>
+  </html>
