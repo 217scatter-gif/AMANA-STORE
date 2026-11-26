@@ -83,6 +83,8 @@ textarea.field{min-height:90px;resize:vertical}
 .admin-section{display:none}
 .admin-section.active{display:block}
 .status-badge{display:inline-block;padding:4px 9px;border-radius:20px;background:#e8f6eb;color:#23733a;font-size:11px;margin-top:5px}
+.image-preview{display:none;width:100%;max-height:190px;object-fit:contain;background:#f4f4f4;border:1px solid #eee;border-radius:12px;margin:5px 0 12px;padding:5px}
+.image-hint{font-size:12px;color:#777;margin:-5px 0 10px;line-height:1.7}
 @media(min-width:700px){
 .category-grid{grid-template-columns:repeat(3,1fr)}
 .product-grid{grid-template-columns:repeat(4,1fr)}
@@ -188,8 +190,14 @@ button:disabled{opacity:.65;cursor:not-allowed}
 <input type="hidden" id="editCategoryId">
 <label class="muted">اسم القسم</label>
 <input id="adminCategoryName" class="field" placeholder="مثال: شحن الألعاب">
-<label class="muted">رابط صورة القسم</label>
+
+<label class="muted">اختر صورة القسم من هاتفك</label>
+<input id="adminCategoryImageFile" class="field" type="file" accept="image/*" onchange="previewImage(this,'categoryImagePreview')">
+<img id="categoryImagePreview" class="image-preview" alt="معاينة صورة القسم">
+<div class="image-hint">يمكنك اختيار صورة من المعرض مباشرة، أو استخدام رابط صورة في الحقل التالي.</div>
+<label class="muted">رابط صورة اختياري</label>
 <input id="adminCategoryImage" class="field" placeholder="https://example.com/image.jpg">
+
 <button class="primary" onclick="saveCategory()">حفظ القسم</button>
 <button class="secondary" style="width:100%;margin-top:8px" onclick="resetCategoryForm()">إلغاء التعديل</button>
 </div>
@@ -206,8 +214,14 @@ button:disabled{opacity:.65;cursor:not-allowed}
 <select id="adminProductCategory" class="field"><option value="">اختر القسم</option></select>
 <label class="muted">السعر بالجنيه السوداني</label>
 <input id="adminProductPrice" class="field" type="number" min="0" placeholder="مثال: 50000">
-<label class="muted">رابط صورة المنتج</label>
+
+<label class="muted">اختر صورة المنتج من هاتفك</label>
+<input id="adminProductImageFile" class="field" type="file" accept="image/*" onchange="previewImage(this,'productImagePreview')">
+<img id="productImagePreview" class="image-preview" alt="معاينة صورة المنتج">
+<div class="image-hint">اختر الصورة مباشرة من معرض هاتفك، أو أدخل رابط صورة.</div>
+<label class="muted">رابط صورة اختياري</label>
 <input id="adminProductImage" class="field" placeholder="https://example.com/image.jpg">
+
 <label class="muted">وصف المنتج</label>
 <textarea id="adminProductDescription" class="field" placeholder="تفاصيل المنتج..."></textarea>
 <button class="primary" onclick="saveProduct()">حفظ المنتج</button>
@@ -225,8 +239,13 @@ button:disabled{opacity:.65;cursor:not-allowed}
 <input id="settingArabicName" class="field" placeholder="أمانة ستور">
 <label class="muted">الشعار / العبارة التعريفية</label>
 <input id="settingSlogan" class="field" placeholder="ثقتك أمانة.. وخدماتك علينا.">
-<label class="muted">رابط شعار المتجر</label>
+
+<label class="muted">اختر شعار المتجر من هاتفك</label>
+<input id="settingLogoFile" class="field" type="file" accept="image/*" onchange="previewImage(this,'logoImagePreview')">
+<img id="logoImagePreview" class="image-preview" alt="معاينة شعار المتجر">
+<label class="muted">رابط شعار اختياري</label>
 <input id="settingLogo" class="field" placeholder="رابط صورة الشعار">
+
 <label class="muted">رقم واتساب المتجر مع مفتاح الدولة</label>
 <input id="settingWhatsapp" class="field" placeholder="249xxxxxxxxx">
 <label class="muted">رقم الهاتف</label>
@@ -294,6 +313,8 @@ const SUPABASE_URL="https://zlwagyhhjzrggjlqigpz.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_2Yr1cVB2vclDkytSegjDhg_wtwSKvX2";
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
+const IMAGE_BUCKET="store-images";
+
 let categories=[];
 let products=[];
 let settings={};
@@ -317,6 +338,79 @@ return String(value??"").replace(/[&<>"']/g,c=>({
 
 function closeModal(id){
 document.getElementById(id).classList.remove("show");
+}
+
+function previewImage(input,previewId){
+const preview=document.getElementById(previewId);
+const file=input.files?.[0];
+
+if(!file){
+preview.removeAttribute("src");
+preview.style.display="none";
+return;
+}
+
+if(!file.type.startsWith("image/")){
+alert("الملف المحدد ليس صورة.");
+input.value="";
+preview.style.display="none";
+return;
+}
+
+if(file.size>5*1024*1024){
+alert("حجم الصورة يجب ألا يتجاوز 5 ميجابايت.");
+input.value="";
+preview.style.display="none";
+return;
+}
+
+const reader=new FileReader();
+reader.onload=()=>{
+preview.src=reader.result;
+preview.style.display="block";
+};
+reader.readAsDataURL(file);
+}
+
+// رفع صورة من الهاتف إلى Supabase Storage
+async function uploadStoreImage(inputId,oldUrl=""){
+const input=document.getElementById(inputId);
+const file=input?.files?.[0];
+
+if(!file)return oldUrl||null;
+
+if(!file.type.startsWith("image/")){
+throw new Error("الملف المحدد ليس صورة.");
+}
+
+if(file.size>5*1024*1024){
+throw new Error("حجم الصورة أكبر من 5 ميجابايت.");
+}
+
+const allowed=["jpg","jpeg","png","webp","gif","avif"];
+let extension=(file.name.split(".").pop()||"jpg").toLowerCase();
+
+if(!allowed.includes(extension)){
+extension=file.type.split("/")[1]||"jpg";
+}
+
+const filePath="store/"+Date.now()+"-"+Math.random().toString(36).slice(2)+"."+extension;
+
+const {data,error}=await db.storage
+.from(IMAGE_BUCKET)
+.upload(filePath,file,{
+cacheControl:"3600",
+upsert:false,
+contentType:file.type
+});
+
+if(error)throw error;
+
+const {data:publicData}=db.storage
+.from(IMAGE_BUCKET)
+.getPublicUrl(data.path);
+
+return publicData.publicUrl;
 }
 
 function openAuth(){
@@ -414,7 +508,6 @@ btn.textContent=authMode==="login"?"تسجيل الدخول":"إنشاء الح�
 }
 }
 
-// تحديث حالة الجلسة من مصدر واحد
 async function refreshSession(){
 if(authRefreshRunning)return;
 authRefreshRunning=true;
@@ -709,31 +802,63 @@ target.innerHTML=categories.map(c=>`
 
 async function saveCategory(){
 if(!isAdmin)return alert("ليس لديك صلاحية.");
+
 const id=document.getElementById("editCategoryId").value;
 const name=document.getElementById("adminCategoryName").value.trim();
-const image=document.getElementById("adminCategoryImage").value.trim();
+const oldImage=document.getElementById("adminCategoryImage").value.trim();
+
 if(!name)return alert("اكتب اسم القسم.");
 
-const payload={name,image_url:image||null,is_active:true};
+const btn=document.querySelector("#categoriesTab .primary");
+btn.disabled=true;
+btn.textContent="جاري الحفظ ورفع الصورة...";
 
 try{
+const image=await uploadStoreImage("adminCategoryImageFile",oldImage);
+
+const payload={
+name,
+image_url:image,
+is_active:true
+};
+
 const result=id
 ?await db.from("categories").update(payload).eq("id",id)
 :await db.from("categories").insert(payload);
+
 if(result.error)throw result.error;
-alert(id?"تم تعديل القسم بنجاح.":"تمت إضافة القسم بنجاح.");
+
+alert("تم حفظ القسم والصورة بنجاح.");
 resetCategoryForm();
 await loadAdminData();
-}catch(error){alert("تعذر حفظ القسم: "+error.message);}
+
+}catch(error){
+alert("تعذر حفظ القسم: "+error.message);
+}finally{
+btn.disabled=false;
+btn.textContent="حفظ القسم";
+}
 }
 
 function editCategory(id){
 const c=categories.find(x=>String(x.id)===String(id));
 if(!c)return;
+
 document.getElementById("editCategoryId").value=c.id;
 document.getElementById("adminCategoryName").value=c.name||"";
 document.getElementById("adminCategoryImage").value=c.image_url||"";
+document.getElementById("adminCategoryImageFile").value="";
+
+const preview=document.getElementById("categoryImagePreview");
+if(c.image_url){
+preview.src=c.image_url;
+preview.style.display="block";
+}else{
+preview.style.display="none";
+}
+
 document.getElementById("categoryFormTitle").textContent="تعديل القسم";
+showAdminTab("categoriesTab");
 document.getElementById("categoriesTab").scrollIntoView({behavior:"smooth"});
 }
 
@@ -741,6 +866,9 @@ function resetCategoryForm(){
 document.getElementById("editCategoryId").value="";
 document.getElementById("adminCategoryName").value="";
 document.getElementById("adminCategoryImage").value="";
+document.getElementById("adminCategoryImageFile").value="";
+document.getElementById("categoryImagePreview").removeAttribute("src");
+document.getElementById("categoryImagePreview").style.display="none";
 document.getElementById("categoryFormTitle").textContent="إضافة قسم جديد";
 }
 
@@ -793,40 +921,74 @@ return `<div class="admin-item">
 
 async function saveProduct(){
 if(!isAdmin)return alert("ليس لديك صلاحية.");
+
 const id=document.getElementById("editProductId").value;
 const name=document.getElementById("adminProductName").value.trim();
 const category=document.getElementById("adminProductCategory").value;
 const price=Number(document.getElementById("adminProductPrice").value);
-const image=document.getElementById("adminProductImage").value.trim();
+const oldImage=document.getElementById("adminProductImage").value.trim();
 const description=document.getElementById("adminProductDescription").value.trim();
 
 if(!name)return alert("اكتب اسم المنتج.");
 if(!category)return alert("اختر القسم.");
 if(!Number.isFinite(price)||price<0)return alert("أدخل سعراً صحيحاً.");
 
-const payload={name,category_id:category,price,image_url:image||null,description,is_active:true};
+const btn=document.querySelector("#productsTab .primary");
+btn.disabled=true;
+btn.textContent="جاري الحفظ ورفع الصورة...";
 
 try{
+const image=await uploadStoreImage("adminProductImageFile",oldImage);
+
+const payload={
+name,
+category_id:category,
+price,
+image_url:image,
+description,
+is_active:true
+};
+
 const result=id
 ?await db.from("products").update(payload).eq("id",id)
 :await db.from("products").insert(payload);
+
 if(result.error)throw result.error;
-alert(id?"تم تعديل المنتج بنجاح.":"تمت إضافة المنتج بنجاح.");
+
+alert("تم حفظ المنتج والصورة بنجاح.");
 resetProductForm();
 await loadAdminData();
-}catch(error){alert("تعذر حفظ المنتج: "+error.message);}
+
+}catch(error){
+alert("تعذر حفظ المنتج: "+error.message);
+}finally{
+btn.disabled=false;
+btn.textContent="حفظ المنتج";
+}
 }
 
 function editProduct(id){
 const p=products.find(x=>String(x.id)===String(id));
 if(!p)return;
+
 document.getElementById("editProductId").value=p.id;
 document.getElementById("adminProductName").value=p.name||"";
 document.getElementById("adminProductCategory").value=p.category_id||"";
 document.getElementById("adminProductPrice").value=p.price||0;
 document.getElementById("adminProductImage").value=p.image_url||"";
+document.getElementById("adminProductImageFile").value="";
 document.getElementById("adminProductDescription").value=p.description||"";
+
+const preview=document.getElementById("productImagePreview");
+if(p.image_url){
+preview.src=p.image_url;
+preview.style.display="block";
+}else{
+preview.style.display="none";
+}
+
 document.getElementById("productFormTitle").textContent="تعديل المنتج";
+showAdminTab("productsTab");
 document.getElementById("productsTab").scrollIntoView({behavior:"smooth"});
 }
 
@@ -836,7 +998,10 @@ document.getElementById("adminProductName").value="";
 document.getElementById("adminProductCategory").value="";
 document.getElementById("adminProductPrice").value="";
 document.getElementById("adminProductImage").value="";
+document.getElementById("adminProductImageFile").value="";
 document.getElementById("adminProductDescription").value="";
+document.getElementById("productImagePreview").removeAttribute("src");
+document.getElementById("productImagePreview").style.display="none";
 document.getElementById("productFormTitle").textContent="إضافة منتج جديد";
 }
 
@@ -866,28 +1031,51 @@ document.getElementById("settingStoreName").value=settings.store_name||"AMANA ST
 document.getElementById("settingArabicName").value=settings.arabic_name||"أمانة ستور";
 document.getElementById("settingSlogan").value=settings.slogan||"ثقتك أمانة.. وخدماتك علينا.";
 document.getElementById("settingLogo").value=settings.logo_url||"";
+document.getElementById("settingLogoFile").value="";
 document.getElementById("settingWhatsapp").value=settings.whatsapp_number||"";
 document.getElementById("settingPhone").value=settings.phone_number||"";
 document.getElementById("settingWelcome").value=settings.welcome_message||"";
+
+const preview=document.getElementById("logoImagePreview");
+if(settings.logo_url){
+preview.src=settings.logo_url;
+preview.style.display="block";
+}else{
+preview.style.display="none";
+}
+
 const payments=settings.payment_accounts||{};
 document.getElementById("settingPayments").value=typeof payments==="string"?payments:JSON.stringify(payments,null,2);
 }
 
 async function saveSettings(){
 if(!isAdmin)return alert("ليس لديك صلاحية.");
+
 let paymentAccounts={};
 const paymentText=document.getElementById("settingPayments").value.trim();
 
 if(paymentText){
-try{paymentAccounts=JSON.parse(paymentText);}
-catch(error){alert("بيانات حسابات الدفع يجب أن تكون بصيغة JSON صحيحة.");return;}
+try{
+paymentAccounts=JSON.parse(paymentText);
+}catch(error){
+alert("بيانات حسابات الدفع يجب أن تكون بصيغة JSON صحيحة.");
+return;
 }
+}
+
+const btn=document.querySelector("#settingsTab .primary");
+btn.disabled=true;
+btn.textContent="جاري حفظ الإعدادات ورفع الشعار...";
+
+try{
+const oldLogo=document.getElementById("settingLogo").value.trim();
+const logo=await uploadStoreImage("settingLogoFile",oldLogo);
 
 const payload={
 store_name:document.getElementById("settingStoreName").value.trim(),
 arabic_name:document.getElementById("settingArabicName").value.trim(),
 slogan:document.getElementById("settingSlogan").value.trim(),
-logo_url:document.getElementById("settingLogo").value.trim(),
+logo_url:logo,
 whatsapp_number:document.getElementById("settingWhatsapp").value.trim(),
 phone_number:document.getElementById("settingPhone").value.trim(),
 welcome_message:document.getElementById("settingWelcome").value.trim(),
@@ -895,21 +1083,28 @@ payment_accounts:paymentAccounts,
 updated_at:new Date().toISOString()
 };
 
-try{
 let result;
 if(settings.id){
 result=await db.from("store_settings").update(payload).eq("id",settings.id);
 }else{
 result=await db.from("store_settings").insert(payload);
 }
+
 if(result.error)throw result.error;
-alert("تم حفظ إعدادات المتجر.");
+
+alert("تم حفظ إعدادات المتجر والشعار بنجاح.");
 await loadStore();
 fillSettingsForm();
-}catch(error){alert("تعذر حفظ الإعدادات: "+error.message);}
+
+}catch(error){
+alert("تعذر حفظ الإعدادات: "+error.message);
+}finally{
+btn.disabled=false;
+btn.textContent="حفظ إعدادات المتجر";
+}
 }
 
-// مراقبة تغيّر الجلسة: لا تنفذ عمليتي فحص متزامنتين
+// مراقبة تغيّر الجلسة
 db.auth.onAuthStateChange((event,session)=>{
 currentUser=session?.user||null;
 
