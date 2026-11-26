@@ -3,428 +3,1392 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#c69b35">
 <title>AMANA STORE | أمانة ستور</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-:root{--gold:#d6ad55;--bg:#090909;--card:#171717;--white:#fff;--muted:#aaa}
+:root{
+--gold:#c69b35;--gold2:#f0d58b;--ink:#171717;
+--muted:#777;--line:#e9e9e9;--bg:#f7f7f7;--white:#fff;
+--shadow:0 5px 18px #0000000c;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:white;font-family:Tahoma,Arial,sans-serif}
-header{background:#111;border-bottom:1px solid #49391d;padding:15px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.logo{color:var(--gold);font-size:21px;font-weight:bold}
-button{cursor:pointer;border:0;border-radius:9px;padding:11px 16px;font-weight:bold}
-.gold{background:var(--gold);color:#111}
-.dark{background:#292929;color:white}
-.danger{background:#8d2222;color:white}
-.container{max-width:1100px;margin:auto;padding:18px}
-.hero{background:linear-gradient(120deg,#211b10,#111);border:1px solid #49391d;border-radius:16px;padding:35px 20px;text-align:center;margin:20px 0}
-.hero h1{color:var(--gold);margin:0 0 12px}
-.hero p{color:#ddd}
-.section-title{color:var(--gold);margin:28px 0 15px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
-.card{background:var(--card);border:1px solid #292929;border-radius:13px;padding:12px;overflow:hidden}
-.card img{width:100%;height:150px;object-fit:cover;border-radius:9px;background:#222}
-.card h3{font-size:16px;margin:10px 0}
-.price{color:var(--gold);font-weight:bold;margin:9px 0}
-.muted{color:var(--muted);font-size:13px}
-input,textarea,select{width:100%;padding:12px;margin:7px 0 13px;background:#101010;color:white;border:1px solid #444;border-radius:8px}
-label{color:var(--gold);font-size:14px}
-.panel{background:#151515;border:1px solid #333;border-radius:13px;padding:15px;margin:15px 0}
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
-.tabs button{flex:1;min-width:100px}
-.hidden{display:none!important}
-.banner{position:relative;margin:15px 0}
-.banner img{width:100%;height:190px;object-fit:cover;border-radius:13px}
-.status{font-size:12px;padding:5px 8px;border-radius:6px;background:#164b2c;color:#a5ffbd}
-.off{background:#542323;color:#ffaaaa}
-footer{text-align:center;color:#999;padding:25px;border-top:1px solid #292929;margin-top:35px}
-a{color:var(--gold)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif;padding-bottom:86px}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.topbar{height:76px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 15px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.top-actions{display:flex;gap:9px}
+.icon-btn{width:43px;height:43px;border:0;border-radius:13px;background:var(--gold);color:#171717;font-size:21px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:900;font-size:23px}
+.brand-mark{width:36px;height:36px;border-radius:11px;background:var(--ink);color:var(--gold2);display:grid;place-items:center;font-size:21px;overflow:hidden}
+.brand small{display:block;font-size:11px;color:#777;font-weight:600;text-align:right;margin-top:2px}
+.page{display:none;max-width:1050px;margin:auto;padding:15px}
+.page.active{display:block}
+.hero{height:190px;border-radius:23px;background:linear-gradient(120deg,#171717,#383027 60%,#b18a35);color:#fff;padding:25px;display:flex;flex-direction:column;justify-content:center;overflow:hidden;position:relative;margin:10px 0 28px}
+.hero:after{content:"✦";position:absolute;left:22px;top:10px;font-size:130px;color:#ffffff12}
+.hero .eyebrow{color:var(--gold2);font-size:13px;margin-bottom:10px}
+.hero h1{font-size:25px;margin:0 0 10px;max-width:75%;line-height:1.5}
+.hero p{margin:0;color:#e6e2d8;font-size:14px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:27px 2px 14px}
+.section-head h2{font-size:20px;margin:0}
+.section-head h2:after{content:"";display:block;width:48px;height:3px;background:var(--gold);margin-top:7px;border-radius:5px}
+.text-btn{border:1px solid var(--gold);color:#171717;background:var(--gold);border-radius:30px;padding:9px 15px;font-weight:bold}
+.category-grid,.product-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.category-card,.product-card{background:#fff;border:1px solid var(--line);border-radius:17px;overflow:hidden;box-shadow:var(--shadow);text-align:right}
+.category-card{padding:15px;min-height:110px;display:flex;align-items:center;gap:12px;width:100%;color:var(--ink)}
+.category-icon{width:52px;height:52px;border-radius:15px;background:#fff7e4;display:grid;place-items:center;font-size:25px;flex-shrink:0;overflow:hidden}
+.category-card strong{display:block;font-size:15px}
+.category-card small{display:block;color:var(--muted);margin-top:7px;font-size:12px}
+.product-card{cursor:pointer}
+.product-card img{width:100%;height:178px;object-fit:cover;display:block;background:#eee}
+.product-info{padding:12px}
+.product-info strong{display:block;font-size:14px;line-height:1.5;min-height:40px}
+.price{color:#98701d;font-weight:bold;margin-top:8px;font-size:14px}
+.empty{background:#fff;border:1px dashed #d8c18b;border-radius:15px;padding:25px;text-align:center;color:#777;grid-column:1/-1;line-height:1.8}
+.page-title{background:#191919;color:#fff;padding:24px;border-radius:18px;text-align:center;font-size:22px;font-weight:bold;margin:8px 0 18px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:17px;padding:18px;margin:14px 0;box-shadow:var(--shadow)}
+.panel h3{margin:0 0 14px}
+.field{width:100%;padding:13px;border:1px solid #ddd;border-radius:12px;margin:7px 0 12px;background:#fff;outline:none}
+.field:focus{border-color:var(--gold)}
+textarea.field{min-height:90px;resize:vertical}
+.primary,.secondary{border:1px solid var(--gold);background:var(--gold);color:#171717;border-radius:12px;padding:13px 18px;font-weight:bold}
+.primary{width:100%}
+.secondary{padding:11px 15px}
+.danger{border:1px solid #c62828;background:#c62828;color:#fff;border-radius:10px;padding:10px 13px;font-weight:bold}
+.small-btn{padding:8px 12px;font-size:12px}
+.muted{color:var(--muted);font-size:13px;line-height:1.8}
+.balance{font-size:30px;color:#98701d;font-weight:bold}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:72px;background:#fff;border-top:1px solid #ddd;display:flex;justify-content:space-around;align-items:center;z-index:30;padding-bottom:env(safe-area-inset-bottom)}
+.nav-item{border:0;background:none;color:#777;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;min-width:58px}
+.nav-item b{font-size:22px;font-weight:normal}
+.nav-item.active{color:#a77b20;font-weight:bold}
+.whatsapp{position:fixed;bottom:88px;left:17px;width:55px;height:55px;border-radius:50%;background:#20c86b;color:white;text-decoration:none;display:grid;place-items:center;font-size:27px;box-shadow:0 5px 15px #0002;z-index:25}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:50;align-items:center;justify-content:center;padding:18px}
+.modal.show{display:flex}
+.modal-box{background:#fff;border-radius:18px;padding:20px;width:100%;max-width:480px;max-height:88vh;overflow:auto}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.close{border:1px solid var(--gold);background:var(--gold);color:#171717;border-radius:10px;width:35px;height:35px;font-size:20px}
+.notice{padding:12px;background:#fff8e8;border:1px solid #f0dfb5;color:#77591c;border-radius:12px;font-size:13px;line-height:1.7;margin:12px 0}
+.footer{text-align:center;color:#888;font-size:12px;padding:30px 10px}
+.admin-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
+.admin-tabs button{flex:1;min-width:100px}
+.admin-item{border:1px solid #eee;border-radius:13px;padding:12px;margin:10px 0;background:#fff}
+.admin-item-row{display:flex;align-items:center;gap:12px}
+.admin-item img{width:65px;height:65px;object-fit:cover;border-radius:10px;background:#eee}
+.admin-item-info{flex:1;min-width:0}
+.admin-item-info strong{display:block;line-height:1.6}
+.admin-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.admin-actions button{flex:1}
+.admin-section{display:none}
+.admin-section.active{display:block}
+.status-badge{display:inline-block;padding:4px 9px;border-radius:20px;background:#e8f6eb;color:#23733a;font-size:11px;margin-top:5px}
+.image-preview{display:none;width:100%;max-height:190px;object-fit:contain;background:#f4f4f4;border:1px solid #eee;border-radius:12px;margin:5px 0 12px;padding:5px}
+.image-hint{font-size:12px;color:#777;margin:-5px 0 10px;line-height:1.7}
+
+/* البنرات الإعلانية */
+.banner-slider{
+width:100%;height:190px;position:relative;overflow:hidden;
+border-radius:20px;background:#191919;margin:10px 0 22px;
+box-shadow:var(--shadow);
+}
+.banner-slide{
+position:absolute;inset:0;opacity:0;visibility:hidden;
+transition:opacity .55s ease,visibility .55s ease;
+cursor:pointer;
+}
+.banner-slide.active{opacity:1;visibility:visible;z-index:2}
+.banner-slide img{width:100%;height:100%;object-fit:cover;display:block}
+.banner-overlay{
+position:absolute;inset:auto 0 0;padding:25px 15px 17px;
+background:linear-gradient(transparent,#000a);color:#fff;
+font-weight:bold;font-size:15px;pointer-events:none;
+}
+.banner-arrow{
+position:absolute;top:50%;transform:translateY(-50%);
+z-index:5;border:0;width:36px;height:36px;border-radius:50%;
+background:#ffffffdd;color:#171717;font-size:22px;
+display:grid;place-items:center;
+}
+.banner-prev{right:12px}
+.banner-next{left:12px}
+.banner-dots{
+position:absolute;bottom:10px;left:0;right:0;
+display:flex;justify-content:center;gap:7px;z-index:6;
+}
+.banner-dot{
+width:9px;height:9px;border:0;border-radius:20px;
+background:#ffffff99;padding:0;transition:.25s;
+}
+.banner-dot.active{width:24px;background:var(--gold2)}
+.banner-empty{
+height:100%;display:flex;align-items:center;justify-content:center;
+color:#f0d58b;font-weight:bold;font-size:16px;
+}
+.banner-admin-preview{
+width:100%;height:100px;object-fit:cover;border-radius:12px;
+background:#eee;margin-top:7px;
+}
+.banner-order{display:flex;gap:7px;align-items:center}
+.banner-order button{min-width:42px}
+@media(min-width:700px){
+.category-grid{grid-template-columns:repeat(3,1fr)}
+.product-grid{grid-template-columns:repeat(4,1fr)}
+.product-card img{height:190px}
+.hero{height:240px}
+.hero h1{font-size:32px}
+.banner-slider{height:280px}
+}
+@media(max-width:420px){
+.banner-slider{height:155px}
+}
+button:disabled{opacity:.65;cursor:not-allowed}
 </style>
 </head>
+
 <body>
 
-<header>
- <div class="logo">AMANA STORE | أمانة ستور</div>
- <div>
-  <button class="dark" onclick="showPage('home')">الرئيسية</button>
-  <button class="dark" onclick="showPage('shop')">المتجر</button>
-  <button class="dark" onclick="showPage('account')">حسابي</button>
-  <button class="gold hidden" id="adminBtn" onclick="openAdmin()">الإدارة</button>
- </div>
+<header class="topbar">
+<div class="top-actions">
+<button class="icon-btn" onclick="openAuth()">♙</button>
+<button class="icon-btn" onclick="searchProducts()">⌕</button>
+</div>
+<div class="brand">
+<div class="brand-mark">أ</div>
+<div>AMANA STORE<small>أمانة ستور</small></div>
+</div>
+<button class="icon-btn" onclick="toggleMenu()">☰</button>
 </header>
 
-<main class="container">
+<main>
 
-<section id="home">
- <div class="hero">
-  <h1 id="storeTitle">أمانة ستور</h1>
-  <p id="storeSlogan">ثقتك أمانة.. وخدماتك علينا.</p>
-  <button class="gold" onclick="showPage('shop')">تصفح المتجر</button>
- </div>
- <div id="bannerArea"></div>
- <h2 class="section-title">أقسام المتجر</h2>
- <div class="grid" id="homeCategories"></div>
+<section id="home" class="page active">
+
+<!-- مساحة البنرات الإعلانية -->
+<div id="bannerSlider" class="banner-slider">
+<div class="banner-empty">أمانة ستور — ثقتك أمانة</div>
+</div>
+
+<div class="hero">
+<div class="eyebrow">AMANA STORE · أمانة ستور</div>
+<h1>ثقتك أمانة.. وخدماتك علينا.</h1>
+<p>خدمات رقمية، شحن، تحويلات وحسابات — بسهولة وأمان.</p>
+</div>
+<div class="section-head">
+<h2>تسوق حسب القسم</h2>
+<button class="text-btn" onclick="showPage('shop')">عرض الكل ‹</button>
+</div>
+<div id="homeCategories" class="category-grid"><div class="empty">جاري تحميل الأقسام...</div></div>
+<div class="section-head">
+<h2>الأكثر طلباً</h2>
+<button class="text-btn" onclick="showPage('shop')">عرض الكل ‹</button>
+</div>
+<div id="featuredProducts" class="product-grid"><div class="empty">جاري تحميل المنتجات...</div></div>
+<div class="footer">© <span id="year"></span> AMANA STORE — جميع الحقوق محفوظة</div>
 </section>
 
-<section id="shop" class="hidden">
- <h2 class="section-title">متجر أمانة</h2>
- <div id="shopCategories" class="grid"></div>
- <h2 class="section-title">المنتجات</h2>
- <div id="products" class="grid"></div>
+<section id="shop" class="page">
+<div class="page-title">المتجر</div>
+<div class="panel">
+<input id="shopSearch" class="field" placeholder="ابحث عن منتج..." oninput="renderShop()">
+<select id="categoryFilter" class="field" onchange="renderShop()"><option value="">كل الأقسام</option></select>
+<div class="muted" id="productCount"></div>
+</div>
+<div id="shopProducts" class="product-grid"><div class="empty">جاري تحميل المنتجات...</div></div>
 </section>
 
-<section id="account" class="hidden">
- <h2 class="section-title">حسابي</h2>
- <div class="panel" id="accountBox">
-  <p>سجل الدخول للوصول إلى حسابك.</p>
-  <input id="email" type="email" placeholder="البريد الإلكتروني">
-  <input id="password" type="password" placeholder="كلمة المرور">
-  <button class="gold" onclick="login()">تسجيل الدخول</button>
-  <button class="dark" onclick="register()">إنشاء حساب</button>
- </div>
+<section id="wallet" class="page">
+<div class="page-title">محفظتي</div>
+<div class="panel">
+<div class="muted">رصيد المحفظة الحالي</div>
+<div class="balance" id="walletBalance">— SDG</div>
+<div class="muted">يظهر رصيدك بعد تسجيل الدخول.</div>
+</div>
+<div class="panel">
+<h3>شحن المحفظة</h3>
+<p class="muted">لطلب إضافة رصيد، تواصل مع خدمة العملاء وأرسل إيصال التحويل. تتم مراجعة الطلب يدوياً قبل إضافة الرصيد.</p>
+<button class="primary" onclick="contactSupport()">التواصل لشحن المحفظة ←</button>
+</div>
+<div class="notice">لا تحول أي مبلغ إلا بعد التأكد من بيانات الدفع المعروضة من إدارة المتجر.</div>
 </section>
 
-<section id="admin" class="hidden">
- <h2 class="section-title">لوحة إدارة أمانة ستور</h2>
- <div class="tabs">
-  <button class="gold" onclick="adminTab('cats')">الأقسام</button>
-  <button class="gold" onclick="adminTab('prods')">المنتجات</button>
-  <button class="gold" onclick="adminTab('banners')">البنرات</button>
-  <button class="gold" onclick="adminTab('settings')">الإعدادات</button>
- </div>
-
- <div id="adminCats" class="panel">
-  <h3>إضافة قسم</h3>
-  <input id="catName" placeholder="اسم القسم">
-  <input id="catImage" placeholder="رابط صورة القسم">
-  <button class="gold" onclick="saveCategory()">حفظ القسم</button>
-  <h3>كل الأقسام</h3>
-  <div id="adminCategoryList"></div>
- </div>
-
- <div id="adminProds" class="panel hidden">
-  <h3>إضافة منتج</h3>
-  <input id="prodName" placeholder="اسم المنتج">
-  <select id="prodCategory"></select>
-  <textarea id="prodDesc" placeholder="وصف المنتج"></textarea>
-  <input id="prodPrice" type="number" placeholder="السعر بالجنيه السوداني">
-  <input id="prodImage" placeholder="رابط صورة المنتج">
-  <button class="gold" onclick="saveProduct()">حفظ المنتج</button>
-  <h3>كل المنتجات</h3>
-  <div id="adminProductList"></div>
- </div>
-
- <div id="adminBanners" class="panel hidden">
-  <h3>إضافة بنر (الحد الأقصى 4)</h3>
-  <input id="bannerTitle" placeholder="عنوان البنر">
-  <input id="bannerImage" placeholder="رابط صورة البنر">
-  <input id="bannerUrl" placeholder="رابط الانتقال عند الضغط (اختياري)">
-  <input id="bannerOrder" type="number" placeholder="ترتيب العرض" value="1">
-  <button class="gold" onclick="saveBanner()">حفظ البنر</button>
-  <div id="adminBannerList"></div>
- </div>
-
- <div id="adminSettings" class="panel hidden">
-  <h3>إعدادات المتجر</h3>
-  <input id="settingName" placeholder="اسم المتجر بالإنجليزية">
-  <input id="settingArabic" placeholder="اسم المتجر بالعربية">
-  <input id="settingSlogan" placeholder="شعار المتجر">
-  <button class="gold" onclick="saveSettings()">حفظ الإعدادات</button>
- </div>
-
- <button class="dark" onclick="exitAdmin()">العودة للمتجر</button>
+<section id="orders" class="page">
+<div class="page-title">طلباتي</div>
+<div class="panel"><p class="muted" id="ordersMessage">سجل الدخول لمتابعة طلباتك.</p></div>
 </section>
 
+<section id="account" class="page">
+<div class="page-title">حسابي</div>
+<div class="panel" id="accountPanel">
+<h3>أهلاً بك في أمانة ستور</h3>
+<p class="muted">سجل الدخول أو أنشئ حساباً لمتابعة محفظتك وطلباتك.</p>
+<button class="primary" onclick="openAuth()">تسجيل الدخول / حساب جديد</button>
+</div>
+<div class="panel">
+<h3>الدعم الفني</h3>
+<p class="muted">نحن هنا لمساعدتك في الطلبات والخدمات.</p>
+<button class="secondary" onclick="contactSupport()">تواصل مع خدمة العملاء</button>
+</div>
+</section>
+
+<section id="admin" class="page">
+<div class="page-title">لوحة تحكم المدير</div>
+<div class="notice">يمكنك من هنا إدارة أقسام المتجر ومنتجاته والبنرات وإعدادات العرض. التغييرات تحفظ مباشرة في قاعدة البيانات.</div>
+
+<div class="admin-tabs">
+<button class="secondary" onclick="showAdminTab('categoriesTab')">الأقسام</button>
+<button class="secondary" onclick="showAdminTab('productsTab')">المنتجات</button>
+<button class="secondary" onclick="showAdminTab('bannersTab')">البنرات</button>
+<button class="secondary" onclick="showAdminTab('settingsTab')">إعدادات المتجر</button>
+</div>
+
+<div id="categoriesTab" class="admin-section active">
+<div class="panel">
+<h3 id="categoryFormTitle">إضافة قسم جديد</h3>
+<input type="hidden" id="editCategoryId">
+<label class="muted">اسم القسم</label>
+<input id="adminCategoryName" class="field" placeholder="مثال: شحن الألعاب">
+<label class="muted">اختر صورة القسم من هاتفك</label>
+<input id="adminCategoryImageFile" class="field" type="file" accept="image/*" onchange="previewImage(this,'categoryImagePreview')">
+<img id="categoryImagePreview" class="image-preview" alt="معاينة صورة القسم">
+<div class="image-hint">يمكنك اختيار صورة من المعرض مباشرة، أو استخدام رابط صورة في الحقل التالي.</div>
+<label class="muted">رابط صورة اختياري</label>
+<input id="adminCategoryImage" class="field" placeholder="https://example.com/image.jpg">
+<button class="primary" onclick="saveCategory()">حفظ القسم</button>
+<button class="secondary" style="width:100%;margin-top:8px" onclick="resetCategoryForm()">إلغاء التعديل</button>
+</div>
+<div class="panel"><h3>الأقسام الموجودة</h3><div id="adminCategoriesList"><div class="empty">جاري التحميل...</div></div></div>
+</div>
+
+<div id="productsTab" class="admin-section">
+<div class="panel">
+<h3 id="productFormTitle">إضافة منتج جديد</h3>
+<input type="hidden" id="editProductId">
+<label class="muted">اسم المنتج</label>
+<input id="adminProductName" class="field" placeholder="اسم المنتج">
+<label class="muted">القسم</label>
+<select id="adminProductCategory" class="field"><option value="">اختر القسم</option></select>
+<label class="muted">السعر بالجنيه السوداني</label>
+<input id="adminProductPrice" class="field" type="number" min="0" placeholder="مثال: 50000">
+<label class="muted">اختر صورة المنتج من هاتفك</label>
+<input id="adminProductImageFile" class="field" type="file" accept="image/*" onchange="previewImage(this,'productImagePreview')">
+<img id="productImagePreview" class="image-preview" alt="معاينة صورة المنتج">
+<div class="image-hint">اختر الصورة مباشرة من معرض هاتفك، أو أدخل رابط صورة.</div>
+<label class="muted">رابط صورة اختياري</label>
+<input id="adminProductImage" class="field" placeholder="https://example.com/image.jpg">
+<label class="muted">وصف المنتج</label>
+<textarea id="adminProductDescription" class="field" placeholder="تفاصيل المنتج..."></textarea>
+<button class="primary" onclick="saveProduct()">حفظ المنتج</button>
+<button class="secondary" style="width:100%;margin-top:8px" onclick="resetProductForm()">إلغاء التعديل</button>
+</div>
+<div class="panel"><h3>المنتجات الموجودة</h3><div id="adminProductsList"><div class="empty">جاري التحميل...</div></div></div>
+</div>
+
+<!-- إدارة البنرات -->
+<div id="bannersTab" class="admin-section">
+<div class="panel">
+<h3 id="bannerFormTitle">إضافة بنر إعلاني</h3>
+<input type="hidden" id="editBannerId">
+
+<label class="muted">عنوان البنر (اختياري)</label>
+<input id="adminBannerTitle" class="field" placeholder="مثال: عروض أمانة ستور">
+
+<label class="muted">صورة البنر من الهاتف</label>
+<input id="adminBannerImageFile" class="field" type="file" accept="image/*" onchange="previewImage(this,'bannerImagePreview')">
+<img id="bannerImagePreview" class="image-preview" alt="معاينة البنر">
+<div class="image-hint">اختر صورة إعلانية من معرض هاتفك. يفضل أن تكون الصورة أفقية.</div>
+
+<label class="muted">رابط صورة بديل (اختياري)</label>
+<input id="adminBannerImage" class="field" placeholder="https://example.com/banner.jpg">
+
+<label class="muted">رابط عند الضغط على البنر (اختياري)</label>
+<input id="adminBannerTarget" class="field" placeholder="https://example.com أو shop">
+
+<label class="muted">ترتيب ظهور البنر</label>
+<input id="adminBannerOrder" class="field" type="number" min="1" value="1">
+
+<label class="muted" style="display:flex;align-items:center;gap:8px;margin:8px 0 15px">
+<input id="adminBannerActive" type="checkbox" checked style="width:18px;height:18px">
+إظهار البنر في الصفحة الرئيسية
+</label>
+
+<button class="primary" id="saveBannerButton" onclick="saveBanner()">حفظ البنر</button>
+<button class="secondary" style="width:100%;margin-top:8px" onclick="resetBannerForm()">إلغاء التعديل</button>
+</div>
+
+<div class="panel">
+<h3>البنرات الموجودة</h3>
+<p class="muted">يمكنك إضافة 4 بنرات، وتعديلها أو حذفها أو تغيير ترتيب ظهورها.</p>
+<div id="adminBannersList"><div class="empty">جاري تحميل البنرات...</div></div>
+</div>
+</div>
+
+<div id="settingsTab" class="admin-section">
+<div class="panel">
+<h3>إعدادات المتجر</h3>
+<label class="muted">الاسم الإنجليزي</label>
+<input id="settingStoreName" class="field" placeholder="AMANA STORE">
+<label class="muted">الاسم العربي</label>
+<input id="settingArabicName" class="field" placeholder="أمانة ستور">
+<label class="muted">الشعار / العبارة التعريفية</label>
+<input id="settingSlogan" class="field" placeholder="ثقتك أمانة.. وخدماتك علينا.">
+<label class="muted">اختر شعار المتجر من هاتفك</label>
+<input id="settingLogoFile" class="field" type="file" accept="image/*" onchange="previewImage(this,'logoImagePreview')">
+<img id="logoImagePreview" class="image-preview" alt="معاينة شعار المتجر">
+<label class="muted">رابط شعار اختياري</label>
+<input id="settingLogo" class="field" placeholder="رابط صورة الشعار">
+<label class="muted">رقم واتساب المتجر مع مفتاح الدولة</label>
+<input id="settingWhatsapp" class="field" placeholder="249xxxxxxxxx">
+<label class="muted">رقم الهاتف</label>
+<input id="settingPhone" class="field" placeholder="رقم الهاتف">
+<label class="muted">رسالة الترحيب</label>
+<textarea id="settingWelcome" class="field" placeholder="رسالة الترحيب بالعملاء"></textarea>
+<label class="muted">بيانات حسابات الدفع (JSON)</label>
+<textarea id="settingPayments" class="field" placeholder='{"maycash":"بيانات الحساب"}'></textarea>
+<button class="primary" onclick="saveSettings()">حفظ إعدادات المتجر</button>
+</div>
+</div>
+
+<div class="panel">
+<button class="danger" style="width:100%" onclick="exitAdmin()">الخروج من لوحة التحكم</button>
+</div>
+</section>
 </main>
 
-<footer>
- AMANA STORE | أمانة ستور
- <p>ثقتك أمانة.. وخدماتك علينا.</p>
-</footer>
+<nav class="bottom-nav">
+<button class="nav-item active" data-page="home" onclick="showPage('home')"><b>⌂</b>الرئيسية</button>
+<button class="nav-item" data-page="shop" onclick="showPage('shop')"><b>▦</b>المتجر</button>
+<button class="nav-item" data-page="wallet" onclick="showPage('wallet')"><b>▣</b>محفظتي</button>
+<button class="nav-item" data-page="orders" onclick="showPage('orders')"><b>▤</b>طلباتي</button>
+<button class="nav-item" data-page="account" onclick="showPage('account')"><b>♙</b>حسابي</button>
+</nav>
+
+<a id="whatsappFloat" class="whatsapp" href="#" onclick="contactSupport();return false;">☏</a>
+
+<div id="authModal" class="modal">
+<div class="modal-box">
+<div class="modal-head"><h3 id="authTitle">تسجيل الدخول</h3><button class="close" onclick="closeModal('authModal')">×</button></div>
+<div id="authForms">
+<input id="authName" class="field" placeholder="الاسم الكامل" style="display:none">
+<input id="authEmail" class="field" type="email" placeholder="البريد الإلكتروني">
+<input id="authPassword" class="field" type="password" placeholder="كلمة المرور">
+<button class="primary" id="authSubmit" onclick="submitAuth()">تسجيل الدخول</button>
+<p class="muted" style="text-align:center"><span id="authSwitchText">ليس لديك حساب؟</span>
+<button class="secondary" id="authSwitch" onclick="switchAuth()">إنشاء حساب جديد</button></p>
+</div>
+<div class="notice">استخدم بريداً إلكترونياً صحيحاً وكلمة مرور قوية.</div>
+</div>
+</div>
+
+<div id="productModal" class="modal">
+<div class="modal-box">
+<div class="modal-head"><h3 id="productModalTitle">تفاصيل المنتج</h3><button class="close" onclick="closeModal('productModal')">×</button></div>
+<div id="productModalBody"></div>
+</div>
+</div>
+
+<div id="menuModal" class="modal">
+<div class="modal-box">
+<div class="modal-head"><h3>القائمة</h3><button class="close" onclick="closeModal('menuModal')">×</button></div>
+<button class="secondary field" onclick="menuGo('home')">الرئيسية</button>
+<button class="secondary field" onclick="menuGo('shop')">المتجر</button>
+<button class="secondary field" onclick="menuGo('wallet')">محفظتي</button>
+<button class="secondary field" onclick="menuGo('orders')">طلباتي</button>
+<button class="secondary field" onclick="menuGo('account')">حسابي</button>
+<button id="menuAdminButton" class="primary field" style="display:none" onclick="closeModal('menuModal');openAdmin()">لوحة تحكم المدير</button>
+</div>
+</div>
 
 <script>
 const SUPABASE_URL="https://zlwagyhhjzrggjlqigpz.supabase.co";
-const SUPABASE_KEY="sb_publishable_2Yr1cVB2vclDkytSegjDhg_wtwSKvX2";
-const db=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const SUPABASE_ANON_KEY="sb_publishable_2Yr1cVB2vclDkytSegjDhg_wtwSKvX2";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
-let currentUser=null,isAdmin=false;
-let categories=[],products=[],banners=[],adminCategories=[],adminProducts=[];
+const IMAGE_BUCKET="store-images";
+
+let categories=[];
+let products=[];
+let banners=[];
 let settings={};
-let editingCategory=null,editingProduct=null;
+let currentUser=null;
+let authMode="login";
+let isAdmin=false;
+let authReady=false;
+let authSyncToken=0;
+let bannerTimer=null;
+let currentBannerIndex=0;
 
-function showPage(page){
- document.querySelectorAll("main section").forEach(x=>x.classList.add("hidden"));
- document.getElementById(page).classList.remove("hidden");
- window.scrollTo(0,0);
- if(page==="shop")loadStore();
- if(page==="admin"&&!isAdmin)showPage("home");
- if(page==="account")renderAccount();
+document.getElementById("year").textContent=new Date().getFullYear();
+
+function money(value){
+return Number(value||0).toLocaleString("en-US")+" SDG";
 }
-function safe(v){
- return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function safeText(value){
+return String(value??"").replace(/[&<>"']/g,c=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
 }
-function money(v){return Number(v||0).toLocaleString("en-US")+" جنيه";}
-async function loadStore(){
- const [c,p,b]=await Promise.all([
-  db.from("categories").select("*").eq("is_active",true),
-  db.from("products").select("*").eq("is_active",true),
-  db.from("banners").select("*").eq("is_active",true).order("sort_order")
- ]);
- categories=c.data||[];
- products=p.data||[];
- banners=b.data||[];
- renderCategories();
- renderProducts();
- renderBanners();
+
+function closeModal(id){
+document.getElementById(id).classList.remove("show");
 }
-function renderCategories(){
- const html=categories.map(x=>`
- <div class="card" onclick="filterCategory('${x.id}')">
- <img src="${safe(x.image_url||'')}" onerror="this.style.display='none'">
- <h3>${safe(x.name)}</h3></div>`).join("");
- document.getElementById("homeCategories").innerHTML=html||"<p>لا توجد أقسام حالياً</p>";
- document.getElementById("shopCategories").innerHTML=
- `<button class="gold" onclick="renderProducts()">كل المنتجات</button>`+html;
- document.getElementById("prodCategory").innerHTML=
- categories.map(x=>`<option value="${x.id}">${safe(x.name)}</option>`).join("");
+
+function previewImage(input,previewId){
+const preview=document.getElementById(previewId);
+const file=input.files?.[0];
+
+if(!file){
+preview.removeAttribute("src");
+preview.style.display="none";
+return;
 }
-function renderProducts(list=products){
- document.getElementById("products").innerHTML=list.map(x=>`
- <div class="card">
- <img src="${safe(x.image_url||'')}" onerror="this.style.display='none'">
- <h3>${safe(x.name)}</h3>
- <p class="muted">${safe(x.description||"")}</p>
- <div class="price">${money(x.price)}</div>
- <button class="gold" onclick="orderProduct('${x.id}')">اطلب الآن</button>
- </div>`).join("")||"<p>لا توجد منتجات متاحة حالياً.</p>";
+
+if(!file.type.startsWith("image/")){
+alert("الملف المحدد ليس صورة.");
+input.value="";
+preview.style.display="none";
+return;
 }
-function filterCategory(id){
- renderProducts(products.filter(x=>x.category_id===id));
- document.getElementById("products").scrollIntoView({behavior:"smooth"});
+
+if(file.size>5*1024*1024){
+alert("حجم الصورة يجب ألا يتجاوز 5 ميجابايت.");
+input.value="";
+preview.style.display="none";
+return;
 }
-function orderProduct(id){
- const p=products.find(x=>x.id===id);
- if(!p)return;
- const msg=`السلام عليكم، أرغب في طلب المنتج: ${p.name} - السعر: ${money(p.price)}`;
- const phone=settings.whatsapp_number||"";
- if(!phone){alert(msg+"\nيرجى إضافة رقم واتساب المتجر من الإعدادات.");return;}
- window.open("https://wa.me/"+phone.replace(/\D/g,"")+"?text="+encodeURIComponent(msg),"_blank");
+
+const reader=new FileReader();
+reader.onload=()=>{
+preview.src=reader.result;
+preview.style.display="block";
+};
+reader.readAsDataURL(file);
 }
-function renderBanners(){
- const el=document.getElementById("bannerArea");
- el.innerHTML=banners.map(b=>`
- <div class="banner">
- <a href="${safe(b.target_url||'#')}" target="_blank">
- <img src="${safe(b.image_url)}" alt="${safe(b.title)}">
- </a></div>`).join("");
+
+// رفع صورة من الهاتف إلى Supabase Storage
+async function uploadStoreImage(inputId,oldUrl="",folder="store"){
+const input=document.getElementById(inputId);
+const file=input?.files?.[0];
+
+if(!file)return oldUrl||null;
+
+if(!file.type.startsWith("image/")){
+throw new Error("الملف المحدد ليس صورة.");
 }
-async function refreshSession(){
- const {data}=await db.auth.getSession();
- await applySession(data.session);
+
+if(file.size>5*1024*1024){
+throw new Error("حجم الصورة أكبر من 5 ميجابايت.");
 }
-async function applySession(session){
- currentUser=session?.user||null;
- if(!currentUser){
-  isAdmin=false;
-  document.getElementById("adminBtn").classList.add("hidden");
-  return;
- }
- const {data,error}=await db.rpc("is_store_admin");
- if(!error)isAdmin=!!data;
- document.getElementById("adminBtn").classList.toggle("hidden",!isAdmin);
+
+const allowed=["jpg","jpeg","png","webp","gif","avif"];
+let extension=(file.name.split(".").pop()||"jpg").toLowerCase();
+
+if(!allowed.includes(extension)){
+extension=file.type.split("/")[1]||"jpg";
 }
-db.auth.onAuthStateChange((event,session)=>{
- if(event==="SIGNED_OUT"){
-  currentUser=null;isAdmin=false;
-  document.getElementById("adminBtn").classList.add("hidden");
- }else{
-  setTimeout(()=>applySession(session),0);
- }
+
+const filePath=folder+"/"+Date.now()+"-"+Math.random().toString(36).slice(2)+"."+extension;
+
+const {data,error}=await db.storage
+.from(IMAGE_BUCKET)
+.upload(filePath,file,{
+cacheControl:"3600",
+upsert:false,
+contentType:file.type
 });
-async function login(){
- const email=document.getElementById("email").value.trim();
- const password=document.getElementById("password").value;
- const {data,error}=await db.auth.signInWithPassword({email,password});
- if(error)return alert(error.message);
- await applySession(data.session);
- alert("تم تسجيل الدخول بنجاح");
- renderAccount();
+
+if(error)throw error;
+
+const {data:publicData}=db.storage
+.from(IMAGE_BUCKET)
+.getPublicUrl(data.path);
+
+return publicData.publicUrl;
 }
-async function register(){
- const email=document.getElementById("email").value.trim();
- const password=document.getElementById("password").value;
- if(password.length<6)return alert("كلمة المرور يجب أن تكون 6 أحرف على الأقل");
- const {error}=await db.auth.signUp({email,password});
- if(error)return alert(error.message);
- alert("تم إنشاء الحساب. إذا كان تأكيد البريد مفعلاً، راجع بريدك الإلكتروني.");
+
+function openAuth(){
+if(currentUser){
+showPage("account");
+return;
 }
-function renderAccount(){
- const box=document.getElementById("accountBox");
- if(currentUser){
-  box.innerHTML=`<p>مرحباً بك</p><p>${safe(currentUser.email)}</p>
-  <button class="danger" onclick="signOut()">تسجيل الخروج</button>`;
- }else{
-  box.innerHTML=`<p>سجل الدخول للوصول إلى حسابك.</p>
-  <input id="email" type="email" placeholder="البريد الإلكتروني">
-  <input id="password" type="password" placeholder="كلمة المرور">
-  <button class="gold" onclick="login()">تسجيل الدخول</button>
-  <button class="dark" onclick="register()">إنشاء حساب</button>`;
- }
+document.getElementById("authModal").classList.add("show");
 }
-async function signOut(){
- await db.auth.signOut();
- currentUser=null;isAdmin=false;
- showPage("home");
+
+function toggleMenu(){
+document.getElementById("menuModal").classList.add("show");
 }
+
+function menuGo(id){
+closeModal("menuModal");
+showPage(id);
+}
+
+function showPage(id){
+if(id==="admin"&&!isAdmin){
+alert("هذه الصفحة مخصصة لإدارة المتجر فقط.");
+return;
+}
+
+document.querySelectorAll(".page").forEach(p=>{
+p.classList.toggle("active",p.id===id);
+});
+
+document.querySelectorAll(".nav-item").forEach(b=>{
+b.classList.toggle("active",b.dataset.page===id);
+});
+
+window.scrollTo({top:0,behavior:"smooth"});
+
+if(["wallet","account","orders"].includes(id)){
+loadUserData();
+}
+}
+
+function exitAdmin(){
+if(!isAdmin){
+showPage("home");
+return;
+}
+// الخروج من لوحة التحكم لا يعني تسجيل الخروج من الحساب
+showPage("home");
+}
+
+function switchAuth(){
+authMode=authMode==="login"?"signup":"login";
+document.getElementById("authTitle").textContent=authMode==="login"?"تسجيل الدخول":"إنشاء حساب جديد";
+document.getElementById("authSubmit").textContent=authMode==="login"?"تسجيل الدخول":"إنشاء الحساب";
+document.getElementById("authName").style.display=authMode==="signup"?"block":"none";
+document.getElementById("authSwitchText").textContent=authMode==="login"?"ليس لديك حساب؟":"لديك حساب بالفعل؟";
+document.getElementById("authSwitch").textContent=authMode==="login"?"إنشاء حساب جديد":"تسجيل الدخول";
+}
+
+async function submitAuth(){
+const email=document.getElementById("authEmail").value.trim();
+const password=document.getElementById("authPassword").value;
+const name=document.getElementById("authName").value.trim();
+
+if(!email||!password){alert("أدخل البريد الإلكتروني وكلمة المرور.");return;}
+if(authMode==="signup"&&!name){alert("أدخل اسمك الكامل.");return;}
+
+const btn=document.getElementById("authSubmit");
+btn.disabled=true;
+btn.textContent="يرجى الانتظار...";
+
+try{
+let result;
+
+if(authMode==="signup"){
+result=await db.auth.signUp({
+email,password,options:{data:{full_name:name}}
+});
+}else{
+result=await db.auth.signInWithPassword({email,password});
+}
+
+if(result.error)throw result.error;
+
+if(authMode==="signup"&&!result.data.session){
+alert("تم إنشاء الحساب. راجع بريدك الإلكتروني لتأكيد الحساب، ثم سجل الدخول.");
+switchAuth();
+return;
+}
+
+closeModal("authModal");
+await refreshSession();
+alert("تم تسجيل الدخول بنجاح.");
+
+}catch(error){
+alert("تعذر إكمال العملية: "+error.message);
+}finally{
+btn.disabled=false;
+btn.textContent=authMode==="login"?"تسجيل الدخول":"إنشاء الحساب";
+}
+}
+
+/*
+إدارة الجلسة:
+- لا يتم استدعاء getSession من داخل onAuthStateChange.
+- يتم تحديث بيانات المستخدم والصلاحيات خارج callback.
+- لا يؤدي فشل التحقق من صلاحية المدير إلى تسجيل خروج المستخدم.
+*/
+async function applySession(session){
+const token=++authSyncToken;
+currentUser=session?.user||null;
+
+const adminButton=document.getElementById("menuAdminButton");
+
+if(!currentUser){
+isAdmin=false;
+if(adminButton)adminButton.style.display="none";
+await loadUserData(false);
+authReady=true;
+return;
+}
+
+try{
+const {data,error}=await db.rpc("is_store_admin");
+
+if(token!==authSyncToken)return;
+
+if(error){
+console.warn("تعذر التحقق من صلاحية المدير:",error.message);
+}else{
+isAdmin=data===true;
+}
+
+}catch(error){
+console.warn("تعذر التحقق من صلاحية المدير:",error.message);
+}
+
+if(token!==authSyncToken)return;
+
+if(adminButton)adminButton.style.display=isAdmin?"block":"none";
+
+await loadUserData(false);
+authReady=true;
+}
+
+async function refreshSession(){
+try{
+const {data,error}=await db.auth.getSession();
+if(error)throw error;
+await applySession(data.session);
+}catch(error){
+console.error("خطأ تحديث الجلسة:",error);
+}
+}
+
+async function checkAdmin(){
+if(!currentUser){
+isAdmin=false;
+return false;
+}
+
+try{
+const {data,error}=await db.rpc("is_store_admin");
+if(error)throw error;
+isAdmin=data===true;
+const button=document.getElementById("menuAdminButton");
+if(button)button.style.display=isAdmin?"block":"none";
+}catch(error){
+console.warn("تعذر التحقق من صلاحية المدير:",error.message);
+}
+return isAdmin;
+}
+
 async function openAdmin(){
- await refreshSession();
- if(!isAdmin)return alert("ليس لديك صلاحية دخول لوحة الإدارة");
- showPage("admin");
- await loadAdminData();
+if(!currentUser){
+alert("سجل الدخول أولاً.");
+openAuth();
+return;
 }
-function exitAdmin(){showPage("home");}
-function adminTab(tab){
- ["Cats","Prods","Banners","Settings"].forEach(x=>
- document.getElementById("admin"+x).classList.add("hidden"));
- document.getElementById("admin"+tab[0].toUpperCase()+tab.slice(1)).classList.remove("hidden");
+
+const {data,error}=await db.auth.getSession();
+
+if(error){
+alert("تعذر التأكد من جلسة الدخول: "+error.message);
+return;
 }
+
+if(!data.session){
+currentUser=null;
+isAdmin=false;
+alert("انتهت جلسة الدخول. سجل الدخول مرة أخرى.");
+openAuth();
+return;
+}
+
+await applySession(data.session);
+
+if(!isAdmin){
+alert("ليس لديك صلاحية دخول لوحة الإدارة.");
+return;
+}
+
+showPage("admin");
+await loadAdminData();
+}
+
+async function loadUserData(refresh=true){
+try{
+if(refresh){
+const {data,error}=await db.auth.getSession();
+if(error)throw error;
+currentUser=data.session?.user||null;
+}
+
+const panel=document.getElementById("accountPanel");
+
+if(!currentUser){
+document.getElementById("walletBalance").textContent="— SDG";
+document.getElementById("ordersMessage").textContent="سجل الدخول لمتابعة طلباتك.";
+panel.innerHTML=`
+<h3>أهلاً بك في أمانة ستور</h3>
+<p class="muted">سجل الدخول أو أنشئ حساباً لمتابعة محفظتك وطلباتك.</p>
+<button class="primary" onclick="openAuth()">تسجيل الدخول / حساب جديد</button>`;
+return;
+}
+
+const userId=currentUser.id;
+
+const [{data:profile,error:profileError},{data:wallet,error:walletError}]=await Promise.all([
+db.from("profiles").select("*").eq("id",userId).maybeSingle(),
+db.from("wallets").select("*").eq("user_id",userId).maybeSingle()
+]);
+
+if(profileError)console.warn(profileError.message);
+if(walletError)console.warn(walletError.message);
+
+if(!currentUser||currentUser.id!==userId)return;
+
+document.getElementById("walletBalance").textContent=money(wallet?.balance);
+document.getElementById("ordersMessage").textContent=
+"تم تسجيل الدخول. ستظهر تفاصيل الطلبات بعد تفعيل سجل الطلبات.";
+
+const displayName=profile?.full_name||currentUser.user_metadata?.full_name||currentUser.email;
+
+panel.innerHTML=`
+<h3>مرحباً، ${safeText(displayName)}</h3>
+<p class="muted">البريد: ${safeText(currentUser.email)}</p>
+<p class="muted">رقم العضوية: ${safeText(profile?.member_id||"سيظهر بعد إنشاء ملفك")}</p>
+${isAdmin?'<button class="primary" onclick="openAdmin()">دخول لوحة تحكم المدير</button>':""}
+<button class="secondary" style="width:100%;margin-top:10px" onclick="signOut()">تسجيل الخروج</button>`;
+
+}catch(error){
+console.error("خطأ تحميل بيانات العميل:",error);
+}
+}
+
+async function signOut(){
+if(!confirm("هل تريد تسجيل الخروج من حسابك؟"))return;
+
+try{
+const {error}=await db.auth.signOut();
+if(error)throw error;
+
+currentUser=null;
+isAdmin=false;
+authSyncToken++;
+
+const button=document.getElementById("menuAdminButton");
+if(button)button.style.display="none";
+
+await loadUserData(false);
+showPage("home");
+alert("تم تسجيل الخروج.");
+}catch(error){
+alert("تعذر تسجيل الخروج: "+error.message);
+}
+}
+
+// تحميل المتجر
+async function loadStore(){
+const {data:cats,error:catErr}=await db.from("categories")
+.select("id,name,image_url,is_active").eq("is_active",true);
+
+const {data:prods,error:prodErr}=await db.from("products")
+.select("id,category_id,name,description,image_url,price,is_active").eq("is_active",true);
+
+const {data:setts,error:settErr}=await db.from("store_settings")
+.select("*").limit(1).maybeSingle();
+
+if(catErr){
+console.error("خطأ تحميل الأقسام:",catErr);
+categories=[];
+document.getElementById("homeCategories").innerHTML='<div class="empty">تعذر تحميل الأقسام. تحقق من صلاحيات القراءة.</div>';
+}else categories=cats||[];
+
+if(prodErr){
+console.error("خطأ تحميل المنتجات:",prodErr);
+products=[];
+document.getElementById("featuredProducts").innerHTML='<div class="empty">تعذر تحميل المنتجات حالياً.</div>';
+}else products=prods||[];
+
+settings=setts||{};
+if(settErr)console.warn("إعدادات المتجر:",settErr.message);
+
+document.title=(settings.store_name||"AMANA STORE")+" | أمانة ستور";
+
+document.querySelector(".brand").innerHTML=
+'<div class="brand-mark">أ</div><div>'+safeText(settings.store_name||"AMANA STORE")+
+'<small>'+safeText(settings.arabic_name||"أمانة ستور")+'</small></div>';
+
+document.querySelector(".hero h1").textContent=settings.slogan||"ثقتك أمانة.. وخدماتك علينا.";
+document.querySelector(".hero p").textContent=settings.welcome_message||"خدمات رقمية، شحن، تحويلات وحسابات — بسهولة وأمان.";
+
+if(settings.logo_url){
+document.querySelector(".brand-mark").innerHTML='<img src="'+safeText(settings.logo_url)+'" style="width:100%;height:100%;object-fit:contain;border-radius:10px">';
+}
+
+renderCategories();
+renderProducts();
+renderShop();
+await loadBanners(false);
+}
+
+// تحميل البنرات
+async function loadBanners(adminMode=false){
+const target=document.getElementById("bannerSlider");
+
+try{
+let query=db.from("banners")
+.select("id,title,image_url,target_url,is_active,sort_order,created_at")
+.order("sort_order",{ascending:true})
+.order("created_at",{ascending:true});
+
+if(!adminMode)query=query.eq("is_active",true);
+
+const {data,error}=await query;
+
+if(error)throw error;
+
+banners=data||[];
+renderBanners();
+
+if(adminMode)renderAdminBanners();
+
+}catch(error){
+console.error("خطأ تحميل البنرات:",error);
+
+if(target){
+target.innerHTML='<div class="banner-empty">أمانة ستور — ثقتك أمانة</div>';
+}
+
+const adminList=document.getElementById("adminBannersList");
+if(adminMode&&adminList){
+adminList.innerHTML='<div class="empty">تعذر تحميل البنرات: '+safeText(error.message)+'</div>';
+}
+}
+}
+
+function renderBanners(){
+const target=document.getElementById("bannerSlider");
+if(!target)return;
+
+if(bannerTimer){
+clearInterval(bannerTimer);
+bannerTimer=null;
+}
+
+const activeBanners=banners
+.filter(b=>b.is_active&&b.image_url)
+.sort((a,b)=>(Number(a.sort_order)||0)-(Number(b.sort_order)||0));
+
+if(!activeBanners.length){
+target.innerHTML='<div class="banner-empty">أمانة ستور — ثقتك أمانة</div>';
+return;
+}
+
+if(currentBannerIndex>=activeBanners.length)currentBannerIndex=0;
+
+target.innerHTML=`
+${activeBanners.map((b,i)=>`
+<div class="banner-slide ${i===currentBannerIndex?"active":""}"
+data-index="${i}" onclick="openBannerTarget('${safeText(b.target_url||"")}')">
+<img src="${safeText(b.image_url)}" alt="${safeText(b.title||"أمانة ستور")}" loading="${i===0?"eager":"lazy"}">
+${b.title?'<div class="banner-overlay">'+safeText(b.title)+'</div>':""}
+</div>`).join("")}
+${activeBanners.length>1?`
+<button class="banner-arrow banner-prev" onclick="event.stopPropagation();changeBanner(-1)">›</button>
+<button class="banner-arrow banner-next" onclick="event.stopPropagation();changeBanner(1)">‹</button>
+<div class="banner-dots">
+${activeBanners.map((b,i)=>`<button class="banner-dot ${i===currentBannerIndex?"active":""}" onclick="event.stopPropagation();goBanner(${i})"></button>`).join("")}
+</div>`:""}`;
+
+if(activeBanners.length>1){
+bannerTimer=setInterval(()=>changeBanner(1),5000);
+}
+}
+
+function changeBanner(direction){
+const slides=[...document.querySelectorAll(".banner-slide")];
+if(slides.length<2)return;
+
+currentBannerIndex=(currentBannerIndex+direction+slides.length)%slides.length;
+
+slides.forEach((slide,i)=>slide.classList.toggle("active",i===currentBannerIndex));
+document.querySelectorAll(".banner-dot").forEach((dot,i)=>dot.classList.toggle("active",i===currentBannerIndex));
+}
+
+function goBanner(index){
+currentBannerIndex=index;
+const slides=[...document.querySelectorAll(".banner-slide")];
+slides.forEach((slide,i)=>slide.classList.toggle("active",i===index));
+document.querySelectorAll(".banner-dot").forEach((dot,i)=>dot.classList.toggle("active",i===index));
+}
+
+function openBannerTarget(target){
+if(!target)return;
+
+const value=String(target).trim();
+
+if(value.startsWith("#")){
+const page=value.replace("#","");
+if(document.getElementById(page)){
+showPage(page);
+return;
+}
+}
+
+if(["home","shop","wallet","orders","account"].includes(value)){
+showPage(value);
+return;
+}
+
+if(/^https?:\/\//i.test(value)){
+window.open(value,"_blank","noopener");
+return;
+}
+
+alert("رابط البنر غير صحيح. استخدم رابطاً يبدأ بـ https:// أو اسم صفحة مثل shop.");
+}
+
+function renderCategories(){
+const target=document.getElementById("homeCategories");
+
+if(!categories.length){
+target.innerHTML='<div class="empty">لا توجد أقسام نشطة مضافة حالياً.</div>';
+}else{
+target.innerHTML=categories.map(c=>`
+<button class="category-card" onclick="filterCategory('${safeText(c.id)}')">
+<div class="category-icon">${c.image_url?'<img src="'+safeText(c.image_url)+'" style="width:100%;height:100%;object-fit:cover;border-radius:15px">':"✦"}</div>
+<div><strong>${safeText(c.name)}</strong><small>تصفح الخدمات والمنتجات</small></div>
+</button>`).join("");
+}
+
+document.getElementById("categoryFilter").innerHTML=
+'<option value="">كل الأقسام</option>'+categories.map(c=>
+'<option value="'+safeText(c.id)+'">'+safeText(c.name)+'</option>').join("");
+}
+
+function productCard(p){
+return `<article class="product-card" onclick="openProduct('${safeText(p.id)}')">
+<img src="${safeText(p.image_url||"https://placehold.co/600x500/f3f0e8/8b6b2b?text=AMANA+STORE")}" alt="${safeText(p.name)}" loading="lazy">
+<div class="product-info"><strong>${safeText(p.name)}</strong><div class="price">${money(p.price)}</div></div>
+</article>`;
+}
+
+function renderProducts(){
+const target=document.getElementById("featuredProducts");
+target.innerHTML=products.length?products.slice(0,4).map(productCard).join(""):'<div class="empty">لا توجد منتجات مضافة حالياً.</div>';
+}
+
+function renderShop(){
+const query=(document.getElementById("shopSearch")?.value||"").trim().toLowerCase();
+const cat=document.getElementById("categoryFilter")?.value||"";
+
+const list=products.filter(p=>
+(!cat||String(p.category_id)===String(cat))&&
+(!query||String(p.name||"").toLowerCase().includes(query)||String(p.description||"").toLowerCase().includes(query))
+);
+
+document.getElementById("productCount").textContent="عرض "+list.length+" منتج";
+document.getElementById("shopProducts").innerHTML=list.length?list.map(productCard).join(""):'<div class="empty">لا توجد منتجات مطابقة حالياً.</div>';
+}
+
+function filterCategory(id){
+showPage("shop");
+document.getElementById("categoryFilter").value=id;
+renderShop();
+}
+
+function openProduct(id){
+const p=products.find(x=>String(x.id)===String(id));
+if(!p)return;
+
+document.getElementById("productModalTitle").textContent=p.name;
+document.getElementById("productModalBody").innerHTML=`
+<img src="${safeText(p.image_url||"https://placehold.co/600x500")}" style="width:100%;max-height:230px;object-fit:cover;border-radius:13px">
+<h3>${safeText(p.name)}</h3>
+<div class="price">${money(p.price)}</div>
+<p class="muted">${safeText(p.description||"")}</p>
+<div class="notice">لتأكيد توفر المنتج وإتمام الطلب، تواصل مع خدمة العملاء. لا يتم خصم أي مبلغ من محفظتك عبر هذه الصفحة حالياً.</div>
+<button class="primary" onclick="contactSupportFor('${safeText(p.name)}')">اطلب عبر خدمة العملاء ←</button>`;
+document.getElementById("productModal").classList.add("show");
+}
+
+function searchProducts(){
+showPage("shop");
+document.getElementById("shopSearch").focus();
+}
+
+function contactSupportFor(name){
+closeModal("productModal");
+contactSupport("أرغب في الاستفسار عن: "+name);
+}
+
+function contactSupport(message){
+const number=String(settings.whatsapp_number||"").replace(/\D/g,"");
+if(!number){
+alert("رقم واتساب المتجر لم تتم إضافته بعد من إعدادات لوحة الإدارة.");
+return;
+}
+const text=encodeURIComponent(message||"السلام عليكم، أحتاج مساعدة من خدمة عملاء أمانة ستور.");
+window.open("https://wa.me/"+number+"?text="+text,"_blank");
+}
+
+// وظائف لوحة الإدارة
+function showAdminTab(tabId){
+document.querySelectorAll(".admin-section").forEach(s=>s.classList.remove("active"));
+document.getElementById(tabId).classList.add("active");
+
+if(tabId==="bannersTab"){
+loadBanners(true);
+}
+}
+
 async function loadAdminData(){
- const [c,p,b,s]=await Promise.all([
-  db.from("categories").select("*").order("name"),
-  db.from("products").select("*").order("name"),
-  db.from("banners").select("*").order("sort_order"),
-  db.from("store_settings").select("*").limit(1).maybeSingle()
- ]);
- if(c.error||p.error||b.error){
-  alert("تعذر تحميل بيانات الإدارة. راجع صلاحيات قاعدة البيانات.");
-  return;
- }
- adminCategories=c.data||[];
- adminProducts=p.data||[];
- banners=b.data||[];
- settings=s.data||{};
- renderAdminLists();
- document.getElementById("settingName").value=settings.store_name||"AMANA STORE";
- document.getElementById("settingArabic").value=settings.arabic_name||"أمانة ستور";
- document.getElementById("settingSlogan").value=settings.slogan||"ثقتك أمانة.. وخدماتك علينا.";
+if(!isAdmin)return;
+await loadStore();
+renderAdminCategories();
+renderAdminProducts();
+fillAdminCategorySelect();
+fillSettingsForm();
+await loadBanners(true);
 }
-function renderAdminLists(){
- document.getElementById("adminCategoryList").innerHTML=adminCategories.map(c=>`
- <div class="panel">
- <b>${safe(c.name)}</b>
- <span class="status ${c.is_active?'':'off'}">${c.is_active?'نشط':'متوقف'}</span>
- <button class="dark" onclick="toggleCategory('${c.id}',${!c.is_active})">${c.is_active?'إيقاف':'تفعيل'}</button>
- <button class="danger" onclick="deleteCategory('${c.id}')">حذف</button>
- </div>`).join("")||"لا توجد أقسام";
- document.getElementById("adminProductList").innerHTML=adminProducts.map(p=>`
- <div class="panel">
- <b>${safe(p.name)}</b> - ${money(p.price)}
- <span class="status ${p.is_active?'':'off'}">${p.is_active?'نشط':'متوقف'}</span>
- <button class="dark" onclick="toggleProduct('${p.id}',${!p.is_active})">${p.is_active?'إيقاف':'تفعيل'}</button>
- <button class="danger" onclick="deleteProduct('${p.id}')">حذف</button>
- </div>`).join("")||"لا توجد منتجات";
- document.getElementById("adminBannerList").innerHTML=banners.map(b=>`
- <div class="panel">
- ${safe(b.title||"بنر")}
- <span class="status ${b.is_active?'':'off'}">${b.is_active?'نشط':'متوقف'}</span>
- <button class="dark" onclick="toggleBanner('${b.id}',${!b.is_active})">${b.is_active?'إيقاف':'تفعيل'}</button>
- <button class="danger" onclick="deleteBanner('${b.id}')">حذف</button>
- </div>`).join("")||"لا توجد بنرات";
- renderCategories();
+
+function fillAdminCategorySelect(){
+const select=document.getElementById("adminProductCategory");
+const current=select.value;
+select.innerHTML='<option value="">اختر القسم</option>'+categories.map(c=>
+'<option value="'+safeText(c.id)+'">'+safeText(c.name)+'</option>').join("");
+if(current)select.value=current;
 }
+
+function renderAdminCategories(){
+const target=document.getElementById("adminCategoriesList");
+if(!categories.length){
+target.innerHTML='<div class="empty">لا توجد أقسام حتى الآن.</div>';
+return;
+}
+
+target.innerHTML=categories.map(c=>`
+<div class="admin-item">
+<div class="admin-item-row">
+<img src="${safeText(c.image_url||"https://placehold.co/100x100")}">
+<div class="admin-item-info"><strong>${safeText(c.name)}</strong><span class="status-badge">قسم نشط</span></div>
+</div>
+<div class="admin-actions">
+<button class="secondary small-btn" onclick="editCategory('${safeText(c.id)}')">تعديل</button>
+<button class="secondary small-btn" onclick="toggleCategory('${safeText(c.id)}',false)">إيقاف</button>
+<button class="danger small-btn" onclick="deleteCategory('${safeText(c.id)}')">حذف</button>
+</div>
+</div>`).join("");
+}
+
 async function saveCategory(){
- const name=document.getElementById("catName").value.trim();
- const image_url=document.getElementById("catImage").value.trim();
- if(!name)return alert("اكتب اسم القسم");
- const {error}=await db.from("categories").insert({name,image_url,is_active:true});
- if(error)return alert(error.message);
- document.getElementById("catName").value="";
- document.getElementById("catImage").value="";
- await loadAdminData();await loadStore();
+if(!isAdmin)return alert("ليس لديك صلاحية.");
+
+const id=document.getElementById("editCategoryId").value;
+const name=document.getElementById("adminCategoryName").value.trim();
+const oldImage=document.getElementById("adminCategoryImage").value.trim();
+
+if(!name)return alert("اكتب اسم القسم.");
+
+const btn=document.querySelector("#categoriesTab .primary");
+btn.disabled=true;
+btn.textContent="جاري الحفظ ورفع الصورة...";
+
+try{
+const image=await uploadStoreImage("adminCategoryImageFile",oldImage);
+
+const payload={
+name,
+image_url:image,
+is_active:true
+};
+
+const result=id
+?await db.from("categories").update(payload).eq("id",id)
+:await db.from("categories").insert(payload);
+
+if(result.error)throw result.error;
+
+alert("تم حفظ القسم والصورة بنجاح.");
+resetCategoryForm();
+await loadAdminData();
+
+}catch(error){
+alert("تعذر حفظ القسم: "+error.message);
+}finally{
+btn.disabled=false;
+btn.textContent="حفظ القسم";
 }
-async function toggleCategory(id,value){
- const {error}=await db.from("categories").update({is_active:value}).eq("id",id);
- if(error)return alert(error.message);
- await loadAdminData();await loadStore();
 }
+
+function editCategory(id){
+const c=categories.find(x=>String(x.id)===String(id));
+if(!c)return;
+
+document.getElementById("editCategoryId").value=c.id;
+document.getElementById("adminCategoryName").value=c.name||"";
+document.getElementById("adminCategoryImage").value=c.image_url||"";
+document.getElementById("adminCategoryImageFile").value="";
+
+const preview=document.getElementById("categoryImagePreview");
+if(c.image_url){
+preview.src=c.image_url;
+preview.style.display="block";
+}else{
+preview.style.display="none";
+}
+
+document.getElementById("categoryFormTitle").textContent="تعديل القسم";
+showAdminTab("categoriesTab");
+document.getElementById("categoriesTab").scrollIntoView({behavior:"smooth"});
+}
+
+function resetCategoryForm(){
+document.getElementById("editCategoryId").value="";
+document.getElementById("adminCategoryName").value="";
+document.getElementById("adminCategoryImage").value="";
+document.getElementById("adminCategoryImageFile").value="";
+document.getElementById("categoryImagePreview").removeAttribute("src");
+document.getElementById("categoryImagePreview").style.display="none";
+document.getElementById("categoryFormTitle").textContent="إضافة قسم جديد";
+}
+
+async function toggleCategory(id,active){
+if(!isAdmin)return;
+try{
+const {error}=await db.from("categories").update({is_active:active}).eq("id",id);
+if(error)throw error;
+await loadAdminData();
+}catch(error){alert("تعذر تغيير حالة القسم: "+error.message);}
+}
+
 async function deleteCategory(id){
- if(!confirm("هل تريد حذف القسم؟"))return;
- const {error}=await db.from("categories").delete().eq("id",id);
- if(error)return alert(error.message);
- await loadAdminData();await loadStore();
+if(!isAdmin)return;
+if(!confirm("هل أنت متأكد من حذف هذا القسم؟"))return;
+try{
+const {error}=await db.from("categories").delete().eq("id",id);
+if(error)throw error;
+alert("تم حذف القسم.");
+await loadAdminData();
+}catch(error){alert("تعذر حذف القسم. قد يكون مرتبطاً بمنتجات. يمكنك إيقافه بدلاً من حذفه.\n"+error.message);}
 }
+
+function renderAdminProducts(){
+const target=document.getElementById("adminProductsList");
+if(!products.length){
+target.innerHTML='<div class="empty">لا توجد منتجات حتى الآن.</div>';
+return;
+}
+
+target.innerHTML=products.map(p=>{
+const category=categories.find(c=>String(c.id)===String(p.category_id));
+return `<div class="admin-item">
+<div class="admin-item-row">
+<img src="${safeText(p.image_url||"https://placehold.co/100x100")}">
+<div class="admin-item-info">
+<strong>${safeText(p.name)}</strong>
+<div class="price">${money(p.price)}</div>
+<small class="muted">${safeText(category?.name||"بدون قسم")}</small>
+</div>
+</div>
+<div class="admin-actions">
+<button class="secondary small-btn" onclick="editProduct('${safeText(p.id)}')">تعديل</button>
+<button class="secondary small-btn" onclick="toggleProduct('${safeText(p.id)}',false)">إيقاف</button>
+<button class="danger small-btn" onclick="deleteProduct('${safeText(p.id)}')">حذف</button>
+</div>
+</div>`;
+}).join("");
+}
+
 async function saveProduct(){
- const name=document.getElementById("prodName").value.trim();
- const category_id=document.getElementById("prodCategory").value;
- const description=document.getElementById("prodDesc").value.trim();
- const price=Number(document.getElementById("prodPrice").value);
- const image_url=document.getElementById("prodImage").value.trim();
- if(!name||!category_id||!price)return alert("أكمل بيانات المنتج");
- const {error}=await db.from("products").insert({name,category_id,description,price,image_url,is_active:true});
- if(error)return alert(error.message);
- ["prodName","prodDesc","prodPrice","prodImage"].forEach(id=>document.getElementById(id).value="");
- await loadAdminData();await loadStore();
+if(!isAdmin)return alert("ليس لديك صلاحية.");
+
+const id=document.getElementById("editProductId").value;
+const name=document.getElementById("adminProductName").value.trim();
+const category=document.getElementById("adminProductCategory").value;
+const price=Number(document.getElementById("adminProductPrice").value);
+const oldImage=document.getElementById("adminProductImage").value.trim();
+const description=document.getElementById("adminProductDescription").value.trim();
+
+if(!name)return alert("اكتب اسم المنتج.");
+if(!category)return alert("اختر القسم.");
+if(!Number.isFinite(price)||price<0)return alert("أدخل سعراً صحيحاً.");
+
+const btn=document.querySelector("#productsTab .primary");
+btn.disabled=true;
+btn.textContent="جاري الحفظ ورفع الصورة...";
+
+try{
+const image=await uploadStoreImage("adminProductImageFile",oldImage);
+
+const payload={
+name,
+category_id:category,
+price,
+image_url:image,
+description,
+is_active:true
+};
+
+const result=id
+?await db.from("products").update(payload).eq("id",id)
+:await db.from("products").insert(payload);
+
+if(result.error)throw result.error;
+
+alert("تم حفظ المنتج والصورة بنجاح.");
+resetProductForm();
+await loadAdminData();
+
+}catch(error){
+alert("تعذر حفظ المنتج: "+error.message);
+}finally{
+btn.disabled=false;
+btn.textContent="حفظ المنتج";
 }
-async function toggleProduct(id,value){
- const {error}=await db.from("products").update({is_active:value}).eq("id",id);
- if(error)return alert(error.message);
- await loadAdminData();await loadStore();
 }
+
+function editProduct(id){
+const p=products.find(x=>String(x.id)===String(id));
+if(!p)return;
+
+document.getElementById("editProductId").value=p.id;
+document.getElementById("adminProductName").value=p.name||"";
+document.getElementById("adminProductCategory").value=p.category_id||"";
+document.getElementById("adminProductPrice").value=p.price||0;
+document.getElementById("adminProductImage").value=p.image_url||"";
+document.getElementById("adminProductImageFile").value="";
+document.getElementById("adminProductDescription").value=p.description||"";
+
+const preview=document.getElementById("productImagePreview");
+if(p.image_url){
+preview.src=p.image_url;
+preview.style.display="block";
+}else{
+preview.style.display="none";
+}
+
+document.getElementById("productFormTitle").textContent="تعديل المنتج";
+showAdminTab("productsTab");
+document.getElementById("productsTab").scrollIntoView({behavior:"smooth"});
+}
+
+function resetProductForm(){
+document.getElementById("editProductId").value="";
+document.getElementById("adminProductName").value="";
+document.getElementById("adminProductCategory").value="";
+document.getElementById("adminProductPrice").value="";
+document.getElementById("adminProductImage").value="";
+document.getElementById("adminProductImageFile").value="";
+document.getElementById("adminProductDescription").value="";
+document.getElementById("productImagePreview").removeAttribute("src");
+document.getElementById("productImagePreview").style.display="none";
+document.getElementById("productFormTitle").textContent="إضافة منتج جديد";
+}
+
+async function toggleProduct(id,active){
+if(!isAdmin)return;
+try{
+const {error}=await db.from("products").update({is_active:active}).eq("id",id);
+if(error)throw error;
+await loadAdminData();
+}catch(error){alert("تعذر تغيير حالة المنتج: "+error.message);}
+}
+
 async function deleteProduct(id){
- if(!confirm("هل تريد حذف المنتج؟"))return;
- const {error}=await db.from("products").delete().eq("id",id);
- if(error)return alert(error.message);
- await loadAdminData();await loadStore();
+if(!isAdmin)return;
+if(!confirm("هل تريد حذف هذا المنتج نهائياً؟"))return;
+try{
+const {error}=await db.from("products").delete().eq("id",id);
+if(error)throw error;
+alert("تم حذف المنتج.");
+await loadAdminData();
+}catch(error){alert("تعذر حذف المنتج: "+error.message);}
 }
+
+// إدارة البنرات من لوحة المدير
 async function saveBanner(){
- const title=document.getElementById("bannerTitle").value.trim();
- const image_url=document.getElementById("bannerImage").value.trim();
- const target_url=document.getElementById("bannerUrl").value.trim();
- const sort_order=Number(document.getElementById("bannerOrder").value||1);
- if(!image_url)return alert("أضف رابط صورة البنر");
- if(banners.length>=4)return alert("الحد الأقصى أربعة بنرات");
- const {error}=await db.from("banners").insert({title,image_url,target_url,sort_order,is_active:true});
- if(error)return alert(error.message);
- await loadAdminData();await loadStore();
+if(!isAdmin)return alert("ليس لديك صلاحية.");
+
+const id=document.getElementById("editBannerId").value;
+const title=document.getElementById("adminBannerTitle").value.trim();
+const oldImage=document.getElementById("adminBannerImage").value.trim();
+const targetUrl=document.getElementById("adminBannerTarget").value.trim();
+const orderValue=Number(document.getElementById("adminBannerOrder").value||1);
+const active=document.getElementById("adminBannerActive").checked;
+
+if(!oldImage&&!document.getElementById("adminBannerImageFile").files.length){
+alert("اختر صورة للبنر من هاتفك أو أدخل رابط الصورة.");
+return;
 }
-async function toggleBanner(id,value){
- const {error}=await db.from("banners").update({is_active:value}).eq("id",id);
- if(error)return alert(error.message);
- await loadAdminData();await loadStore();
+
+if(!Number.isFinite(orderValue)||orderValue<1){
+alert("أدخل ترتيباً صحيحاً للبنر.");
+return;
 }
-async function deleteBanner(id){
- if(!confirm("حذف البنر؟"))return;
- const {error}=await db.from("banners").delete().eq("id",id);
- if(error)return alert(error.message);
- await loadAdminData();await loadStore();
+
+if(targetUrl&&!/^https?:\/\//i.test(targetUrl)&&!["home","shop","wallet","orders","account","#home","#shop","#wallet","#orders","#account"].includes(targetUrl)){
+alert("رابط البنر يجب أن يبدأ بـ https:// أو يكون اسم صفحة مثل shop.");
+return;
 }
-async function saveSettings(){
- const store_name=document.getElementById("settingName").value.trim();
- const arabic_name=document.getElementById("settingArabic").value.trim();
- const slogan=document.getElementById("settingSlogan").value.trim();
- const payload={store_name,arabic_name,slogan,updated_at:new Date().toISOString()};
- let result;
- if(settings.id){
-  result=await db.from("store_settings").update(payload).eq("id",settings.id);
- }else{
-  result=await db.from("store_settings").insert(payload);
- }
- if(result.error)return alert(result.error.message);
- alert("تم حفظ الإعدادات");
- await loadAdminData();
- await loadStore();
+
+if(!id&&banners.length>=4){
+alert("وصلت إلى الحد الأقصى وهو 4 بنرات. عدّل بنراً موجوداً أو احذف أحدها أولاً.");
+return;
 }
-async function loadSettings(){
- const {data}=await db.from("store_settings").select("*").limit(1).maybeSingle();
- settings=data||{};
- document.getElementById("storeTitle").textContent=settings.arabic_name||"أمانة ستور";
- document.getElementById("storeSlogan").textContent=settings.slogan||"ثقتك أمانة.. وخدماتك علينا.";
+
+const btn=document.getElementById("saveBannerButton");
+btn.disabled=true;
+btn.textContent="جاري رفع الصورة والحفظ...";
+
+try{
+const image=await uploadStoreImage("adminBannerImageFile",oldImage,"banners");
+
+const payload={
+title:title||null,
+image_url:image,
+target_url:targetUrl||null,
+is_active:active,
+sort_order:orderValue
+};
+
+const result=id
+?await db.from("banners").update(payload).eq("id",id)
+:await db.from("banners").insert(payload);
+
+if(result.error)throw result.error;
+
+alert("تم حفظ البنر بنجاح.");
+resetBannerForm();
+await loadBanners(true);
+
+}catch(error){
+alert("تعذر حفظ البنر: "+error.message);
+}finally{
+btn.disabled=false;
+btn.textContent="حفظ البنر";
 }
-async function startStore(){
- await loadSettings();
- await loadStore();
- await refreshSession();
 }
-startStore();
-</script>
-</body>
-    </html>
+
+function renderAdminBanners(){
+const target=document.getElementById("adminBannersList");
+if(!target)return;
+
+if(!banners.length){
+target.innerHTML='<div class="empty">لا توجد بنرات حالياً. يمكنك إضافة حتى 4 بنرات.</div>';
+return;
+}
+
+const sorted=[...banners].sort((a,b)=>(Number(a.sort_order)||0)-(Number(b.sort_order)||0));
+
+target.innerHTML=sorted.map((b,index)=>`
+<div class="admin-item">
+<div class="admin-item-row">
+<img src="${safeText(b.image_url||"https://placehold.co/120x80")}">
+<div class="admin-item-info">
+<strong>${safeText(b.title||"بنر إعلاني بدون عنوان")}</strong>
+<small class="muted">الترتيب: ${Number(b.sort_order)||index+1}</small><br>
+<span class="status-badge" style="${b.is_active?"":"background:#fbeaea;color:#a22"}">${b.is_active?"ظاهر في الموقع":"متوقف"}</span>
+</div>
+</div>
+<div class="admin-actions">
+<button class="secondary small-btn" onclick="editBanner('${safeText(b.id)}')">تعديل</button>
+<button class="secondary small-btn" onclick="moveBanner('${safeText(b.id)}',-1)">↑ تقديم</button>
+<button class="secondary small-btn" onclick="moveBanner('${safeText(b.id)}',1)">↓ تأخير</button>
+<button class="secondary small-btn" onclick="toggleBanner('${safeText(b.id)}',${!b.is_active})">${b.is_ac
